@@ -1219,7 +1219,7 @@ class BDSettings(Window):
             parent=self._subContainer,
             position=((self._subWidth-buttonWidth)*0.5-d, v),
             size=(buttonWidth, 60),
-            value=13 in settings.scenes,
+            value=12 in settings.scenes,
             maxWidth=buttonWidth,
             color=gCheckBoxColor,
             textColor=gCheckBoxTextColor,
