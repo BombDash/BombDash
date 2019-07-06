@@ -6,6 +6,7 @@ import bsUtils
 import bsInternal
 import bdUtils
 import settings
+import bsVector
 
 # list of defined spazzes
 appearances = {}
@@ -76,6 +77,25 @@ class _CurseExplodeMessage(object):
 class _BombDiedMessage(object):
     "A bomb has died and thus can be recycled"
     pass
+
+class _RailgunFiredMessage(object):
+    def __init__(
+            self, srcNode=None,  sourcePlayer=None,):
+        """
+        Instantiate a message with various bits of information
+        on the type of hit that occurred.
+        """
+        # convert None to empty node-ref/player-ref
+        if srcNode is None:
+            srcNode = bs.Node(None)
+        if sourcePlayer is None:
+            sourcePlayer = bs.Player(None)
+
+        self.srcNode = srcNode
+        self.sourcePlayer = sourcePlayer
+
+
+    "A railgun has fired"
 
 class NewFly(object):
 
@@ -315,7 +335,8 @@ class SpazFactory(object):
         """
         Instantiate a factory object.
         """
-
+        self.railgunSound = bs.getSound('railgun')
+        self.railgunChargeSound = bs.getSound('railgunCharge')
         self.impactSoundsMedium = (bs.getSound('impactMedium'),
                                 bs.getSound('impactMedium2'))
         self.impactSoundsHard = (bs.getSound('impactHard'),
@@ -490,6 +511,8 @@ class Spaz(bs.Actor):
         self.shovel = False
         self.character = character
         self.shovels = 0
+        self.Railgun = False
+        self.RailgunFired = 0
 
         factory = self.getFactory()
 
@@ -2064,6 +2087,18 @@ class Spaz(bs.Actor):
                         position=self.node.position,
                         owner=self.node)
 
+            elif m.powerupType == 'railgun':
+                    if self.node.style == 'penguin':
+                        self.node.upperArmModel = bs.getModel('penguinBeam')
+                    else:
+                        self.node.handModel = bs.getModel('beam')
+                    self.RailgunFired = 0
+                    self.Railgun = True
+                    bs.playSound(self.getFactory().railgunChargeSound, position=self.node.position)
+                    def waitForCharge():
+                        self.node.getDelegate().getPlayer().assignInputCall('punchPress', bs.Call(self.railgunChecker))
+                    bs.gameTimer(1000, bs.Call(waitForCharge))
+
             elif m.powerupType == 'impactBombs':
                 if bs.getConfig().get('Powerup Popups', True):
                     bsUtils.PopupText((bs.Lstr(
@@ -2549,6 +2584,38 @@ class Spaz(bs.Actor):
 
         elif isinstance(m, _BombDiedMessage):
             self.bombCount += 1
+
+        elif isinstance(m, _RailgunFiredMessage):
+            if m.srcNode is not None and m.srcNode.exists() \
+                    and m.srcNode.getNodeType() == 'spaz':
+                d = m.srcNode.getDelegate()
+                s = m.srcNode
+                
+                try:
+                    if m.srcNode is not None and m.srcNode.exists():
+                        if m.srcNode.getDelegate().Railgun:
+                            d = m.srcNode.getDelegate()
+                            s = m.srcNode
+                            if self.RailgunFired == 2:
+                                s.upperArmModel = self.getFactory()._getMedia(
+                                    self.character)['upperArmModel'] if not s.style == 'penguin' \
+                                        else bs.getModel('penguinUpperArm')
+
+                                s.handModel = self.getFactory()._getMedia(
+                                    self.character)['handModel'] if not s.style == 'penguin' else None
+
+                                d.Railgun = False
+
+                except:
+                    if self.RailgunFired == 2:
+                        s.upperArmModel = self.getFactory()._getMedia(
+                            self.character)['upperArmModel'] if not s.style == 'penguin' \
+                                else bs.getModel('penguinUpperArm')
+
+                        s.handModel = self.getFactory()._getMedia(
+                            self.character)['handModel'] if not s.style == 'penguin' else None
+
+                        d.Railgun = False
         
         elif isinstance(m, bs.DieMessage):
             wasDead = self._dead
@@ -2739,6 +2806,31 @@ class Spaz(bs.Actor):
             self.node.color = (random.random(),
                                random.random(),
                                random.random())
+
+    def railgunChecker(self):
+        if self.Railgun == True and not self.RailgunFired == 2:
+            if self.node is not None and self.node.exists():
+                if self.node.getNodeType() == 'spaz':
+                    p1 = self.node.positionCenter
+                    p2 = self.node.positionForward
+
+                direction = [p1[0]-p2[0], p2[1]-p1[1], p1[2]-p2[2]]
+                direction[1] = 0.0
+                mag = 10.0 / bsVector.Vector(*direction).length()
+                self.vel = [v*mag for v in direction]
+
+                b = bs.RailBullet(
+                    position=(self.node.position[0],
+                              self.node.position[1]+0.4,
+                              self.node.position[2]),
+                    velocity=(self.vel[0],0,self.vel[2])).autoRetain()
+
+                b.node.modelScale = 0.05
+                b.node.extraAcceleration = (self.vel[0]*900, -1000, self.vel[2]*900)
+                bs.playSound(self.getFactory().railgunSound, position=self.node.position)
+                self.RailgunFired+=1
+                self.handleMessage(_RailgunFiredMessage(srcNode=self.node))
+
 
     def soulExtractor(self):
         if self.node.exists():

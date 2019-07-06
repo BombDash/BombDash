@@ -248,6 +248,7 @@ def getDefaultPowerupDistribution():
             ('artillery', 2),
             ('highJump', 2),
             ('blessing', 2),
+            ('railgun', 222),
             ('petard', 2 if bsUI.gNewYear else 0),
             ('snoball', 1 if bsUI.gWinter else 0),
             ('poison', 1),
@@ -301,6 +302,10 @@ class Powerup(bs.Actor):
             color = (0.9, 0.2, 0.2)
 
         elif powerupType == 'blessing':
+            tex = factory.texBlessing
+            color = (0.2, 0.2, 1.0)
+
+        elif powerupType == 'railgun':
             tex = factory.texBlessing
             color = (0.2, 0.2, 1.0)
 

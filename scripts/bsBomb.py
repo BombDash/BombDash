@@ -347,7 +347,7 @@ class Blast(bs.Actor):
         elif self.blastType == 'turret':
             explosion.color = (0.5, 0, 0)
 
-        elif self.blastType == 'shockWave':
+        elif self.blastType == 'shockWave' or self.blastType == 'rail':
             explosion.color = (0.3, 0.3, 1)
 
         elif self.blastType == 'heal':
@@ -365,9 +365,14 @@ class Blast(bs.Actor):
         else:
             explosion.color = blastColor
 
-        bs.gameTimer(1000, explosion.delete)
+        if not self.blastType == 'rail': 
+            bs.gameTimer(1000, explosion.delete)
+        else:
+            bsUtils.animate(explosion, 'radius',
+                    {0: self.radius, 8000:0})
+            bs.gameTimer(8000, explosion.delete)
 
-        if not self.blastType in ['turret', 'heal', 'shockWave',
+        if not self.blastType in ['turret', 'heal', 'shockWave', 'rail',
                                   'giant', 'portal', 'colorBomb']:
             if self.blastType != 'ice':
                 bs.emitBGDynamics(position=position, velocity=velocity,
@@ -466,6 +471,22 @@ class Blast(bs.Actor):
                 bs.gameTimer(60, f.delete)
 
             bs.gameTimer(50, _doEmit)
+
+        elif self.blastType == 'rail':
+            def _doEmit():
+                bs.emitBGDynamics(position=position, velocity=velocity,
+                                  count=20, scale=0.7, chunkType='spark',
+                                  emitType='stickers');
+
+                f = bs.newNode('flash', attrs={
+                    'position': position,
+                    'size': 0.5,
+                    'color': (0.6, 0.6, 1-random.random()*0.2)})
+                bsUtils.animate(f, 'size',
+                    {0: 0.5, 460:0})
+                bs.gameTimer(460, f.delete)
+
+            bs.gameTimer(50, _doEmit)
             
         elif self.blastType == 'petard':
             bs.emitBGDynamics(position=position, count=50,
@@ -562,7 +583,7 @@ class Blast(bs.Actor):
             elif self.blastType == "turret":
                 color = (0.5, 0, 0)
 
-            elif self.blastType == 'shockWave':
+            elif self.blastType == 'shockWave' or self.blastType == 'rail':
                 color = (0.3, 0.3, 1)
 
             elif self.blastType == 'heal':
@@ -607,21 +628,36 @@ class Blast(bs.Actor):
             scorchRadius *= 0.05
             s *= 0.05
 
+        elif self.blastType == 'rail':
+            lightRadius *= 0.4
+            s *= 30
+
         elif self.blastType == 'petard':
             s *= 3.0
 
-        iScale = 1.6
-        bsUtils.animate(light, 'intensity', {
-            0: 2.0*iScale, int(s*20): 0.1*iScale,
-            int(s*25): 0.2*iScale, int(s*50): 17.0*iScale, int(s*60): 5.0*iScale,
-            int(s*80): 4.0*iScale, int(s*200): 0.6*iScale,
-            int(s*2000): 0.00*iScale, int(s*3000): 0.0})
-
-        bsUtils.animate(light, 'radius', {
-            0: lightRadius*0.2, int(s*50): lightRadius*0.55,
-            int(s*100): lightRadius*0.3, int(s*300): lightRadius*0.15,
-            int(s*1000): lightRadius*0.05})
-
+        if not self.blastType == 'rail': 
+            iScale = 1.6
+        else:
+            iScale = 0.2
+        
+        if not self.blastType == 'rail':
+            bsUtils.animate(light, 'intensity', {
+                0: 2.0*iScale, int(s*20): 0.1*iScale,
+                int(s*25): 0.2*iScale, int(s*50): 17.0*iScale, int(s*60): 5.0*iScale,
+                int(s*80): 4.0*iScale, int(s*200): 0.6*iScale,
+                int(s*2000): 0.00*iScale, int(s*3000): 0.0})
+            bsUtils.animate(light, 'radius', {
+                0: lightRadius*0.2, int(s*50): lightRadius*0.55,
+                int(s*100): lightRadius*0.3, int(s*300): lightRadius*0.15,
+                int(s*1000): lightRadius*0.05})
+        else:
+            bsUtils.animate(light, 'intensity', {
+                0:17.0*iScale, int(s*60): 5.0*iScale,
+                int(s*80): 4.0*iScale, int(s*200): 0.6*iScale,
+                int(s*2000): 0.00*iScale, int(s*3000): 0.0})
+            bsUtils.animate(light, 'radius', {
+                0: lightRadius*0.6,
+                int(s*1000): lightRadius*0.1})
         bs.gameTimer(int(s*3000), light.delete)
 
         # make a scorch that fades over time
@@ -653,7 +689,7 @@ class Blast(bs.Actor):
             bs.playSound(factory.hissSound, position=light.position)
             
         p = light.position
-        if not self.blastType == 'turret' and not self.blastType == 'heal' and not self.blastType == 'holy':
+        if not self.blastType == 'turret' and not self.blastType == 'heal' and not self.blastType == 'holy' and not self.blastType == 'rail':
             bs.playSound(factory.getRandomExplodeSound(), position=p)
             bs.playSound(factory.debrisFallSound, position=p)
 
@@ -1122,7 +1158,7 @@ class Bomb(bs.Actor):
                 'reflection': 'soft',
                 'reflectionScale': [0.7],
                 'materials': materials})
-
+            
         elif self.bombType == 'petard':
             fuseTime = 4000
             self.node = bs.newNode('bomb', delegate=self, attrs={
