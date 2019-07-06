@@ -2827,6 +2827,12 @@ class Spaz(bs.Actor):
 
                 b.node.modelScale = 0.05
                 b.node.extraAcceleration = (self.vel[0]*900, -1000, self.vel[2]*900)
+
+                self.node.handleMessage(
+                    'kickBack', self.node.position[0], self.node.position[1],
+                    self.node.position[2], -(self.vel[0])*2, self.vel[1]*1,
+                    -(self.vel[2]*2), mag*20)
+
                 bs.playSound(self.getFactory().railgunSound, position=self.node.position)
                 self.RailgunFired+=1
                 self.handleMessage(_RailgunFiredMessage(srcNode=self.node))
