@@ -5,7 +5,6 @@ import bs
 import bsUI
 import bsUtils
 import BuddyBunny
-import SnoBallz
 
 
 defaultPowerupInterval = 8000
@@ -254,9 +253,8 @@ def getDefaultPowerupDistribution():
             ('artillery', 2),
             ('highJump', 2),
             ('blessing', 2),
-            ('railgun', 2),
             ('petard', 2 if bsUI.gNewYear else 0),
-            ('snoball', 1 if bsUI.gWinter else 0),
+            ('railgun', 1),
             ('poison', 1),
             ('healthBomb', 1),
             ('molotov', 1),
@@ -387,11 +385,6 @@ class Powerup(bs.Actor):
         elif powerupType == 'bot':
             tex = factory.texBot
             color = (1.0, 0.9, 0.3)
-
-        elif powerupType == 'snoball':
-            tex = factory.texSno
-            mod = factory.snoModel
-            color = (1.0, 1.0, 1.0)
 
         elif powerupType == 'artillery':
             tex = factory.texArtillery
@@ -545,18 +538,6 @@ class Powerup(bs.Actor):
                             p.gameData['bunnies'] = BuddyBunny.BunnyBotSet(p)
 
                         p.gameData['bunnies'].doBunny()
-                        self._powersGiven = True
-                        self.handleMessage(bs.DieMessage())
-
-                    elif self.powerupType == 'snoball':
-                        bsUtils.PopupText((bs.Lstr(
-                            resource='descriptionSnoballs')),
-                            color=(1, 1, 1),
-                            scale=1,
-                            position=self.node.position).autoRetain()
-
-                        spaz = node.getDelegate()
-                        SnoBallz.snoBall().getFactory().giveBallz(spaz)
                         self._powersGiven = True
                         self.handleMessage(bs.DieMessage())
                     else:

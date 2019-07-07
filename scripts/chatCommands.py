@@ -10,13 +10,18 @@ import settings
 
 
 class Commands(object):
+    """
+    category: BombDash Classes
 
+    In this class there will be a search of command in the received arguments
+    from the chatOptions function.
+    """
     def __init__(self):
         self.tint = None
         self.all = settings.cmdForAll
 
     def checkPrivilege(self, privilege, nick):
-        """Check the player host or player privilege."""
+        """ Check the player host or player privilege. """
         data = bs.getConfig()['BombDash Privilege']
 
         # doing a host check
@@ -51,7 +56,7 @@ class Commands(object):
             return False
 
     def handleCommand(self, nick, msg):
-        """ Handle the command in the message text."""
+        """ Handle the command in the message text. """
         admin = self.checkPrivilege('admin', nick)
         gameName = bsInternal._getForegroundHostActivity().getName()
 
@@ -1511,6 +1516,7 @@ c = Commands()
 
 
 def chatOptions(msg):
+    """ Text processing of the message and transfer to a class of teams. """
     if bsInternal._getForegroundHostActivity() is not None:
         n = msg.split(': ')
         c.handleCommand(n[0], n[1])
