@@ -190,9 +190,7 @@ class MainMenuActivity(bs.Activity):
             bs.getConfig()['BombDash Privilege'] = {
                 'admins': [],
                 'vips': [],
-                'bans': []
-                }
-
+                'bans': []}
             bs.writeConfig()
 
         if 'BombDash Stats' not in bs.getConfig():
@@ -203,9 +201,7 @@ class MainMenuActivity(bs.Activity):
                 'Betrayals': 0,
                 'Bomb explosions': 0,
                 'Collected powerups': 0,
-                'Fatality hits': 0
-                }
-
+                'Fatality hits': 0}
             bs.writeConfig()
 
         # hmm, it works?
@@ -342,7 +338,7 @@ class MainMenuActivity(bs.Activity):
             tint = (0.78, 0.78, 0.82)
             self.color = (0.92, 0.91, 0.93)
 
-            # FOR ENGLISH: "grom" is "thunder" (on russian).
+            # FOR ENGLISH: "grom" is "thunder" (on russian)
             gromLite = bs.getSound('grom3')
             groms = ['grom', 'grom2']
             rain = bs.getSound('rain')
@@ -355,10 +351,11 @@ class MainMenuActivity(bs.Activity):
             bs.animate(sound, 'volume', {0: 0, 2000: 0.4})
 
             def dropB():
-                velB1 = (-5.0 + random.random()*30.0)\
+                pos = (-15 + random.random()*30, 15, -15 + random.random()*30)
+
+                velB1 = (-5.0 + random.random()*30.0) \
                     * (-1.0 if pos[0] > 0 else 1.0)
 
-                pos = (-15 + random.random()*30, 15, -15 + random.random()*30)
                 vel = (velB1, -4.0, 0)
 
                 bs.Bomb(
@@ -369,22 +366,6 @@ class MainMenuActivity(bs.Activity):
                     notSound=True).autoRetain()
 
                 bs.gameTimer(random.randint(120, 400), dropB)
-
-            def lightningBolt():
-                bs.shakeCamera(5)
-                bs.playSound(bs.getSound(random.choice(groms)))
-
-                light = bs.newNode('light', attrs={
-                    'position': (0, 10, 0),
-                    'color': (0.2, 0.2, 0.4),
-                    'volumeIntensityScale': 1.0,
-                    'radius': 10})
-
-                bs.animate(
-                    light, 'intensity',
-                    {0: 1, 50: 10, 150: 5, 250: 0, 260: 10, 410: 5, 510: 0})
-
-                bs.gameTimer(random.randint(5000, 40000), lightningBolt)
 
             def liteGrom():
                 bs.playSound(
@@ -398,11 +379,11 @@ class MainMenuActivity(bs.Activity):
             bs.gameTimer(random.randint(5000, 20000), liteGrom)
 
             def dropBGD():
-                velB2 = (-5.0 + random.random()*30.0)\
-                    * (-1.0 if pos[0] > 0 else 1.0)
-
                 pos = (-15 + (random.random()*30), 15,
                        -15 + (random.random()*30))
+
+                velB2 = (-5.0 + random.random()*30.0) \
+                    * (-1.0 if pos[0] > 0 else 1.0)
 
                 vel = (velB2, -120.0, random.uniform(-20, 20))
 
@@ -1086,12 +1067,12 @@ class MainMenuActivity(bs.Activity):
                 self.light7beam, 'color', 3,
                 {0: (0, 0, 0), 3000: lightsBeamColor})
 
-            vel1 = (-5.0 + random.random()*30.0)*(-1.0 if pos[0] > 0 else 1.0)
-
             def dropBGD():
                 pos = (-15+(random.random()*30),
                        15,
                        -15+(random.random()*30))
+
+                vel1 = (-5.0 + random.random()*30.0)*(-1.0 if pos[0] > 0 else 1.0)
 
                 vel = (vel1,
                        -50.0,

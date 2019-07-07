@@ -214,7 +214,6 @@ values = {
     'descriptionHighJump':'HighJump',
     'descriptionPortalBomb':'PortalBomb',
     'descriptionBot':'Bot',
-    'descriptionSnoballs':'Snoballs',
     'descriptionColorBomb':'PaintBomb',
     'nameScene1':'Scene 1 (Sparks)',
     'nameScene2':'Scene 2 (Bomb rain)',
@@ -299,7 +298,7 @@ values = {
     'chatMuteText':'Mute Chat',
     'chatUnMuteText':'Unmute Chat',
     'chatMutedText':'Chat Muted',
-    
+
     'pleaseWaitText':'Please wait...',
     'alreadySignedInText':('Your account is signed in from another device;\n'
                            'please switch accounts or close the game on your\n'
@@ -1400,43 +1399,43 @@ values = {
         'powerupCurseNameText':'Curse',
         'powerupHealthDescriptionText':('Restores you to full health.\n'
                                         'You\'d never have guessed.'),
-                                        
+
         'powerupShockwaveDescriptionText':('Shocks the enemies\nin a small radius.'),
         'powerupShockwaveNameText':'Electrobomb',
         'powerupLuckyBlockNameText':'LuckyBlock',
         'powerupLuckyBlockDescriptionText':('Contains 30 random effects\n'
                                             'Not always lucky :D\n'),
-                                            
+
         'powerupStickyForceNameText':'Sticky gift',
         'powerupStickyForceDescriptionText':('It makes the enemy soar\nwith pleasure!'),
-                                            
-                                            
+
+
         'powerupLegoNameText':'Lego',
         'powerupLegoDescriptionText':('The name tells for itself.'),
-                                            
+
         'powerupBlackHoleNameText':'Black Hole',
         'powerupBlackHoleDescriptionText':('Tearing the hapless\nplayers into pieces.'),
-                                            
+
         'powerupToxicNameText':'Toxic waste',
         'powerupToxicDescriptionText':('Creates an area in which players\nfall unconscious for 8 seconds.'),
-                                            
+
         'powerupDirtNameText':'Dirt',
         'powerupDirtDescriptionText':('Sticks to the players, preventing\nthem from living normally.'),
-                                            
+
         'powerupPoisonNameText':'Poison',
         'powerupPoisonDescriptionText':('Curses players in small area'),
-                                            
+
         'powerupSlipperNameText':'Mined slipper',
         'powerupSlipperDescriptionText':('One... Two... Three... THROW!!!'),
-                                            
-                                            
+
+
         'powerupArtilleryNameText':'Artillery',
-        'powerupArtilleryDescriptionText':('Throws several bombs into the air,\nwhich fall on the enemy.'),                       
-                                            
-                                            
-                                            
-                                            
-                                            
+        'powerupArtilleryDescriptionText':('Throws several bombs into the air,\nwhich fall on the enemy.'),
+
+
+
+
+
         'powerupExtraAcceleratorNameText':'Extra Accelerator',
         'powerupExtraAcceleratorDescriptionText':('Weighted cube, which,\n'
                                                   'contrary to logic,\n'
@@ -1461,11 +1460,11 @@ values = {
         'powerupShieldNameText':'Energy-Shield',
         'powerupStickyBombsDescriptionText':('Stick to anything they hit.\n'
                                              'Hilarity ensues.'),
-                                             
+
         'powerupStickyBombsNameText':'Sticky-Bombs',
         'powerupHealthBombNameText':'Healing bomb',
         'powerupHealthBombDescriptionText':('Incredibly original invention,\nown development.'),
-        
+
         'powerupBananaNameText':'Banana hell',
         'powerupBananaDescriptionText':('Fragment grenade\ndisguised as a banana.'),
         'powerupsSubtitleText':'Of course, no game is complete without powerups:',
@@ -1698,7 +1697,7 @@ values = {
                         'Some fashions from Mrmaxmeier - https://github.com/Mrmaxmeier\n'
                         '\n'
                         'We do not assign copyright to the resources used.\n'),
-                        
+
         'changeLogText' :('                                                    HISTORY OF UPDATES\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'Modpack version: 1.7.2 Beta 5\n'

@@ -1,4 +1,4 @@
-scenes = [13]
+scenes = [11]
 fair = False
 bolt = False
 badWords = False
@@ -13,7 +13,8 @@ theme = 'Default'
 
 def saveSettings():
     import bs
-    with open(bs.getEnvironment()['systemScriptsDirectory']+'/settings.py') as file:
+    with open(bs.getEnvironment()[
+            'systemScriptsDirectory']+'/settings.py') as file:
         s = [row for row in file]
         s[0] = 'scenes = ' + str(scenes) + '\n'
         s[1] = 'fair = ' + str(fair) + '\n'
