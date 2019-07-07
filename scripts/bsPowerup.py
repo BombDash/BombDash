@@ -161,6 +161,7 @@ class PowerupFactory(object):
         self.texBot = bs.getTexture('neoSpazIcon')
         self.texSno = bs.getTexture('bunnyColor')
         self.texBlessing = bs.getTexture('achievementFlawlessVictory')
+        self.texRailgun = bs.getTexture('powerupRailgun')
 
         self.healthPowerupSound = bs.getSound('healthPowerup')
         self.powerupSound = bs.getSound('powerup01')
@@ -312,8 +313,8 @@ class Powerup(bs.Actor):
             color = (0.2, 0.2, 1.0)
 
         elif powerupType == 'railgun':
-            tex = factory.texBlessing
-            color = (0.2, 0.2, 1.0)
+            tex = factory.texRailgun
+            color = (1, 0.2, 0.0)
 
         elif powerupType == 'iceBombs':
             tex = factory.texIceBombs
