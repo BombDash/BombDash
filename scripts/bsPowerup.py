@@ -312,7 +312,7 @@ class Powerup(bs.Actor):
 
         elif powerupType == 'railgun':
             tex = factory.texRailgun
-            color = (1, 0.2, 0.0)
+            color = (1, 0.4, 0.0)
 
         elif powerupType == 'iceBombs':
             tex = factory.texIceBombs
