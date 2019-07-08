@@ -1,3 +1,11 @@
+"""
+In this script there are majority of the classes BombDash.
+But nevertheless a smaller part of classes are in other scripts.
+
+And also this script may contain some functions, constants, etc.
+"""
+
+
 import math
 import random
 import urllib
@@ -5,6 +13,11 @@ import bs
 import bsUtils
 import bsVector
 import bsInternal
+
+
+BD_INTERNAL_URL = 'http://bombdash.net/other/BombSquad/server/server/' \
+    + 'internal.php'
+
 
 class PortalFactory(object):
 
@@ -24,13 +37,13 @@ class PortalFactory(object):
         self.legoMaterial = bs.Material()
         self.legoMaterial.addActions(
             conditions=(('theyHaveMaterial', self.legoMaterial)),
-            actions=('message', 'ourNode', 'atConnect', LegoConnect())
-            )
+            actions=('message', 'ourNode', 'atConnect', LegoConnect()))
 
         self.legoMaterial.addActions(
-            conditions=(('theyHaveMaterial', bs.getSharedObject('playerMaterial'))),
-            actions=('message', 'ourNode', 'atConnect', FuckFuckFuckFuckingLego())
-            )
+            conditions=(('theyHaveMaterial',
+                         bs.getSharedObject('playerMaterial'))),
+            actions=('message', 'ourNode', 'atConnect',
+                     LegoMessage()))
 
         self.impactBlastMaterial = bs.Material()
         self.impactBlastMaterial.addActions(
@@ -41,46 +54,44 @@ class PortalFactory(object):
                                  bs.getSharedObject('footingMaterial')),
                                 'or', ('theyHaveMaterial',
                                        bs.getSharedObject('objectMaterial')))),
-            actions=(('message', 'ourNode', 'atConnect', ImpactMessage()))
-            )
+            actions=(('message', 'ourNode', 'atConnect', ImpactMessage())))
+
 
 class SplatMessage(object):
     pass
 
+
 class ImpactMessage(object):
     pass
+
 
 class LegoConnect(object):
     pass
 
-class FuckFuckFuckFuckingLego(object):
+
+class LegoMessage(object):
     pass
+
 
 class BlackHoleMessage(object):
     pass
 
+
 class ParticlesCircle(object):
     pass
+
 
 class TurretImpactMessage(object):
     pass
 
+
 class dirtBombMessage(object):
     pass
+
 
 class FireMessage(object):
     pass
 
-def getUpim():
-    bsInternal._getForegroundHostActivity().players[0].actor.node.materials = \
-        bsInternal._getForegroundHostActivity().players[0].actor.node.materials + (bs.getSharedObject('upim'),)
-
-def siteAvailabilityCheck(url):
-    try:
-        urllib.request.urlopen(url)
-        return True
-    except:
-        return False
 
 class UltraPunch(bs.Actor):
 
@@ -114,15 +125,15 @@ class UltraPunch(bs.Actor):
             'color': (0.3, 0, 0),
             'radius': 0.1})
 
-        bsUtils.animate(self.visualRadius, 'radius',
-            {0: 0, speed: self.radius*2})
+        bs.animate(self.visualRadius, 'radius',
+                   {0: 0, speed: self.radius*2})
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0, 0, 0),
-            speed: (self.radius, self.radius, self.radius)}, True)
+        scale = {0: (0, 0, 0), speed: (self.radius, self.radius, self.radius)}
+        bs.animateArray(self.node, 'scale', 3, scale, True)
 
         bs.gameTimer(speed+1, self.node.delete)
         bs.gameTimer(speed+1, self.visualRadius.delete)
+
 
 class ShockWave(bs.Actor):
 
@@ -134,7 +145,8 @@ class ShockWave(bs.Actor):
 
         self.shockWaveMaterial = bs.Material()
         self.shockWaveMaterial.addActions(
-            conditions=(('theyHaveMaterial', bs.getSharedObject('playerMaterial'))),
+            conditions=(('theyHaveMaterial',
+                         bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
                      ('call', 'atConnect', self.touchedSpaz)))
@@ -162,20 +174,19 @@ class ShockWave(bs.Actor):
             'big': True,
             'color': (0.3, 0.3, 1.0)})
 
-        def dowaves():                   
+        def dowaves():
             self.visualRadius = bs.newNode('shield', attrs={
                 'position': self.position,
                 'color': (0.05, 0.05, 0.1),
                 'radius': 0.05})
 
-            bsUtils.animate(self.visualRadius, 'radius',
-                {0: 0, speed: self.radius*2})
+            bs.animate(self.visualRadius, 'radius',
+                       {0: 0, speed: self.radius*2})
 
             bs.gameTimer(speed+1, self.visualRadius.delete)
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0, 0, 0),
-            speed: (self.radius, self.radius, self.radius)}, True)
+        scale = {0: (0, 0, 0), speed: (self.radius, self.radius, self.radius)}
+        bs.animateArray(self.node, 'scale', 3, scale, True)
 
         bs.Blast(
             position=self.position,
@@ -196,6 +207,7 @@ class ShockWave(bs.Actor):
 
     def touchedSpaz(self):
         self.node2 = bs.getCollisionInfo('opposingNode')
+
         def shockSpaz():
             self.node2.getDelegate().shock()
 
@@ -206,11 +218,16 @@ class ShockWave(bs.Actor):
 
         bs.gameTimer(2000, bs.Call(self.re))
 
-        bs.playSound(bs.getSound(random.choice(['electro1', 'electro2', 'electro3'])))
+        bs.playSound(bs.getSound(random.choice(['electro1',
+                                                'electro2',
+                                                'electro3'])))
+
         self.node2.handleMessage(
-            'impulse', self.node2.position[0], self.node2.position[1], self.node2.position[2],
-            -self.node2.velocity[0], -self.node2.velocity[1], -self.node2.velocity[2],
-            200, 200, 0, 0, -self.node2.velocity[0], -self.node2.velocity[1], -self.node2.velocity[2])
+            'impulse', self.node2.position[0], self.node2.position[1],
+            self.node2.position[2], -self.node2.velocity[0],
+            -self.node2.velocity[1], -self.node2.velocity[2],
+            200, 200, 0, 0, -self.node2.velocity[0],
+            -self.node2.velocity[1], -self.node2.velocity[2])
 
         flash = bs.newNode('flash', attrs={
             'position': self.node2.position,
@@ -239,14 +256,20 @@ class ShockWave(bs.Actor):
 
     def touchedObj(self):
         node = bs.getCollisionInfo('opposingNode')
-        bs.playSound(bs.getSound(random.choice(['electro1', 'electro2', 'electro3'])))
+        bs.playSound(bs.getSound(random.choice(['electro1',
+                                                'electro2',
+                                                'electro3'])))
 
         node.handleMessage(
-            'impulse', node.position[0]+random.uniform(-2, 2), node.position[1]+random.uniform(-2, 2),
-            node.position[2]+random.uniform(-2 ,2), -node.velocity[0]+random.uniform(-2, 2),
-            -node.velocity[1]+random.uniform(-2, 2), -node.velocity[2]+random.uniform(-2, 2),
+            'impulse', node.position[0]+random.uniform(-2, 2),
+            node.position[1]+random.uniform(-2, 2),
+            node.position[2]+random.uniform(-2, 2),
+            -node.velocity[0]+random.uniform(-2, 2),
+            -node.velocity[1]+random.uniform(-2, 2),
+            -node.velocity[2]+random.uniform(-2, 2),
             100, 100, 0, 0, -node.velocity[0]+random.uniform(-2, 2),
-            -node.velocity[1]+random.uniform(-2, 2), -node.velocity[2]+random.uniform(-2, 2))
+            -node.velocity[1]+random.uniform(-2, 2),
+            -node.velocity[2]+random.uniform(-2, 2))
 
         try:
             flash = bs.newNode('flash', attrs={
@@ -259,7 +282,9 @@ class ShockWave(bs.Actor):
         try:
             explosion = bs.newNode('explosion', attrs={
                 'position': node.position,
-                'velocity': (node.velocity[0], max(-1.0, node.velocity[1]), node.velocity[2]),
+                'velocity': (node.velocity[0],
+                             max(-1.0, node.velocity[1]),
+                             node.velocity[2]),
                 'radius': 0.4,
                 'big': True,
                 'color': (0.3, 0.3, 1)})
@@ -280,6 +305,7 @@ class ShockWave(bs.Actor):
     def delete(self):
         self.node.delete()
         self.visualRadius.delete()
+
 
 class Apple(bs.Actor):
 
@@ -310,8 +336,9 @@ class Apple(bs.Actor):
             m.srcNode.handleMessage(
                 'impulse', m.pos[0], m.pos[1], m.pos[2],
                 m.velocity[0], m.velocity[1], m.velocity[2],
-                m.magnitude, m.velocityMagnitude, m.radius,0,
+                m.magnitude, m.velocityMagnitude, m.radius, 0,
                 m.velocity[0], m.velocity[1], m.velocity[2])
+
 
 class Napalm(bs.Actor):
 
@@ -332,13 +359,14 @@ class Napalm(bs.Actor):
 
         self.firem = bs.Material()
         self.firem.addActions(
-            conditions=(('theyHaveMaterial', bs.getSharedObject('playerMaterial'))),
+            conditions=(('theyHaveMaterial',
+                         bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
                      ('call', 'atConnect', self.touchedSpaz)))
 
         self.firem.addActions(
-            conditions=(('theyHaveMaterial', 
+            conditions=(('theyHaveMaterial',
                          bs.getSharedObject('objectMaterial')),
                         'and', ('theyDontHaveMaterial',
                                 bs.getSharedObject('playerMaterial'))),
@@ -352,8 +380,12 @@ class Napalm(bs.Actor):
             'type': 'sphere',
             'materials': [self.firem]})
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0, 0, 0), 100: (self.radius/2, self.radius/2, self.radius/2)}, True)
+        scale = {
+            0: (0, 0, 0),
+            100: (self.radius/2, self.radius/2, self.radius/2)
+        }
+
+        bs.animateArray(self.node, 'scale', 3, scale, True)
 
         self.fireLight = bs.newNode('light', attrs={
             'position': self.position,
@@ -362,18 +394,26 @@ class Napalm(bs.Actor):
             'intensity': 0.8,
             'radius': radius/5})
 
-        self.c2 = bs.animate(self.fireLight, 'intensity',
-            {0: random.uniform(0.8, 1.5), 100: random.uniform(0.8, 1.5),
-             200: random.uniform(0.8, 1.5), 300: random.uniform(0.8, 1.5),
-             400: random.uniform(0.8, 1.5), 500: random.uniform(0.8, 1.5),
-             600: random.uniform(0.8, 1.5), 700: random.uniform(0.8, 1.5),
-             800: random.uniform(0.8, 1.5), 900: random.uniform(0.8, 1.5),
-             1000: random.uniform(0.8, 1.5), 1100: random.uniform(0.8, 1.5),
-             1200: random.uniform(0.8, 1.5), 1300: random.uniform(0.8, 1.5)}, True)
+        intensity = {
+            0: random.uniform(0.8, 1.5), 100: random.uniform(0.8, 1.5),
+            200: random.uniform(0.8, 1.5), 300: random.uniform(0.8, 1.5),
+            400: random.uniform(0.8, 1.5), 500: random.uniform(0.8, 1.5),
+            600: random.uniform(0.8, 1.5), 700: random.uniform(0.8, 1.5),
+            800: random.uniform(0.8, 1.5), 900: random.uniform(0.8, 1.5),
+            1000: random.uniform(0.8, 1.5), 1100: random.uniform(0.8, 1.5),
+            1200: random.uniform(0.8, 1.5), 1300: random.uniform(0.8, 1.5)
+        }
 
-        self.c3 = bs.animateArray(self.fireLight, 'color', 3,
-            {0: (1, 0.4, 0), 100: (1, 0.3, 0), 200: (1, 0.6, 0), 300: (1, 0.5, 0),
-            400: (1, 0.2, 0), 500: (1, 0.4, 0), 600: (1, 0.3, 0)}, True)
+        self.c2 = bs.animate(self.fireLight, 'intensity', intensity, True)
+
+        color = {
+            0: (1, 0.4, 0), 100: (1, 0.3, 0),
+            200: (1, 0.6, 0), 300: (1, 0.5, 0),
+            400: (1, 0.2, 0), 500: (1, 0.4, 0),
+            600: (1, 0.3, 0)
+        }
+
+        self.c3 = bs.animateArray(self.fireLight, 'color', 3, color, True)
 
         self.scorch = bs.newNode('scorch', attrs={
             'position': self.position,
@@ -398,9 +438,9 @@ class Napalm(bs.Actor):
                 pass
 
     def spawnSmoke(self, pos):
-        pos = (pos[0]+random.uniform(-self.radius/2, self.radius/2),
+        pos = (pos[0] + random.uniform(-self.radius/2, self.radius/2),
                pos[1]+0.2,
-               pos[2]+random.uniform(-self.radius/2, self.radius/2))
+               pos[2] + random.uniform(-self.radius/2, self.radius/2))
 
         bs.emitBGDynamics(
             position=pos,
@@ -426,7 +466,7 @@ class Napalm(bs.Actor):
             bs.emitBGDynamics(
                 position=pos,
                 velocity=(0, 7, 0),
-                count=int(10+random.random()*8),
+                count=int(10 + random.random()*8),
                 scale=random.random()*0.4,
                 spread=random.random()*0.2,
                 chunkType='spark')
@@ -434,7 +474,7 @@ class Napalm(bs.Actor):
             bs.emitBGDynamics(
                 position=pos,
                 velocity=(0, 7, 0),
-                count=int(5+random.random()*5),
+                count=int(5 + random.random()*5),
                 scale=random.random()*2,
                 spread=random.random()*0.2,
                 chunkType='sweat')
@@ -445,23 +485,24 @@ class Napalm(bs.Actor):
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
             self.stop = True
-            if self.c2 is not None: 
+            if self.c2 is not None:
                 self.c2.delete()
 
-            if self.c3 is not None: 
+            if self.c3 is not None:
                 self.c3.delete()
 
-            #self.c4.delete()
-            if self.node is not None and self.node.exists(): 
+            # self.c4.delete()
+            if self.node is not None and self.node.exists():
                 self.node.delete()
 
-            if self.fireLight is not None and self.fireLight.exists(): 
+            if self.fireLight is not None and self.fireLight.exists():
                 self.fireLight.delete()
 
-            bsUtils.animate(self.scorch, 'presence',
-                {0: self.scorch.presence, 8000: 0})
+            bs.animate(self.scorch, 'presence',
+                       {0: self.scorch.presence, 8000: 0})
 
             bs.gameTimer(8001, self.scorch.delete)
+
 
 class Shovel(bs.Actor):
 
@@ -501,6 +542,7 @@ class Shovel(bs.Actor):
                 m.velocity[0], m.velocity[1], m.velocity[2],
                 m.magnitude, m.velocityMagnitude, m.radius,
                 0, m.velocity[0], m.velocity[1], m.velocity[2])
+
 
 class Nuke(bs.Actor):
 
@@ -568,6 +610,7 @@ class Nuke(bs.Actor):
                 m.magnitude, m.velocityMagnitude, m.radius,
                 0, m.velocity[0], m.velocity[1], m.velocity[2])
 
+
 class babyNuke(bs.Actor):
 
     def __init__(self, position=(0, 10, 0), velocity=(0, 0, 0)):
@@ -609,13 +652,14 @@ class babyNuke(bs.Actor):
             if self.node.exists():
                 self.node.delete()
 
-        elif isinstance(m,bs.OutOfBoundsMessage):
+        elif isinstance(m, bs.OutOfBoundsMessage):
             self.node.handleMessage(bs.DieMessage())
 
         elif isinstance(m, ImpactMessage):
             bs.Blast(
                 position=self.node.position,
                 blastType='impact').autoRetain()
+
             bs.playSound(bs.getSound('bomb2'))
             self.node.handleMessage(bs.DieMessage())
 
@@ -623,27 +667,43 @@ class babyNuke(bs.Actor):
             m.srcNode.handleMessage(
                 'impulse', m.pos[0], m.pos[1], m.pos[2],
                 m.velocity[0], m.velocity[1], m.velocity[2],
-                m.magnitude, m.velocityMagnitude, m.radius,0,
+                m.magnitude, m.velocityMagnitude, m.radius, 0,
                 m.velocity[0], m.velocity[1], m.velocity[2])
+
 
 class Number(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), num=0, velocity=(0, 0, 0)):
         bs.Actor.__init__(self)
 
-        self.node = bs.newNode('prop', delegate=self, attrs={
-            'position': position,
-            'model': bs.getModel('one') if num == 1 else bs.getModel('zero'),
-            'lightModel': bs.getModel('one') if num == 1 else bs.getModel('zero'),
-            'body': 'box',
-            'velocity': velocity,
-            'modelScale': 0.8,
-            'bodyScale': 0.5,
-            'shadowSize': 0.5,
-            'reflection': 'soft',
-            'colorTexture': bs.getTexture('greenTerminal'),
-            'materials': (bs.getSharedObject('footingMaterial'),
-                          bs.getSharedObject('objectMaterial'))})
+        if num == 1:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'model': bs.getModel('one'),
+                'lightModel': bs.getModel('one'),
+                'body': 'box',
+                'velocity': velocity,
+                'modelScale': 0.8,
+                'bodyScale': 0.5,
+                'shadowSize': 0.5,
+                'reflection': 'soft',
+                'colorTexture': bs.getTexture('greenTerminal'),
+                'materials': (bs.getSharedObject('footingMaterial'),
+                              bs.getSharedObject('objectMaterial'))})
+        else:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'model': bs.getModel('zero'),
+                'lightModel': bs.getModel('zero'),
+                'body': 'box',
+                'velocity': velocity,
+                'modelScale': 0.8,
+                'bodyScale': 0.5,
+                'shadowSize': 0.5,
+                'reflection': 'soft',
+                'colorTexture': bs.getTexture('greenTerminal'),
+                'materials': (bs.getSharedObject('footingMaterial'),
+                              bs.getSharedObject('objectMaterial'))})
 
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
@@ -657,25 +717,27 @@ class Number(bs.Actor):
             m.srcNode.handleMessage(
                 'impulse', m.pos[0], m.pos[1], m.pos[2],
                 m.velocity[0], m.velocity[1], m.velocity[2],
-                m.magnitude, m.velocityMagnitude, m.radius,0,
-                m.velocity[0], m.velocity[1], m.velocity[2])  
+                m.magnitude, m.velocityMagnitude, m.radius, 0,
+                m.velocity[0], m.velocity[1], m.velocity[2])
+
 
 class Artillery(object):
 
-    def __init__(self, position=(0,1,0), target=None,
+    def __init__(self, position=(0, 1, 0), target=None,
                  owner=None, bombType='impact', sourcePlayer=None):
-
         self.position = position
         self.owner = owner
         self.target = target
         self.bombType = bombType
         self.sourcePlayer = sourcePlayer
         self.radius = 60
-        self.maxHeight = bs.getActivity().getMap().getDefBoundBox('levelBounds')
+        self.maxHeight = bs.getActivity().getMap().getDefBoundBox(
+            'levelBounds')
 
         self.aimZone = bs.Material()
         self.aimZone.addActions(
-            conditions=(('theyHaveMaterial', bs.getSharedObject('playerMaterial'))),
+            conditions=(('theyHaveMaterial',
+                         bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
                      ('call', 'atConnect', self.touchedSpaz)))
@@ -686,8 +748,12 @@ class Artillery(object):
             'type': 'sphere',
             'materials': [self.aimZone]})
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0.5, 0.5, 0.5), 100: (self.radius, self.radius, self.radius)})
+        scale = {
+            0: (0.5, 0.5, 0.5),
+            100: (self.radius, self.radius, self.radius)
+        }
+
+        bs.animateArray(self.node, 'scale', 3, scale)
 
         bs.gameTimer(101, self.node.delete)
         bs.gameTimer(102, self.strike)
@@ -712,9 +778,10 @@ class Artillery(object):
                         napalm=True).autoRetain()
 
                     b.node.extraAcceleration = (0, 700, 0)
-                    b.node.velocity = (b.node.velocity[0]+(self.pos[0]-b.node.position[0]),
-                                       10,
-                                       b.node.velocity[2]+(self.pos[2]-b.node.position[2]))
+                    b.node.velocity = (
+                        b.node.velocity[0]+(self.pos[0]-b.node.position[0]),
+                        10,
+                        b.node.velocity[2]+(self.pos[2]-b.node.position[2]))
 
                     bs.playSound(bs.getSound('Aim'))
 
@@ -730,7 +797,7 @@ class Artillery(object):
         def launchBombDrop():
             bs.playSound(bs.getSound('Aim'))
             b = bs.Bomb(
-                position=(self.pos[0]+(-2+random.random()*4), 
+                position=(self.pos[0]+(-2+random.random()*4),
                           self.maxHeight[4],
                           self.pos[2]+(-2+random.random()*4)),
                 velocity=(0, -100, 0),
@@ -746,11 +813,11 @@ class Artillery(object):
         bs.gameTimer(900, bs.Call(launchBombDrop))
         bs.gameTimer(1000, bs.Call(launchBombDrop))
 
+
 class Cannon(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), velocity=(0, 0, 0), angle=0,
                  haveCharge=False, owner=None, sourcePlayer=None):
-
         bs.Actor.__init__(self)
         self.haveCharge = haveCharge
         self.bombType = None
@@ -766,7 +833,7 @@ class Cannon(bs.Actor):
         self.cannonMaterial = bs.Material()
         self.cannonMaterial.addActions(
             conditions=(('theyHaveMaterial',
-                          bs.getSharedObject('objectMaterial'))),
+                         bs.getSharedObject('objectMaterial'))),
             actions=(('call', 'atConnect', self.Charged)))
 
         self.node = bs.newNode('prop', delegate=self, attrs={
@@ -802,15 +869,16 @@ class Cannon(bs.Actor):
             if m.node.getNodeType() == 'spaz':
                 self.areaOfInterestRadius = m.node.areaOfInterestRadius
                 m.node.areaOfInterestRadius = 13
+
                 def off():
                     m.node.areaOfInterestRadius = self.areaOfInterestRadius
 
                 bs.gameTimer(1000, bs.Call(off))
 
-            if self.bombCount == True and not self.ShotsHaveDone == 3:
+            if self.bombCount and not self.ShotsHaveDone == 3:
                 self.shot()
 
-            elif self.ShotsHaveDone == 3 or self.bombCount == False:
+            elif self.ShotsHaveDone == 3 or not self.bombCount:
                 bsUtils.PopupText(
                     bs.Lstr(resource='cannonNotCharged'),
                     color=(1, 0, 0),
@@ -820,7 +888,7 @@ class Cannon(bs.Actor):
                 bs.gameTimer(2000, bs.Call(self.explode))
 
     def Charged(self):
-        if self.bombCount == False:
+        if not self.bombCount:
             node = bs.getCollisionInfo('opposingNode')
             if isinstance(node.getDelegate(), bs.Bomb):
                 self.bombType = node.getDelegate().bombType
@@ -878,7 +946,7 @@ class Cannon(bs.Actor):
                 position=(self.node.position[0],
                           self.node.position[1],
                           self.node.position[2]),
-                velocity=(self.vel[0],6,self.vel[2]),
+                velocity=(self.vel[0], 6, self.vel[2]),
                 modelSize=0.5,
                 bombType=self.bombType).autoRetain()
 
@@ -902,6 +970,7 @@ class Cannon(bs.Actor):
         bs.gameTimer(1000, bs.Call(boom))
         self.bombCount = False
 
+
 class RailBullet(bs.Actor):
 
     def __init__(self, position=(0, 10, 0), velocity=(0, 0, 0)):
@@ -919,7 +988,7 @@ class RailBullet(bs.Actor):
                                        bs.getSharedObject('objectMaterial')))),
             actions=(('message', 'ourNode', 'atConnect', ImpactMessage()))
             )
-        
+
         self.node = bs.newNode('prop', delegate=self, attrs={
             'position': self.position,
             'velocity': self.velocity,
@@ -930,8 +999,7 @@ class RailBullet(bs.Actor):
             'colorTexture': bs.getTexture('black'),
             'materials': (bs.getSharedObject('footingMaterial'),
                           bs.getSharedObject('objectMaterial'),
-                          self.impactBlastMaterial)}
-            )
+                          self.impactBlastMaterial)})
 
         def emitter():
             self._emit = bs.Timer(10, bs.WeakCall(self.emit), repeat=True)
@@ -944,8 +1012,7 @@ class RailBullet(bs.Actor):
             blastType='rail',
             blastRadius=1,
             notScorch=True,
-            notShake=True
-            ).autoRetain()    
+            notShake=True).autoRetain()
 
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
@@ -961,8 +1028,7 @@ class RailBullet(bs.Actor):
         elif isinstance(m, ImpactMessage):
             bs.Blast(
                 position=self.node.position,
-                blastType='impact'
-                ).autoRetain()
+                blastType='impact').autoRetain()
 
             self.node.handleMessage(bs.DieMessage())
 
@@ -981,11 +1047,11 @@ class RailBullet(bs.Actor):
             position=(self.node.position[0],
                       self.node.position[1]-0.4,
                       self.node.position[2]),
-            velocity=(self.vel[0], 0, self.vel[2])
-            ).autoRetain()
+            velocity=(self.vel[0], 0, self.vel[2])).autoRetain()
 
         b.node.modelScale = 0.05
         b.node.extraAcceleration = (self.vel[0]*900, -1000, self.vel[2]*900)
+
 
 class MagicSpell(bs.Actor):
 
@@ -1006,6 +1072,7 @@ class MagicSpell(bs.Actor):
         self.maxR = 0.2
         self.revers = False
         self.off = False
+
         self.impactBlastMaterial = bs.Material()
         self.impactBlastMaterial.addActions(
             conditions=(('weAreOlderThan', 200),
@@ -1015,8 +1082,7 @@ class MagicSpell(bs.Actor):
                                  bs.getSharedObject('footingMaterial')),
                                 'or', ('theyHaveMaterial',
                                        bs.getSharedObject('objectMaterial')))),
-            actions=(('message', 'ourNode', 'atConnect', ImpactMessage()))
-            )
+            actions=(('message', 'ourNode', 'atConnect', ImpactMessage())))
 
         self.node = bs.newNode('prop', delegate=self, attrs={
             'position': self.position,
@@ -1033,19 +1099,19 @@ class MagicSpell(bs.Actor):
             'colorTexture': bs.getTexture('lava'),
             'materials': (bs.getSharedObject('footingMaterial'),
                           bs.getSharedObject('objectMaterial'),
-                          self.impactBlastMaterial)}
-            )
+                          self.impactBlastMaterial)})
 
         self.lightNode = bs.newNode('light', attrs={
             'position': self.position,
             'color': (1, 0.8, 0),
             'radius': 0.1,
-            'volumeIntensityScale': 15.0}
-            )
+            'volumeIntensityScale': 15.0})
 
         self.node.connectAttr('position', self.lightNode, 'position')
         self._emit = bs.Timer(15, bs.WeakCall(self.emit), repeat=True)
-        self._emit1 = bs.Timer(35, bs.WeakCall(self.spawnParticles), repeat=True)
+        self._emit1 = bs.Timer(35, bs.WeakCall(self.spawnParticles),
+                               repeat=True)
+
         self.aim = AutoAim(self.node, self.owner)
 
         bs.playSound(bs.getSound('spell'))
@@ -1085,6 +1151,7 @@ class MagicSpell(bs.Actor):
         if node is not None:
             if isinstance(node.getDelegate(), bs.Spaz):
                 self.node.handleMessage(bs.DieMessage())
+
                 def setSpeed(val):
                     if node.exists():
                         setattr(node, 'hockey', val)
@@ -1095,22 +1162,13 @@ class MagicSpell(bs.Actor):
                     'color': (random.random()*20,
                               random.random()*20,
                               random.random()*20),
-                    'size': 0.4}
-                    )
+                    'size': 0.4})
 
-                bs.animate(
-                    self.shield,
-                    'size',
-                    {0: 1, 760: 0.4, 1520:1},
-                    loop=True
-                    )
+                bs.animate(self.shield, 'size',
+                           {0: 1, 760: 0.4, 1520: 1}, loop=True)
 
-                bs.animate(
-                    self.shield,
-                    'presence',
-                    {0: 1, 260: 0.4, 520:1},
-                    loop=True
-                    )
+                bs.animate(self.shield, 'presence',
+                           {0: 1, 260: 0.4, 520: 1}, loop=True)
 
                 node.connectAttr('positionCenter', self.shield, 'position')
 
@@ -1118,22 +1176,15 @@ class MagicSpell(bs.Actor):
                     'color': (random.random()*20,
                               random.random()*20,
                               random.random()*20),
-                    'size': 0.4}
-                    )
+                    'size': 0.4})
 
-                bs.animate(
-                    self.shield1,
-                    'size',
-                    {0: 0.7, 380: 0.4, 760: 0.7, 1440:1, 1520: 0.7},
-                    loop=True
-                    )
+                bs.animate(self.shield1, 'size',
+                           {0: 0.7, 380: 0.4, 760: 0.7, 1440: 1, 1520: 0.7},
+                           loop=True)
 
-                bs.animate(
-                    self.shield1,
-                    'presence',
-                    {0: 0.7, 130: 0.4, 260: 0.7, 390:1, 520: 0.7},
-                    loop=True
-                    )
+                bs.animate(self.shield1, 'presence',
+                           {0: 0.7, 130: 0.4, 260: 0.7, 390: 1, 520: 0.7},
+                           loop=True)
 
                 node.connectAttr('positionCenter', self.shield1, 'position')
 
@@ -1141,26 +1192,21 @@ class MagicSpell(bs.Actor):
                     'color': (random.random()*20,
                               random.random()*20,
                               random.random()*20),
-                    'size': 0.4}
-                    )
+                    'size': 0.4})
 
-                bs.animate(
-                    self.shield2,
-                    'size',
-                    {0: 0.4, 380: 0.7, 760: 1, 1440: 0.7, 1520: 0.4},
-                    loop=True
-                    )
+                bs.animate(self.shield2, 'size',
+                           {0: 0.4, 380: 0.7, 760: 1, 1440: 0.7, 1520: 0.4},
+                           loop=True)
 
-                bs.animate(self.shield2, 
-                    'presence',
-                    {0: 0.4, 130: 0.7, 260: 1, 390: 0.7, 520: 0.4},
-                    loop=True
-                    )
+                bs.animate(self.shield2, 'presence',
+                           {0: 0.4, 130: 0.7, 260: 1, 390: 0.7, 520: 0.4},
+                           loop=True)
 
                 node.connectAttr('positionCenter', self.shield2, 'position')
 
                 def onJumpPressSpec():
-                    if not node.exists(): return
+                    if not node.exists():
+                        return
 
                     t = bs.getGameTime()
                     if t - self.lastJumpTime >= self._jumpCooldown \
@@ -1170,17 +1216,21 @@ class MagicSpell(bs.Actor):
                         self.lastJumpTime = t
                         self._jumpCooldown = 750
                         node.handleMessage(
-                            'impulse', node.position[0], node.position[1], node.position[2], 
-                            0, 0, 0, 200, 200, 0, 0, 0, 1, 0)
+                            'impulse', node.position[0], node.position[1],
+                            node.position[2], 0, 0, 0, 200, 200, 0, 0, 0, 1, 0)
 
-                node.getDelegate().getPlayer().assignInputCall('jumpPress', onJumpPressSpec)
+                node.getDelegate().getPlayer().assignInputCall(
+                    'jumpPress', onJumpPressSpec)
+
                 if node is not None and node.exists():
                     node.getDelegate().superHealth(True)
 
                 def spazEmit():
                     try:
                         bs.emitBGDynamics(
-                            position=(node.position[0], node.position[1]-0.3, node.position[2]),
+                            position=(node.position[0],
+                                      node.position[1]-0.3,
+                                      node.position[2]),
                             velocity=node.velocity,
                             count=15,
                             scale=0.4,
@@ -1208,7 +1258,7 @@ class MagicSpell(bs.Actor):
                         except:
                             pass
 
-                bs.gameTimer(15000, bs.Call(offAllEffects))  
+                bs.gameTimer(15000, bs.Call(offAllEffects))
 
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
@@ -1231,9 +1281,11 @@ class MagicSpell(bs.Actor):
         elif isinstance(m, bs.HitMessage):
             pass
 
+
 class DirtRain(object):
+
     def __init__(self):
-        x = -10 
+        x = -10
         while x < 10:
             z = -10
             x += 1
@@ -1247,12 +1299,12 @@ class DirtRain(object):
                               random.random(),
                               random.random())).autoRetain()
 
+
 class Portal(bs.Actor):
 
     def __init__(self, position1=(0, 1, 0), position2=(3, 1, 0),
                  color=(random.random(), random.random(), random.random()),
                  isBomb=False):
-
         bs.Actor.__init__(self)
         self.radius = 1.1
         self.position1 = position1
@@ -1288,14 +1340,16 @@ class Portal(bs.Actor):
         self.portal2Material.addActions(
             conditions=(('theyHaveMaterial',
                          bs.getSharedObject('objectMaterial')),
-                        'and',('theyDontHaveMaterial',
-                               bs.getSharedObject('playerMaterial'))),
+                        'and', ('theyDontHaveMaterial',
+                                bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
                      ('call', 'atConnect', self.objPortal2)))
 
         self.node1 = bs.newNode('region', attrs={
-            'position': (self.position1[0], self.position1[1], self.position1[2]),
+            'position': (self.position1[0],
+                         self.position1[1],
+                         self.position1[2]),
             'scale': (0.1, 0.1, 0.1),
             'type': 'sphere',
             'materials': [self.portal1Material]})
@@ -1305,14 +1359,18 @@ class Portal(bs.Actor):
             'color': color,
             'radius': 0.1})
 
-        bsUtils.animate(self.visualRadius1, 'radius',
-            {0: 0, 500: self.radius*2})
+        scale = {
+            0: (0, 0, 0),
+            500: (self.radius, self.radius, self.radius)
+        }
 
-        bsUtils.animateArray(self.node1, 'scale', 3,
-            {0: (0, 0, 0), 500: (self.radius, self.radius, self.radius)})
+        bs.animate(self.visualRadius1, 'radius', {0: 0, 500: self.radius*2})
+        bs.animateArray(self.node1, 'scale', 3, scale)
 
         self.node2 = bs.newNode('region', attrs={
-            'position': (self.position2[0], self.position2[1], self.position2[2]),
+            'position': (self.position2[0],
+                         self.position2[1],
+                         self.position2[2]),
             'scale': (0.1, 0.1, 0.1),
             'type': 'sphere',
             'materials': [self.portal2Material]})
@@ -1322,11 +1380,13 @@ class Portal(bs.Actor):
             'color': color,
             'radius': 0.1})
 
-        bsUtils.animate(self.visualRadius2, 'radius',
-            {0: 0, 500: self.radius*2})
+        scale = {
+            0: (0, 0, 0),
+            500: (self.radius, self.radius, self.radius)
+        }
 
-        bsUtils.animateArray(self.node2, 'scale', 3,
-            {0: (0, 0, 0), 500: (self.radius, self.radius, self.radius)})
+        bs.animate(self.visualRadius2, 'radius', {0: 0, 500: self.radius*2})
+        bs.animateArray(self.node2, 'scale', 3, scale)
 
         if isBomb:
             bs.gameTimer(10000, self.node1.delete)
@@ -1336,6 +1396,7 @@ class Portal(bs.Actor):
 
     def cooldown1(self, unique=False):
         self.cooldown = True
+
         def off():
             self.cooldown = False
 
@@ -1346,10 +1407,11 @@ class Portal(bs.Actor):
 
     def Portal1(self):
         node = bs.getCollisionInfo('opposingNode')
+
         def cooldown():
             self.alreadyTeleported = False
 
-        if self.alreadyTeleported == False:
+        if not self.alreadyTeleported:
             node.handleMessage(bs.StandMessage(
                 position=self.node2.position))
 
@@ -1358,10 +1420,11 @@ class Portal(bs.Actor):
 
     def Portal2(self):
         node = bs.getCollisionInfo('opposingNode')
+
         def cooldown():
             self.alreadyTeleported = False
 
-        if self.alreadyTeleported == False:
+        if not self.alreadyTeleported:
             node.handleMessage(bs.StandMessage(
                 position=self.node1.position))
 
@@ -1380,7 +1443,7 @@ class Portal(bs.Actor):
         else:
             a = None
 
-        if a is not None and not node in a and node.exists():
+        if a is not None and node not in a and node.exists():
             v = node.velocity
             if not self.cooldown and node.getNodeType() == 'spaz':
                 node.position = self.position2
@@ -1407,7 +1470,7 @@ class Portal(bs.Actor):
         else:
             a = None
 
-        if a is not None and not node in a and node.exists():
+        if a is not None and node not in a and node.exists():
             v = node.velocity
             if not self.cooldown and node.getNodeType() == 'spaz':
                 node.position = self.position1
@@ -1422,6 +1485,7 @@ class Portal(bs.Actor):
 
             bs.gameTimer(10, vel)
 
+
 class Toxic(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), radius=2.5, time=8000):
@@ -1434,36 +1498,42 @@ class Toxic(bs.Actor):
             conditions=(('theyHaveMaterial',
                          bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
-                    ('modifyPartCollision', 'physical', False),
-                    ('call', 'atConnect', self.touchedSpaz)))
+                     ('modifyPartCollision', 'physical', False),
+                     ('call', 'atConnect', self.touchedSpaz)))
 
         self.node = bs.newNode('region', attrs={
-            'position': (self.position[0], self.position[1], self.position[2]),
+            'position': (self.position[0],
+                         self.position[1],
+                         self.position[2]),
             'scale': (0.1, 0.1, 0.1),
             'type': 'sphere',
             'materials': [self.poisonMaterial]})
-                              
+
         self.visualRadius = bs.newNode('shield', attrs={
             'position': self.position,
             'color': (0.3, 1.2, 0.3),
             'radius': 0.1})
 
-        bsUtils.animate(self.visualRadius, 'radius',
-            {0: 0, 500: self.radius*2})
+        scale = {
+            0: (0, 0, 0),
+            500: (self.radius, self.radius, self.radius)
+        }
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0, 0, 0), 500: (self.radius, self.radius, self.radius)}, True)
+        bs.animate(self.visualRadius, 'radius', {0: 0, 500: self.radius*2})
+        bs.animateArray(self.node, 'scale', 3, scale, True)
 
         bs.gameTimer(7700, bs.WeakCall(self.anim))
         bs.gameTimer(time, self.node.delete)
         bs.gameTimer(time, self.visualRadius.delete)
 
     def anim(self):
-        bsUtils.animate(self.visualRadius, 'radius',
-            {0: self.radius*2, 200: 0})
+        scale = {
+            0: (self.radius, self.radius, self.radius),
+            200: (0, 0, 0)
+        }
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (self.radius, self.radius, self.radius), 200: (0, 0, 0)})
+        bs.animate(self.visualRadius, 'radius', {0: self.radius*2, 200: 0})
+        bs.animateArray(self.node, 'scale', 3, scale)
 
     def touchedSpaz(self):
         node = bs.getCollisionInfo('opposingNode')
@@ -1472,6 +1542,7 @@ class Toxic(bs.Actor):
     def delete(self):
         self.node.delete()
         self.visualRadius.delete()
+
 
 class Poison(bs.Actor):
 
@@ -1503,12 +1574,14 @@ class Poison(bs.Actor):
             'color': (0.3, 0.3, 0),
             'radius': 0.1})
 
-        bsUtils.animate(self.visualRadius, 'radius',
-            {0: 0, 200: self.radius*2, 400: 0})
+        radius = {0: 0, 200: self.radius*2, 400: 0}
+        scale = {
+            0: (0, 0, 0), 200: (self.radius, self.radius, self.radius),
+            400: (0, 0, 0)
+        }
 
-        bsUtils.animateArray(self.node, 'scale', 3,
-            {0: (0, 0, 0), 200: (self.radius, self.radius, self.radius),
-            400: (0, 0, 0)})
+        bs.animate(self.visualRadius, 'radius', radius)
+        bs.animateArray(self.node, 'scale', 3, scale)
 
         bs.gameTimer(250, self.node.delete)
         bs.gameTimer(250, self.visualRadius.delete)
@@ -1526,17 +1599,20 @@ class Poison(bs.Actor):
         self.node.delete()
         self.visualRadius.delete()
 
+
 class BlackHole(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), autoExpand=True, scale=1,
                  doNotRandomize=False, infinity=False, owner=None):
-
         bs.Actor.__init__(self)
         self.shields = []
-        self.position = (position[0]-2+random.random()*4,
-                         position[1]+random.random()*2,
-                         position[2]-2+random.random()*4) \
-                         if not doNotRandomize else position
+        if not doNotRandomize:
+            self.position = (position[0] - 2 + random.random()*4,
+                             position[1] + random.random()*2,
+                             position[2] - 2 + random.random()*4)
+        else:
+            self.position = position
+
         self.scale = scale
         self.suckObjects = []
         self.owner = owner
@@ -1545,8 +1621,8 @@ class BlackHole(bs.Actor):
         self.blackHoleMaterial.addActions(
             conditions=(('theyDontHaveMaterial',
                          bs.getSharedObject('objectMaterial')),
-                        'and',('theyHaveMaterial',
-                               bs.getSharedObject('playerMaterial'))),
+                        'and', ('theyHaveMaterial',
+                                bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
                      ('call', 'atConnect', self.touchedSpaz)))
@@ -1565,21 +1641,17 @@ class BlackHole(bs.Actor):
             conditions=(('theyHaveMaterial',
                          bs.getSharedObject('objectMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
-                    ('modifyPartCollision', 'physical', False),
-                    ('call', 'atConnect', self.touchedObjSuck)))
+                     ('modifyPartCollision', 'physical', False),
+                     ('call', 'atConnect', self.touchedObjSuck)))
 
         self.node = bs.newNode('region', attrs={
-            'position': (self.position[0],
-                         self.position[1],
-                         self.position[2]),
+            'position': (self.position[0], self.position[1], self.position[2]),
             'scale': (scale, scale, scale),
             'type': 'sphere',
             'materials': [self.blackHoleMaterial]})
 
         self.suckRadius = bs.newNode('region', attrs={
-            'position': (self.position[0],
-                         self.position[1],
-                         self.position[2]),
+            'position': (self.position[0], self.position[1], self.position[2]),
             'scale': (scale, scale, scale),
             'type': 'sphere',
             'materials': [self.suckMaterial]})
@@ -1598,11 +1670,18 @@ class BlackHole(bs.Actor):
         if not infinity:
             self._dieTimer = bs.Timer(25000, bs.WeakCall(self.explode))
 
-        bsUtils.animateArray(self.node, 'scale', 3, 
-            {0: (0, 0, 0), 300: (self.scale, self.scale, self.scale)}, True)
+        scale1 = {
+            0: (0, 0, 0),
+            300: (self.scale, self.scale, self.scale)
+        }
 
-        bsUtils.animateArray(self.suckRadius, 'scale' ,3, 
-            {0: (0, 0, 0), 300: (self.scale*8, self.scale*8, self.scale*8)}, True)
+        scale2 = {
+            0: (0, 0, 0),
+            300: (self.scale*8, self.scale*8, self.scale*8)
+        }
+
+        bs.animateArray(self.node, 'scale', 3, scale1, True)
+        bs.animateArray(self.suckRadius, 'scale', 3, scale2, True)
 
         for i in range(20):
             self.shields.append(
@@ -1641,14 +1720,14 @@ class BlackHole(bs.Actor):
             chunkType='spark')
 
         for i in self.shields:
-            bsUtils.animate(i, 'radius',
-                {0:0,200:i.radius*5})
+            bs.animate(i, 'radius',
+                       {0: 0, 200: i.radius*5})
 
         bs.Blast(
             position=self.position,
             blastRadius=10).autoRetain()
 
-        for i in self.shields: 
+        for i in self.shields:
             i.delete()
 
         self.node.delete()
@@ -1700,9 +1779,10 @@ class BlackHole(bs.Actor):
                     i.sticky = False
                     i.extraAcceleration = (0, 10, 0)
                 else:
-                    i.extraAcceleration = ((self.position[0]-i.position[0])*8,
-                                           (self.position[1]-i.position[1])*25,
-                                           (self.position[2]-i.position[2])*8)
+                    i.extraAcceleration = (
+                        (self.position[0] - i.position[0])*8,
+                        (self.position[1] - i.position[1])*25,
+                        (self.position[2] - i.position[2])*8)
 
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
@@ -1729,28 +1809,38 @@ class BlackHole(bs.Actor):
             if not node.invincible:
                 node.shattered = 2
 
+
 class Lego(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), num=int(random.random()*3),
                  colorNum=int(random.random()*3), velocity=(0, 0, 0)):
-
-        #i am too lazy, to use factory
         factory = self.getFactory()
         bs.Actor.__init__(self)
 
+        if num == 1:
+            model = bs.getModel('lego1')
+        elif num == 2:
+            model = bs.getModel('lego2')
+        else:
+            model = bs.getModel('lego3')
+
+        if colorNum == 1:
+            colorTexture = bs.getTexture('yellow')
+        elif colorNum == 2:
+            colorTexture = bs.getTexture('blue')
+        else:
+            colorTexture = bs.getTexture('red')
+
         self.node = bs.newNode('prop', delegate=self, attrs={
-            'position':position,
-            'model': bs.getModel('lego1') if num == 1 else bs.getModel('lego2') \
-                if num == 2 else bs.getModel('lego3'),
-            'lightModel': bs.getModel('lego1') if num == 1 else bs.getModel('lego2') \
-                if num == 2 else bs.getModel('lego3'),
+            'position': position,
+            'model': model,
+            'lightModel': model,
             'body': 'landMine',
             'velocity': velocity,
             'modelScale': 0.8,
             'bodyScale': 0.8,
             'shadowSize': 0.5,
-            'colorTexture': bs.getTexture('yellow') if colorNum == 1 else bs.getTexture('blue') \
-                if colorNum == 2 else bs.getTexture('red'),
+            'colorTexture': colorTexture,
             'reflection': 'powerup',
             'reflectionScale': [1.0],
             'materials': (factory.legoMaterial,
@@ -1760,7 +1850,8 @@ class Lego(bs.Actor):
     @classmethod
     def getFactory(cls):
         activity = bs.getActivity()
-        try: return activity._sharedPortalFactory
+        try:
+            return activity._sharedPortalFactory
         except Exception:
             f = activity._sharedPortalFactory = PortalFactory()
             return f
@@ -1782,12 +1873,12 @@ class Lego(bs.Actor):
         elif isinstance(m, LegoConnect):
             self.node.sticky = True
 
-        elif isinstance(m, FuckFuckFuckFuckingLego):
+        elif isinstance(m, LegoMessage):
             self.node.sticky = False
             node = bs.getCollisionInfo('opposingNode')
             node.handleMessage(
-                'impulse', node.position[0], node.position[1], node.position[2],
-                node.velocity[0], 3, node.velocity[2],
+                'impulse', node.position[0], node.position[1],
+                node.position[2], node.velocity[0], 3, node.velocity[2],
                 45, 45, 0, 0, node.velocity[0], 3, node.velocity[2])
 
         elif isinstance(m, bs.HitMessage):
@@ -1797,11 +1888,11 @@ class Lego(bs.Actor):
                 m.magnitude, m.velocityMagnitude, m.radius,
                 0, m.velocity[0], m.velocity[1], m.velocity[2])
 
+
 class cCube(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), velocity=(0, 0, 0),
                  companion=False):
-
         bs.Actor.__init__(self)
         self.companion = companion
         self.light = None
@@ -1818,24 +1909,39 @@ class cCube(bs.Actor):
                          bs.getSharedObject('dirtMaterial'))),
             actions=(('call', 'atConnect', self.shitHitsTheCube)))
 
-        self.node = bs.newNode('prop', delegate=self, attrs={
-            'position': position,
-            'velocity': velocity,
-            'model': factory.companionCubeModel,
-            'lightModel': factory.companionCubeModel,
-            'body': 'crate',
-            'shadowSize': 0.5,
-            'colorTexture': factory.companionCubeTex if companion == True else factory.weightCubeTex,
-            'reflection': 'soft',
-            'reflectionScale': [0.3],
-            'materials': (bs.getSharedObject('objectMaterial'),
-                          bs.getSharedObject('footingMaterial'),
-                          self.cubeMaterial)})
+        if companion:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'velocity': velocity,
+                'model': factory.companionCubeModel,
+                'lightModel': factory.companionCubeModel,
+                'body': 'crate',
+                'shadowSize': 0.5,
+                'colorTexture': factory.companionCubeTex,
+                'reflection': 'soft',
+                'reflectionScale': [0.3],
+                'materials': (bs.getSharedObject('objectMaterial'),
+                              bs.getSharedObject('footingMaterial'),
+                              self.cubeMaterial)})
+        else:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'velocity': velocity,
+                'model': factory.companionCubeModel,
+                'lightModel': factory.companionCubeModel,
+                'body': 'crate',
+                'shadowSize': 0.5,
+                'colorTexture': factory.weightCubeTex,
+                'reflection': 'soft',
+                'reflectionScale': [0.3],
+                'materials': (bs.getSharedObject('objectMaterial'),
+                              bs.getSharedObject('footingMaterial'),
+                              self.cubeMaterial)})
 
         def textSender():
             if self.node.exists():
-                if self.companion == True and (self.pickuped == True) \
-                        and bsInternal._getForegroundHostSession().narkomode == True:
+                if self.companion and self.pickuped \
+                        and bsInternal._getForegroundHostSession().narkomode:
                     bsUtils.PopupText(
                         random.choice([
                             'I love you',
@@ -1851,7 +1957,7 @@ class cCube(bs.Actor):
                             'PLEASE DONT FIRE ME',
                             'Eric bring back the light',
                             'The cake is a lie',
-                            'If life gives you lemons \n dont make the lemonade',
+                            'If life gives you lemons\ndont make the lemonade',
                             '09 Tartaros',
                             'Prometheus']),
                         color=(1, 0.1, 1),
@@ -1863,7 +1969,8 @@ class cCube(bs.Actor):
     @classmethod
     def getFactory(cls):
         activity = bs.getActivity()
-        try: return activity._sharedPortalFactory
+        try:
+            return activity._sharedPortalFactory
         except Exception:
             f = activity._sharedPortalFactory = PortalFactory()
             return f
@@ -1892,19 +1999,22 @@ class cCube(bs.Actor):
         elif isinstance(m, bs.PickedUpMessage):
             self.pickuped = True
             self.node.extraAcceleration = (0, 25, 0)
+
             def up():
                 self.node.extraAcceleration = (0, 40, 0)
 
             self.uptimer = bs.Timer(330, up)
+
             def checker():
-                if m is None or not m.node.exists() or m.node.holdNode != self.node:
+                if m is None or not m.node.exists() \
+                        or m.node.holdNode != self.node:
                     self.node.extraAcceleration = (0, 0, 0)
                     self.pickuped = False
                     self.checkerTimer = None
 
             self.checkerTimer = bs.gameTimer(100, checker, repeat=True)
             self.spazNode = m.node
-            delegate =  m.node.getDelegate()
+            delegate = m.node.getDelegate()
 
             self.light = bs.newNode('light', attrs={
                 'position': self.node.position,
@@ -1917,7 +2027,8 @@ class cCube(bs.Actor):
 
             def regen():
                 if m is not None and m.node.exists() \
-                        and m.node.getDelegate().hitPoints < m.node.getDelegate().hitPointsMax \
+                        and m.node.getDelegate().hitPoints \
+                        < m.node.getDelegate().hitPointsMax \
                         and self.pickuped:
                     delegate.hitPoints += 1
                     delegate._lastHitTime = None
@@ -1954,11 +2065,11 @@ class cCube(bs.Actor):
                 m.magnitude, m.velocityMagnitude, m.radius,
                 0, m.velocity[0], m.velocity[1], m.velocity[2])
 
+
 class Clay(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), velocity=(0, 0, 0),
                  bomb=False, banana=False, owner=None):
-
         bs.Actor.__init__(self)
         self.bomb = bomb
         self.owner = owner
@@ -1968,30 +2079,43 @@ class Clay(bs.Actor):
         self.dirtDieMaterial.addActions(
             conditions=(('weAreOlderThan', 2000)),
             actions=(('message', 'ourNode', 'atConnect', bs.DieMessage())))
-        
+
         self.dirtDieMaterial.addActions(
             conditions=(('theyHaveMaterial',
                          bs.getSharedObject('playerMaterial')),
                         'and', ('weAreYoungerThan', 2000)),
             actions=(('message', 'ourNode', 'atConnect', dirtBombMessage())))
-                                        
+
         self.dirtDieMaterial.addActions(
             conditions=(('theyHaveMaterial',
                          bs.getSharedObject('footingMaterial')),
                         'and', ('weAreYoungerThan', 2000)),
             actions=(('message', 'ourNode', 'atConnect', bs.DieMessage())))
-        
-        self.node = bs.newNode('prop', delegate=self, attrs={
-            'position': position,
-            'velocity': velocity,
-            'model': bs.getModel('box') if not banana else bs.getModel('slice'),
-            'body': 'sphere',
-            'bodyScale': 0.3,
-            'modelScale': 0.15 if not banana else 0.4,
-            'sticky': False,
-            'colorTexture': bs.getTexture('dirt') if not banana else bs.getTexture('yellow'),
-            'materials': (bs.getSharedObject('objectMaterial'),
-                          bs.getSharedObject('dirtMaterial'))})
+
+        if not banana:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'velocity': velocity,
+                'model': bs.getModel('box'),
+                'body': 'sphere',
+                'bodyScale': 0.3,
+                'modelScale': 0.15,
+                'sticky': False,
+                'colorTexture': bs.getTexture('dirt'),
+                'materials': (bs.getSharedObject('objectMaterial'),
+                              bs.getSharedObject('dirtMaterial'))})
+        else:
+            self.node = bs.newNode('prop', delegate=self, attrs={
+                'position': position,
+                'velocity': velocity,
+                'model': bs.getModel('slice'),
+                'body': 'sphere',
+                'bodyScale': 0.3,
+                'modelScale': 0.4,
+                'sticky': False,
+                'colorTexture': bs.getTexture('yellow'),
+                'materials': (bs.getSharedObject('objectMaterial'),
+                              bs.getSharedObject('dirtMaterial'))})
 
         if bomb and not banana:
             self.node.materials = self.node.materials + (self.dirtDieMaterial,)
@@ -2039,15 +2163,15 @@ class Clay(bs.Actor):
         elif isinstance(m, bs.HitMessage):
             self.node.handleMessage(
                 'impulse', m.pos[0], m.pos[1], m.pos[2],
-                m.velocity[0], m.velocity[1] ,m.velocity[2],
-                m.magnitude, m.velocityMagnitude, m.radius,0,
+                m.velocity[0], m.velocity[1], m.velocity[2],
+                m.magnitude, m.velocityMagnitude, m.radius, 0,
                 m.velocity[0], m.velocity[1], m.velocity[2])
+
 
 class BadRock(bs.Actor):
 
-    def __init__(self, position=(0,1,0), velocity=(0,0,0), owner=None,
+    def __init__(self, position=(0, 1, 0), velocity=(0, 0, 0), owner=None,
                  sourcePlayer=None, expire=True, hit=True):
-
         bs.Actor.__init__(self)
         factory = self.getFactory()
         self.hit = hit
@@ -2071,11 +2195,12 @@ class BadRock(bs.Actor):
 
     @classmethod
     def getFactory(cls):
-        '''
+        """
         Returns a shared bs.FlagFactory object, creating it if necessary.
-        '''
+        """
         activity = bs.getActivity()
-        try: return activity._sharedPortalFactory
+        try:
+            return activity._sharedPortalFactory
         except Exception:
             f = activity._sharedPortalFactory = PortalFactory()
             return f
@@ -2090,31 +2215,30 @@ class BadRock(bs.Actor):
                 self.node.delete()
 
         if isinstance(m, ImpactMessage):
-            if self.hit == True:
+            if self.hit:
                 bs.Blast(
                     position=self.node.position,
                     hitType='punch',
                     blastRadius=1).autoRetain()
 
-            if self.expire == True:
+            if self.expire:
                 if self.node.exists():
                     self._lifeTime = bs.Timer(5000, bs.WeakCall(self.animBR))
                     self._clrTime = bs.Timer(5310, bs.WeakCall(self.clrBR))
 
     def animBR(self):
         if self.node.exists():
-            bs.animate(self.node, 'modelScale', 
-                {0: 1, 200: 0})
+            bs.animate(self.node, 'modelScale', {0: 1, 200: 0})
 
     def clrBR(self):
         if self.node.exists():
             self.node.delete()
 
+
 class Turret(bs.Actor):
 
     def __init__(self, position=(0, 2, 0), velocity=(0, 0, 0),
                  different=False, hasLaser=True, mute=False):
-
         # hasLaser used in older versions
         bs.Actor.__init__(self)
         self.turretModel = bs.getModel('turret')
@@ -2131,10 +2255,13 @@ class Turret(bs.Actor):
             conditions=(('weAreOlderThan', 200),
                         'and', ('theyAreOlderThan', 200),
                         'and', ('evalColliding',),
-                        'and', (('theyHaveMaterial', bs.getSharedObject('footingMaterial')),
-                                'or', ('theyHaveMaterial', bs.getSharedObject('objectMaterial')))),
-            actions=(('message', 'ourNode', 'atConnect', TurretImpactMessage())))
-        
+                        'and', (('theyHaveMaterial',
+                                 bs.getSharedObject('footingMaterial')),
+                                'or', ('theyHaveMaterial',
+                                       bs.getSharedObject('objectMaterial')))),
+            actions=(('message', 'ourNode', 'atConnect',
+                      TurretImpactMessage())))
+
         self.node = bs.newNode('prop', delegate=self, attrs={
             'position': position,
             'velocity': velocity,
@@ -2148,13 +2275,12 @@ class Turret(bs.Actor):
             'materials': (bs.getSharedObject('footingMaterial'),
                           bs.getSharedObject('objectMaterial'))})
 
-        if not mute and not self.different: # for scene in main menu
+        if not mute and not self.different:  # for scene in main menu
             bs.playSound(
-                bs.getSound(random.choice([
-                    'turret_activation',
-                    'turret_autosearch',
-                    'turret_hi',
-                    'turret_see_you'])),
+                bs.getSound(random.choice(['turret_activation',
+                                           'turret_autosearch',
+                                           'turret_hi',
+                                           'turret_see_you'])),
                 position=self.node.position)
 
     def shot(self):
@@ -2163,8 +2289,8 @@ class Turret(bs.Actor):
                 position=(self.node.position[0]+random.uniform(-2, 2),
                           self.node.position[1]+random.uniform(-0.5, 0.5),
                           self.node.position[2]+random.uniform(-2, 2)),
-                          blastType='turret',
-                          hitType='punch').autoRetain()
+                blastType='turret',
+                hitType='punch').autoRetain()
 
     def activate(self):
         if not self.mute:
@@ -2179,7 +2305,9 @@ class Turret(bs.Actor):
                             'turret_die3'])),
                         position=self.node.position)
 
-                    self._shotTimer = bs.Timer(50, bs.Call(self.shot), repeat=True)
+                    self._shotTimer = bs.Timer(50, bs.Call(self.shot),
+                                               repeat=True)
+
                     def brokeTimer():
                         self._shotTimer = None
                         self.broke()
@@ -2234,11 +2362,10 @@ class Turret(bs.Actor):
             if not self.different and not self.mute:
                 if not self.activated and not self.mute:
                     bs.playSound(
-                        bs.getSound(random.choice([
-                            'turret_pickup1',
-                            'turret_pickup2',
-                            'turret_pickup3'])),
-                        position = self.node.position)
+                        bs.getSound(random.choice(['turret_pickup1',
+                                                   'turret_pickup2',
+                                                   'turret_pickup3'])),
+                        position=self.node.position)
 
                 self.openTurret()
             else:
@@ -2247,17 +2374,19 @@ class Turret(bs.Actor):
                         'turret_different_'+str(self.phrase)),
                         position=self.node.position)
 
-                    self.phrase +=1
+                    self.phrase += 1
 
         elif isinstance(m, bs.DroppedMessage):
             def addMaterial():
-                self.node.materials = self.node.materials + (self.turretMaterial,)
+                self.node.materials = self.node.materials \
+                    + (self.turretMaterial)
 
             bs.gameTimer(50, bs.Call(addMaterial))
 
         elif isinstance(m, bs.HitMessage):
             if not self.different:
                 self.activate()
+
 
 class AutoAim(object):
 
@@ -2268,7 +2397,7 @@ class AutoAim(object):
         self.node = None
         self.aimZoneSpaz = bs.Material()
         self.aimZoneSpaz.addActions(
-            conditions=(('theyHaveMaterial', 
+            conditions=(('theyHaveMaterial',
                          bs.getSharedObject('playerMaterial'))),
             actions=(('modifyPartCollision', 'collide', True),
                      ('modifyPartCollision', 'physical', False),
@@ -2276,25 +2405,35 @@ class AutoAim(object):
 
         self.whoControl.extraAcceleration = (0, 20, 0)
 
-        self.node = bs.newNode('region', attrs={
-            'position': (self.whoControl.position[0],
-                         self.whoControl.position[1],
-                         self.whoControl.position[2]) \
-                if self.whoControl.exists() else (0, 0, 0),
-            'scale': (0.1, 0.1, 0.1),
-            'type': 'sphere',
-            'materials': [self.aimZoneSpaz]})
+        if self.whoControl.exists():
+            self.node = bs.newNode('region', attrs={
+                'position': (self.whoControl.position[0],
+                             self.whoControl.position[1],
+                             self.whoControl.position[2]),
+                'scale': (0.1, 0.1, 0.1),
+                'type': 'sphere',
+                'materials': [self.aimZoneSpaz]})
+        else:
+            self.node = bs.newNode('region', attrs={
+                'position': (0, 0, 0),
+                'scale': (0.1, 0.1, 0.1),
+                'type': 'sphere',
+                'materials': [self.aimZoneSpaz]})
 
-        bs.animateArray(self.node, 'scale', 3, {0: (0.1, 0.1, 0.1), 1200: (60, 60, 60)})
+        bs.animateArray(self.node, 'scale', 3,
+                        {0: (0.1, 0.1, 0.1), 1200: (60, 60, 60)})
 
     def go(self):
         if self.target is not None \
                 and self.whoControl is not None \
                 and self.whoControl.exists():
             self.whoControl.velocity = \
-                (self.whoControl.velocity[0]+(self.target.position[0]-self.whoControl.position[0]),
-                 self.whoControl.velocity[1]+(self.target.position[1]-self.whoControl.position[1]),
-                 self.whoControl.velocity[2]+(self.target.position[2]-self.whoControl.position[2]))
+                (self.whoControl.velocity[0]+(
+                    self.target.position[0]-self.whoControl.position[0]),
+                 self.whoControl.velocity[1]+(
+                    self.target.position[1]-self.whoControl.position[1]),
+                 self.whoControl.velocity[2]+(
+                    self.target.position[2]-self.whoControl.position[2]))
 
             bs.gameTimer(1, self.go)
 
@@ -2305,7 +2444,8 @@ class AutoAim(object):
                     and node.exists() \
                     and node != self.owner \
                     and node.getDelegate().isAlive() \
-                    and node.getDelegate().getPlayer().getTeam() != self.owner.getDelegate().getPlayer().getTeam():
+                    and node.getDelegate().getPlayer().getTeam() \
+                    != self.owner.getDelegate().getPlayer().getTeam():
                 self.target = node
                 self.node.delete()
                 self.whoControl.extraAcceleration = (0, 20, 0)
@@ -2325,6 +2465,7 @@ class AutoAim(object):
             self.target = None
 
         bs.gameTimer(100, sa)
+
 
 class Airstrike(bs.Actor):
 
@@ -2355,13 +2496,13 @@ class Airstrike(bs.Actor):
                    self.position[1]+3,
                    self.position[2]+random.uniform(1.5, -1.5))
 
-            vel = (1, 1, 0)
-            babyNuke(position=pos, velocity=vel).autoRetain()
+            babyNuke(position=pos, velocity=(1, 1, 0)).autoRetain()
         else:
             self._stopper = None
 
     def endRain(self):
         self._stopper = None
+
 
 class HealBomb(bs.Actor):
 
@@ -2402,6 +2543,7 @@ class HealBomb(bs.Actor):
     def delete(self):
         self.node.delete()
 
+
 class SimpleBox(bs.Actor):
 
     def __init__(self, position=(0, 1, 0), velocity=(0, 0, 0)):
@@ -2410,9 +2552,9 @@ class SimpleBox(bs.Actor):
         self.bombMaterial = bs.Material()
         self.bombMaterial.addActions(
             conditions=((('weAreYoungerThan', 100),
-                         'or',('theyAreYoungerThan', 100)),
-                        'and',('theyHaveMaterial',
-                               bs.getSharedObject('objectMaterial'))),
+                         'or', ('theyAreYoungerThan', 100)),
+                        'and', ('theyHaveMaterial',
+                                bs.getSharedObject('objectMaterial'))),
             actions=(('modifyNodeCollision', 'collide', False)))
 
         # we want pickup materials to always hit us even if we're currently not
@@ -2421,7 +2563,7 @@ class SimpleBox(bs.Actor):
             conditions=('theyHaveMaterial',
                         bs.getSharedObject('pickupMaterial')),
             actions=(('modifyPartCollision', 'useNodeCollide', False)))
-        
+
         self.bombMaterial.addActions(actions=('modifyPartCollision',
                                               'friction', 0.3))
 
@@ -2449,6 +2591,7 @@ class SimpleBox(bs.Actor):
         elif isinstance(m, bs.OutOfBoundsMessage):
             if self.node.exists():
                 self.node.delete()
+
 
 class ColorBomb(bs.Actor):
 
@@ -2488,14 +2631,12 @@ class ColorBomb(bs.Actor):
 
     def touchedSpaz(self):
         node = bs.getCollisionInfo('opposingNode')
-        bs.animateArray(node, 'color', 3,
-            {0: node.color, 1000: self.color})
-
+        bs.animateArray(node, 'color', 3, {0: node.color, 1000: self.color})
         bs.animateArray(node, 'highlight', 3,
-            {0: node.color, 1000: self.color})
+                        {0: node.color, 1000: self.color})
 
         bs.animateArray(node, 'nameColor', 3,
-            {0: node.color, 1000: self.color})
+                        {0: node.color, 1000: self.color})
 
     def delete(self):
         self.node.delete()

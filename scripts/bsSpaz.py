@@ -1453,8 +1453,7 @@ class Spaz(bs.Actor):
                             self.node.position[0],
                             self.node.position[1],
                             self.node.position[2],
-                            0, 0, 0, 200, 200, 0, 0, 0, 1, 0
-                            )
+                            0, 0, 0, 200, 200, 0, 0, 0, 1, 0)
 
                     self._turboFilterAddPress('jump')
 
@@ -1468,11 +1467,45 @@ class Spaz(bs.Actor):
                         scale=1,
                         position=self.node.position).autoRetain()
 
+                pixel = bs.Spaz(
+                    character='Pixel',
+                    color=(1.0, 1.0, 1.0),
+                    highlight=(1.0, 1.0, 1.0)).autoRetain()
+
+                pixel.node.handleMessage(
+                    bs.StandMessage(
+                        position=(self.node.position[0]-0.5,
+                                  self.node.position[1]+3,
+                                  self.node.position[2])))
+
+                box = bs.SimpleBox(
+                    position=pixel.node.position).autoRetain()
+
+                box.node.model = None
+                pixel.node.holdNode = box.node
+                pixel.node.holdBody = 1
+
+                box.node.extraAcceleration = (0, 55, 0)
+
+                bs.emitBGDynamics(
+                    position=(self.node.position[0],
+                              self.node.position[1]+3,
+                              self.node.position[2]),
+                    count=10,
+                    emitType='tendrils',
+                    tendrilType='smoke')
+
+                def deletePixel():
+                    if pixel.exists():
+                        pixel.node.delete()
+                        box.node.delete()
+
+                bs.gameTimer(1250, deletePixel)
+
                 bdUtils.MagicSpell(
                     position=(self.node.position[0],
                               self.node.position[1]+3,
-                              self.node.position[2])
-                    ).autoRetain()
+                              self.node.position[2])).autoRetain()
 
             elif m.powerupType == 'landMines':
                 if bs.getConfig().get('Powerup Popups', True):

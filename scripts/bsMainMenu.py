@@ -206,24 +206,24 @@ class MainMenuActivity(bs.Activity):
 
         # hmm, it works?
         def writeModpackServers(res):
+            global gModpackServers
             bs.getConfig()['BombDash Modpack Servers'] = res
             bs.writeConfig()
 
             gModpackServers = True
 
         def getModpackServers():
-            if bdUtils.siteAvailabilityCheck('http://bombdash.net'):
+            try:
                 global gModpackServers
                 val = {'cmd': 'getModpackServers'}
-                url = 'http://bombdash.net/other/BombSquad/server/server/'\
-                    + 'internal.php'
 
-                req = json.loads(urllib2.urlopen(
-                    urllib2.Request(url), json.dumps(val)).read().decode(
-                        'utf-8'))
+                req = json.loads(
+                    urllib2.urlopen(
+                        urllib2.Request(bdUtils.BD_INTERNAL_URL),
+                        json.dumps(val)).read().decode('utf-8'))
 
                 bs.gameTimer(1000, bs.Call(writeModpackServers, req))
-            else:
+            except:
                 bs.screenMessage(bs.Lstr(resource='databaseNotAvailable'))
 
         if not gModpackServers:
@@ -315,7 +315,9 @@ class MainMenuActivity(bs.Activity):
                 resource='musicText').evaluate()+musicName)
 
             def dropBGD():
-                vel1 = (-5.0 + random.random()*30.0)*(-1.0 if pos[0] > 0 else 1.0)
+                vel1 = (-5.0 + random.random()*30.0) \
+                    * (-1.0 if pos[0] > 0 else 1.0)
+
                 pos = (-15 + (random.random()*30), 15,
                        -15 + (random.random()*30))
 
@@ -1072,7 +1074,8 @@ class MainMenuActivity(bs.Activity):
                        15,
                        -15+(random.random()*30))
 
-                vel1 = (-5.0 + random.random()*30.0)*(-1.0 if pos[0] > 0 else 1.0)
+                vel1 = (-5.0 + random.random()*30.0) \
+                    * (-1.0 if pos[0] > 0 else 1.0)
 
                 vel = (vel1,
                        -50.0,
