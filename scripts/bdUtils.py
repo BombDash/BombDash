@@ -1112,7 +1112,7 @@ class MagicSpell(bs.Actor):
         self._emit1 = bs.Timer(35, bs.WeakCall(self.spawnParticles),
                                repeat=True)
 
-        self.aim = AutoAim(self.node, self.owner)
+        
 
         bs.playSound(bs.getSound('spell'))
 
@@ -1259,6 +1259,8 @@ class MagicSpell(bs.Actor):
                             pass
 
                 bs.gameTimer(15000, bs.Call(offAllEffects))
+            else:
+                self.node.handleMessage(bs.DieMessage())
 
     def handleMessage(self, m):
         if isinstance(m, bs.DieMessage):
@@ -1271,15 +1273,11 @@ class MagicSpell(bs.Actor):
         elif isinstance(m, bs.OutOfBoundsMessage):
             self.node.handleMessage(bs.DieMessage())
 
-        elif isinstance(m, bs.StandMessage):
-            if m.node.getNodeType() == 'spaz':
-                self.owner = m.node
-
         elif isinstance(m, bs.ImpactMessage):
             self.impactSpaz()
 
         elif isinstance(m, bs.HitMessage):
-            pass
+            self.impactSpaz()
 
 
 class DirtRain(object):

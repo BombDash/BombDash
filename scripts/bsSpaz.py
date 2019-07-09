@@ -1431,6 +1431,11 @@ class Spaz(bs.Actor):
                         scale=1,
                         position=self.node.position).autoRetain()
 
+                bdUtils.Cannon(
+                    position=(self.node.position[0],
+                              self.node.position[1]+3,
+                              self.node.position[2])).autoRetain()
+
             elif m.powerupType == 'highJump':
                 if bs.getConfig().get('Powerup Popups', True):
                     bsUtils.PopupText((bs.Lstr(
@@ -1484,28 +1489,32 @@ class Spaz(bs.Actor):
                 box.node.model = None
                 pixel.node.holdNode = box.node
                 pixel.node.holdBody = 1
+                box.node.extraAcceleration = (2, 40, 1)
+                def setFly():   
+                    box.node.extraAcceleration = (-2, 63, -1)
 
-                box.node.extraAcceleration = (0, 55, 0)
-
-                bs.emitBGDynamics(
-                    position=(self.node.position[0],
-                              self.node.position[1]+3,
-                              self.node.position[2]),
-                    count=10,
-                    emitType='tendrils',
-                    tendrilType='smoke')
 
                 def deletePixel():
                     if pixel.exists():
                         pixel.node.delete()
                         box.node.delete()
 
-                bs.gameTimer(1250, deletePixel)
-
-                bdUtils.MagicSpell(
-                    position=(self.node.position[0],
-                              self.node.position[1]+3,
-                              self.node.position[2])).autoRetain()
+                def spawnSpell():
+                    bdUtils.MagicSpell(
+                        position=(pixel.node.position[0],
+                                  pixel.node.position[1]+1,
+                                  pixel.node.position[2])).autoRetain()
+                    bs.emitBGDynamics(
+                        position=(pixel.node.position[0],
+                                  pixel.node.position[1]+0.5,
+                                  pixel.node.position[2]),
+                        count=10,
+                        emitType='tendrils',
+                        tendrilType='smoke')
+                
+                bs.gameTimer(850, spawnSpell)
+                bs.gameTimer(1450, setFly)
+                bs.gameTimer(2550, deletePixel)
 
             elif m.powerupType == 'landMines':
                 if bs.getConfig().get('Powerup Popups', True):
