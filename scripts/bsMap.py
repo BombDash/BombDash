@@ -1451,6 +1451,92 @@ class WWE(Map):
 
 registerMap(WWE)
 
+class snowyMountlands(Map):
+    import snowyMountlandsDefs as defs
+    name = 'Snowy Mountlands'
+    playTypes = ['melee', 'keepAway', 'teamFlag']
+
+    @classmethod
+    def getPreviewTextureName(cls):
+        return 'snowyMountlandsPreview'
+
+    @classmethod
+    def onPreload(cls):
+        data = {}
+        data['model'] = bs.getModel('snowyMountlands')
+        data['collideModel'] = bs.getCollideModel('snowyMountlandsMapCollide')
+        data['collideRollModel'] = bs.getCollideModel('snowyMountlandsMapCollideRoll')
+        data['collideDieModel'] = bs.getCollideModel('snowyMountlandsMapCollideDie')
+        data['tex'] = bs.getTexture('snowyMountlandsLevelColor')
+        data['bgTex'] = bs.getTexture('snowBG')
+        data['bgModel'] = bs.getModel('snowyMountlandsBG')
+        return data
+
+    def __init__(self):
+        Map.__init__(self)
+
+        self.node1 = bs.newNode('terrain', delegate=self, attrs={
+            'collideModel': self.preloadData['collideModel'],
+            'model': self.preloadData['model'],
+            'colorTexture': self.preloadData['tex'],
+            'reflection': 'soft',
+            'reflectionScale': [0.06],
+            'materials': [bs.getSharedObject('footingMaterial')]})
+
+        self.bg = bs.NodeActor(bs.newNode('terrain', attrs={
+            'model': self.preloadData['bgModel'],
+            'lighting': False,
+            'color': (0.9, 0.9, 1.0),
+            'background': True,
+            'colorTexture': self.preloadData['bgTex']}))
+
+        self.border = bs.newNode('terrain', attrs={
+            'collideModel':self.preloadData['collideRollModel'],
+            'materials': [bs.getSharedObject('objectMaterial')]})
+
+        self.outOfBorder = bs.newNode('terrain', attrs={
+            'collideModel':self.preloadData['collideDieModel'],
+            'materials':[bs.getSharedObject('footingMaterial'),
+                         bs.getSharedObject('deathMaterial')]})
+
+        g = bs.getSharedObject('globals')
+        g.tint = (0.74, 0.74, 0.78)
+        g.ambientColor = (1, 1, 1)
+        g.shadowOrtho = True
+        g.vignetteOuter = (0.86, 0.86, 0.86)
+        g.vignetteInner = (0.95, 0.95, 0.99)
+        g.vrNearClip = 0.5
+        self._emit = bs.Timer(15, bs.WeakCall(self.emit), repeat=True)
+    def emit(self):
+        pos = (-15+(random.random()*30),
+               15,
+               -15+(random.random()*30))
+
+        vel1 = (-5.0 + random.random()*30.0) \
+            * (-1.0 if pos[0] > 0 else 1.0)
+
+        vel = (vel1,
+               -50.0,
+               random.uniform(-20, 20))
+
+        bs.emitBGDynamics(
+            position=pos,
+            velocity=vel,
+            count=5,
+            scale=0.4+random.random(),
+            spread=0,
+            chunkType='spark')
+
+    def _isPointNearEdge(self, p, running=False):
+        boxPosition = self.defs.boxes['edgeBox'][0:3]
+        boxScale = self.defs.boxes['edgeBox'][6:9]
+        x = (p.x()-boxPosition[0])/boxScale[0]
+        z = (p.z()-boxPosition[2])/boxScale[2]
+        return (x < -0.5 or x > 0.5 or z < -0.5 or z > 0.5)
+
+registerMap(snowyMountlands)
+
+
 class Airlands(Map):
     import AirlandsDefs as defs
     name = 'Airlands'
