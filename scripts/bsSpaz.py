@@ -2187,10 +2187,11 @@ class Spaz(bs.Actor):
                     bs.playSound(bs.getSound('nukeAlarm'))
 
                     def nuke():
-                        bdUtils.Nuke(
-                            position=(self.node.position[0],
-                                      10,
-                                      self.node.position[2])).autoRetain()
+                        if self.node.exists():
+                            bdUtils.Nuke(
+                                position=(self.node.position[0],
+                                          10,
+                                          self.node.position[2])).autoRetain()
 
                     bs.gameTimer(11500, bs.Call(nuke))
 
@@ -2212,16 +2213,29 @@ class Spaz(bs.Actor):
                         owner=self.node)
 
             elif m.powerupType == 'railgun':
-                    if self.node.style == 'penguin':
-                        self.node.upperArmModel = bs.getModel('penguinBeam')
-                    else:
-                        self.node.handModel = bs.getModel('beam')
-                    self.RailgunFired = 0
-                    self.Railgun = True
-                    bs.playSound(self.getFactory().railgunChargeSound, position=self.node.position)
-                    def waitForCharge():
-                        self.node.getDelegate().getPlayer().assignInputCall('punchPress', bs.Call(self.railgunChecker))
-                    bs.gameTimer(1000, bs.Call(waitForCharge))
+                if bs.getConfig().get('Powerup Popups', True):
+                    bsUtils.PopupText((bs.Lstr(
+                        resource='descriptionRailgun')),
+                        color=(1, 1, 1),
+                        scale=1,
+                        position=self.node.position).autoRetain()
+
+                if self.node.style == 'penguin':
+                    self.node.upperArmModel = bs.getModel('penguinBeam')
+                else:
+                    self.node.handModel = bs.getModel('beam')
+
+                self.RailgunFired = 0
+                self.Railgun = True
+                bs.playSound(
+                    self.getFactory().railgunChargeSound,
+                    position=self.node.position)
+
+                def waitForCharge():
+                    self.node.getDelegate().getPlayer().assignInputCall(
+                        'punchPress', bs.Call(self.railgunChecker))
+
+                bs.gameTimer(1000, bs.Call(waitForCharge))
 
             elif m.powerupType == 'impactBombs':
                 if bs.getConfig().get('Powerup Popups', True):

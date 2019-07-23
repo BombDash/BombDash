@@ -50,9 +50,9 @@ class MainMenuActivity(bs.Activity):
 
         # to put the name of a modpak and its version
         global JRMPmode
-        modpackVersion = '1.7.2'
+        modpackVersion = '1.8'
         jrmpModeText = 'joi ride madpacke'
-        bdtext = modpackVersion + ' Beta 5' if not JRMPmode else jrmpModeText
+        bdtext = modpackVersion + ' Beta' if not JRMPmode else jrmpModeText
         bdtext2 = 'BombDash Modpack' if not JRMPmode else jrmpModeText
 
         self._logoNode = None

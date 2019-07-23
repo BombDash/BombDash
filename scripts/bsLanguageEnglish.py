@@ -54,6 +54,8 @@ values = {
     'powerupName18':'highJump',
     'powerupName19':'holyBomb',
     'powerupName20':'healthBomb',
+    'powerupName21':'railgun',
+    'powerupName22':'blessing',
     'powerupNames':'Powerup names',
     'sysDeleted':'User System Scripts deleted.',
     'sysCreated':'User System Scripts created.',
@@ -132,6 +134,7 @@ values = {
     'dev6':'NullWizard',
     'dev7':'byANUS',
     'dev8':'DeadPool',
+    'dev9':'Romtrap',
     'sceneFullScreen':'Fullscreen scene view',
     'uiStd':'Auto',
     'uiSmall':'Small',
@@ -212,6 +215,8 @@ values = {
     'descriptionArtillery':'Artillery',
     'descriptionExtraAccelerator':'Weighted cube',
     'descriptionHighJump':'HighJump',
+    'descriptionRailgun':'Railgun',
+    'descriptionBlessing':'Blessing',
     'descriptionPortalBomb':'PortalBomb',
     'descriptionBot':'Bot',
     'descriptionColorBomb':'PaintBomb',
@@ -1353,7 +1358,7 @@ values = {
         'pickUpInfoTextScale':0.6,
         'powerupPetardNameText':'Petard',
         'powerupPetardDescriptionText':('Gives the New Year mood.'),
-        'powerupMolotovNameText':'Molotov\'s Cocktail',
+        'powerupMolotovNameText':'Molotov\'s-Cocktail',
         'powerupMolotovDescriptionText':('Turn enemies into ashes'),
         'powerupBombNameText':'Triple-Bombs',
         'powerupBombDescriptionText':('Lets you whip out three bombs\n'
@@ -1364,16 +1369,16 @@ values = {
         'powerupCannonDescriptionText':('Created by a skilled pyrotechnic magician\n'
                                         'this gun shoots as much as 3 times with almost any bombs,\n'
                                         'which you put into it.'),
-        'powerupHolyBombNameText':'Holy bomb',
+        'powerupHolyBombNameText':'Holy-Bomb',
 
         'powerupHolyBombDescriptionText':('Hallelujah!'),
 
-        'powerupPortalBombNameText':'Portal bomb',
+        'powerupPortalBombNameText':'Portal-Bomb',
 
         'powerupPortalBombDescriptionText':('Creates portals after the explosion. \n'
                                             'The first portal on the site of the one who threw the bomb.\n'
                                             'The second portal at the site of the bomb explosion.'),
-        'powerupElonMineNameText':'Elon\'s mine',
+        'powerupElonMineNameText':'Elon-Mine',
 
         'powerupElonMineDescriptionText':('How do you like that, Ilon Musk? \n'
                                           'Mine with StickyForce properties. \n'
@@ -1384,13 +1389,13 @@ values = {
         'powerupAirstrikeDescriptionText':('Makes mark for bombs at the blast site. \n'
                                            'Well helps to close the passage.'),
 
-        'powerupPaintBombNameText':'Paint bomb',
+        'powerupPaintBombNameText':'Paint-Bomb',
 
         'powerupPaintBombDescriptionText':('Bomb, with a bunch of paint inside. \n'
                                            'With the blast it colors everything in \n'
                                            'a certain radius, in random color.'),
 
-        'powerupJumpNameText':'Hight jumping',
+        'powerupJumpNameText':'High-Jump',
 
         'powerupJumpDescriptionText':('Jump much higher than before.'),
 
@@ -1401,22 +1406,22 @@ values = {
                                         'You\'d never have guessed.'),
 
         'powerupShockwaveDescriptionText':('Shocks the enemies\nin a small radius.'),
-        'powerupShockwaveNameText':'Electrobomb',
-        'powerupLuckyBlockNameText':'LuckyBlock',
+        'powerupShockwaveNameText':'Electric-Bomb',
+        'powerupLuckyBlockNameText':'Lucky-Block',
         'powerupLuckyBlockDescriptionText':('Contains 30 random effects\n'
                                             'Not always lucky :D\n'),
 
-        'powerupStickyForceNameText':'Sticky gift',
+        'powerupStickyForceNameText':'Sticky-Gift',
         'powerupStickyForceDescriptionText':('It makes the enemy soar\nwith pleasure!'),
 
 
         'powerupLegoNameText':'Lego',
         'powerupLegoDescriptionText':('The name tells for itself.'),
 
-        'powerupBlackHoleNameText':'Black Hole',
+        'powerupBlackHoleNameText':'Black-Hole',
         'powerupBlackHoleDescriptionText':('Tearing the hapless\nplayers into pieces.'),
 
-        'powerupToxicNameText':'Toxic waste',
+        'powerupToxicNameText':'Toxic-Barrel',
         'powerupToxicDescriptionText':('Creates an area in which players\nfall unconscious for 8 seconds.'),
 
         'powerupDirtNameText':'Dirt',
@@ -1425,18 +1430,13 @@ values = {
         'powerupPoisonNameText':'Poison',
         'powerupPoisonDescriptionText':('Curses players in small area'),
 
-        'powerupSlipperNameText':'Mined slipper',
+        'powerupSlipperNameText':'Mined-Slipper',
         'powerupSlipperDescriptionText':('One... Two... Three... THROW!!!'),
-
 
         'powerupArtilleryNameText':'Artillery',
         'powerupArtilleryDescriptionText':('Throws several bombs into the air,\nwhich fall on the enemy.'),
 
-
-
-
-
-        'powerupExtraAcceleratorNameText':'Extra Accelerator',
+        'powerupExtraAcceleratorNameText':'Extra-Accelerator',
         'powerupExtraAcceleratorDescriptionText':('Weighted cube, which,\n'
                                                   'contrary to logic,\n'
                                                   'pulls you up!'),
@@ -1462,10 +1462,10 @@ values = {
                                              'Hilarity ensues.'),
 
         'powerupStickyBombsNameText':'Sticky-Bombs',
-        'powerupHealthBombNameText':'Healing bomb',
+        'powerupHealthBombNameText':'Healing-Bomb',
         'powerupHealthBombDescriptionText':('Incredibly original invention,\nown development.'),
 
-        'powerupBananaNameText':'Banana hell',
+        'powerupBananaNameText':'Banana-Hell',
         'powerupBananaDescriptionText':('Fragment grenade\ndisguised as a banana.'),
         'powerupsSubtitleText':'Of course, no game is complete without powerups:',
         'powerupsSubtitleTextScale':0.8,
@@ -1632,14 +1632,17 @@ values = {
                         '   Made the whole database for servers and the website.\n '
                         '   VK - https://vk.com/id143515551\n'
                         '\n'
-                        '   DeadPool - now is engaged in servers and the VK group.\n'
-                        '   How many will be engaged still - it is unknown.\n'
-                        '   Tested modpack and created couple of themes for it.\n'
-                        '   VK - https://vk.com/id280216078\n'
+                        '   Romtrap - at the time of writing of this text is engaged\n'
+                        '   servers and VK group.\n'
+                        '   VK - https://vk.com/id233077698\n'
                         '\n'
                         '   byANUS - the best tester, soul of the company.\n'
                         '   Now also developer. Already wrote some bombs.\n'
                         '   VK - https://vk.com/id167437501\n'
+                        '\n'
+                        '   DeadPool - was engaged in servers and the VK group.\n'
+                        '   Tested modpack and created couple of themes for it.\n'
+                        '   VK - https://vk.com/id280216078\n'
                         '\n'
                         '   Filinama (Pasha) - did considerable work on the code.\n'
                         '   Recently left our team... Well, we will wish it good luck.\n'
@@ -1700,13 +1703,13 @@ values = {
 
         'changeLogText' :('                                                    HISTORY OF UPDATES\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
-                        'Modpack version: 1.7.2 Beta 5\n'
+                        'Modpack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: July 3 2019\n'
+                        'List updated: July 23 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
-                        'Changelog for 1.7.2 Beta 5\n'
+                        'Changelog for 1.8 Beta\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         'Upgrade theme engine to version 1.2:\n'
@@ -1716,22 +1719,24 @@ values = {
                         '- Some other colors\n'
                         '\n'
                         'Additions:\n'
-                        '- Added new bonus Blessing\n'
-                        '- Added new menu scene Ricardo Milos\n'
+                        '- Added new bonus "Raingun"\n'
+                        '- Added new bonus "Blessing"\n'
+                        '- Added new map "Snowy Mountlands"\n'
+                        '- Added new menu scene "Ricardo Milos"\n'
                         '- Added an info button to the themes window\n'
                         '- Added button to go to the theme folder in the themes window\n'
-                        '- Added new developer to the "About BombDash" window\n'
+                        '- New developers are added to the "About BombDash" window\n'
                         '\n'
                         'Corrections:\n'
-                        '- Removed eggs in the main menu during Easter\n'
-                        '- Removed dropout of Artillery from the Lego bonus\n'
-                        '- Fixed damage when catching Sticky gift\n'
+                        '- Removed eggs in the main menu during easter\n'
+                        '- Removed dropout of artillery from the lego bonus\n'
+                        '- Fixed damage when catching sticky gift\n'
                         '- Fixed link to our site everywhere\n'
                         '- Fixed allocation of our servers if the database is unavailable\n'
                         '- Corrections in hockey\n'
                         '- Corrections in translations\n'
                         '- High Jump Fixes\n'
-                        '- Corrections in the Extra accelerator\n'
+                        '- Corrections in the extra accelerator\n'
                         '- Bug fixes due to which the game crashed, or maybe not\n'
                         '\n'
                         'Other:\n'

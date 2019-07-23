@@ -1218,7 +1218,7 @@ class Commands(object):
                         bsInternal._chatMessage(
                             bs.Lstr(resource='powerupNames').evaluate()+':')
 
-                        for i in xrange(1, 21):
+                        for i in xrange(1, 23):
                             bsInternal._chatMessage(
                                 bs.Lstr(
                                     resource='powerupName'+str(i)).evaluate())
