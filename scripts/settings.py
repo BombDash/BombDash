@@ -1,7 +1,7 @@
 scenes = [11]
 fair = False
 bolt = False
-badWords = False
+badWords = True
 puppeteer = False
 cmdForAll = False
 cmdForMe = True

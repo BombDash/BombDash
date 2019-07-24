@@ -6913,3 +6913,65 @@ t.pickupSounds = ['gambolPickedup']
 t.fallSounds = ['gambolFall']
 
 t.style = 'agent'
+
+# Russian tramp
+t = Appearance('Russian tramp')
+
+t.colorTexture = 'gopnikColor'
+t.colorMaskTexture = 'gopnikColorMask'
+t.iconTexture = 'gopnikIcon'
+t.iconMaskTexture = 'gopnikIconColorMask'
+
+t.defaultColor = (0.40, 0.44, 0.55)
+t.defaultHighlight = (0.50, 0.48, 0.44)
+
+t.headModel = 'gopnikHead'
+t.torsoModel = 'gopnikTorso'
+t.pelvisModel = 'gopnikPelvis'
+t.upperArmModel = 'gopnikUpperArm'
+t.foreArmModel = 'gopnikForeArm'
+t.handModel = 'gopnikHand'
+t.upperLegModel = 'gopnikUpperLeg'
+t.lowerLegModel = 'gopnikLowerLeg'
+t.toesModel = 'agentToes'
+
+if settings.badWords:
+    t.attackSounds = ['gopnikHit1',
+                      'gopnikHit2']
+
+    t.jumpSounds = ['gopnik1',
+                    'gopnik2',
+                    'gopnik4',
+                    'gopnik3']
+
+    t.impactSounds = ['gopnikHit2',
+                      'gopnikHit1',
+                      'gopnik2',
+                      'gopnik1',
+                      'gopnik4']
+
+    t.deathSounds = ['gopnikDeath']
+
+    t.pickupSounds = ['gopnik1',
+                      'gopnik2',
+                      'gopnik4',
+                      'gopnik3']
+
+    t.fallSounds = ['gopnikFall']
+else:
+    sounds = ['agent1',
+              'agent2',
+              'agent3',
+              'agent4']
+
+    hitSounds = ['agentHit1',
+                 'agentHit2']
+
+    t.attackSounds = sounds
+    t.jumpSounds = sounds
+    t.impactSounds = hitSounds
+    t.deathSounds = ['agentDeath']
+    t.pickupSounds = sounds
+    t.fallSounds = ['agentFall']
+
+t.style = 'agent'
