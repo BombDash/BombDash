@@ -190,7 +190,9 @@ class MainMenuActivity(bs.Activity):
             bs.getConfig()['BombDash Privilege'] = {
                 'admins': [],
                 'vips': [],
-                'bans': []}
+                'bans': []
+                }
+
             bs.writeConfig()
 
         if 'BombDash Stats' not in bs.getConfig():
@@ -201,7 +203,9 @@ class MainMenuActivity(bs.Activity):
                 'Betrayals': 0,
                 'Bomb explosions': 0,
                 'Collected powerups': 0,
-                'Fatality hits': 0}
+                'Fatality hits': 0
+                }
+
             bs.writeConfig()
 
         # hmm, it works?
@@ -267,7 +271,8 @@ class MainMenuActivity(bs.Activity):
         if self.scene is not None:
             startEvent = self.scene
         else:
-            # do not needs to select special scenes, if this is not their time
+            # do not needs to select special scenes,
+            # if this is not their time
             m = settings.scenes
             if not bsUI.gNewYear and 15 in settings.scenes:
                 m = list(set(m)-set([15]))
