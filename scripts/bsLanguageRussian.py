@@ -2653,6 +2653,7 @@ values = {
             'Impact':'Импакт',
             'Bombman':'БомбМэн',
             'Zombie':'Зомби',
+            'Russian tramp':'Гопник',
             'Eric':'Эрик',
             'Kronk':'Кронк',
             'Lee':'Ли',
