@@ -1,4 +1,4 @@
-scenes = [11]
+scenes = [1, 2, 3, 5, 7, 8, 9, 10, 11, 12]
 fair = False
 bolt = False
 badWords = True
@@ -10,6 +10,7 @@ halloweenScene = False
 duck = False
 forcedUI = 0
 theme = 'Default'
+
 
 def saveSettings():
     import bs
@@ -29,7 +30,9 @@ def saveSettings():
         s[10] = 'forcedUI = ' + str(forcedUI) + '\n'
         s[11] = 'theme = ' + "'" + str(theme) + "'" + '\n'
 
-    f = open(bs.getEnvironment()['systemScriptsDirectory']+'/settings.py', 'w')
+    f = open(
+        bs.getEnvironment()['systemScriptsDirectory']+'/settings.py', 'w')
+
     for i in s:
         f.write(i)
 

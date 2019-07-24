@@ -1507,6 +1507,7 @@ class snowyMountlands(Map):
         g.vignetteInner = (0.95, 0.95, 0.99)
         g.vrNearClip = 0.5
         self._emit = bs.Timer(15, bs.WeakCall(self.emit), repeat=True)
+
     def emit(self):
         pos = (-15+(random.random()*30),
                15,
@@ -1535,7 +1536,6 @@ class snowyMountlands(Map):
         return (x < -0.5 or x > 0.5 or z < -0.5 or z > 0.5)
 
 registerMap(snowyMountlands)
-
 
 class Airlands(Map):
     import AirlandsDefs as defs

@@ -881,7 +881,11 @@ class DebugWindow(Window):
             transition='inLeft').getRootWidget()
 
 class BDSettings(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, transition='inRight'):
         import ericBoss
 
@@ -1715,7 +1719,11 @@ class BDSettings(Window):
             transition='inLeft').getRootWidget()
 
 class AboutBDWindow(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, originWidget=None):
         #bsInternal._setAnalyticsScreen('Credits Window')
         # if they provided an origin-widget, scale up from that
@@ -1803,7 +1811,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-385)
+                    suppressWarning=True)-315)
         else:
             self._subHeight = (
                 bsInternal._getStringHeight(
@@ -1811,7 +1819,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-250)
+                    suppressWarning=True)-120)
 
         c = self._subContainer = bs.containerWidget(
             parent=s,
@@ -1906,8 +1914,8 @@ class AboutBDWindow(Window):
             text=bs.getSpecialChar('steamLogo')+bs.Lstr(resource='dev3').evaluate())
 
         ss = -261
-        tintColor = (15, 0, 0)
-        tint2Color = (0, 0, 0)
+        tintColor = (0.2, 1, 1)
+        tint2Color = (0.5, 0.25, 1)
         iconTex = 'bunnyIcon'
         tintTex = 'bunnyIconColorMask'
         maskTexture = bs.getTexture('characterIconMask')
@@ -1932,7 +1940,7 @@ class AboutBDWindow(Window):
             scale=0.72,
             color=bs.getSafeColor(tintColor,0.7),
             shadow=1.0,
-            text=bs.getSpecialChar('steamLogo')+bs.Lstr(resource='dev8').evaluate())
+            text=bs.getSpecialChar('steamLogo')+bs.Lstr(resource='dev9').evaluate())
 
         ss = -348
         tintColor = (20, 0, 20)
@@ -1964,6 +1972,35 @@ class AboutBDWindow(Window):
             text=bs.getSpecialChar('steamLogo')+bs.Lstr(resource='dev7').evaluate())
 
         ss = -435
+        tintColor = (15, 0, 0)
+        tint2Color = (0, 0, 0)
+        iconTex = 'bunnyIcon'
+        tintTex = 'bunnyIconColorMask'
+        maskTexture = bs.getTexture('characterIconMask')
+
+        bs.imageWidget(
+            parent=c,
+            position=(self._subWidth-195, self._subHeight-75+ss),
+            size=(50, 50),
+            color=(1, 1, 1),
+            maskTexture=maskTexture,
+            texture=bs.getTexture(iconTex),
+            tintTexture=bs.getTexture(tintTex),
+            tintColor=tintColor,
+            tint2Color=tint2Color)
+
+        bs.textWidget(
+            parent=c,
+            size=(0,0),
+            position=(self._subWidth-170, self._subHeight-88+ss),
+            hAlign='center',
+            vAlign='center',
+            scale=0.72,
+            color=bs.getSafeColor(tintColor,0.7),
+            shadow=1.0,
+            text=bs.getSpecialChar('steamLogo')+bs.Lstr(resource='dev8').evaluate())
+
+        ss = -522
         tintColor = (11, 1.3, 0)
         tint2Color = (0, 2.6, 0.7)
         iconTex = 'bunnyIcon'
@@ -2053,7 +2090,11 @@ class AboutBDWindow(Window):
         uiGlobals['mainMenuWindow'] = ExtraButtonsWindow().getRootWidget()
 
 class NothingWindow(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self):
         if bs.getEnvironment()['platform'] != 'android':
             pos = (-600, 400)
@@ -2083,7 +2124,11 @@ class NothingWindow(Window):
         bsInternal._getForegroundHostSession().end()
 
 class CMDMenu(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, transition='inRight'):
         self._width = width = 580
         self._height = height = 350 if gSmallUI else 420 if gMedUI else 520
@@ -11262,7 +11307,11 @@ class AccountWindow(Window):
             bs.printException('error restoring state for', self.__class__)
 
 class StatsWindow(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, transition='inRight'):
         self._width = width = 580
         self._height = height = 350 if gSmallUI else 420
@@ -11433,7 +11482,11 @@ class StatsWindow(Window):
             ExtraButtonsWindow().getRootWidget()
 
 class ThemesWindow(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, transition='inRight'):
         self._width = width = 580
         self._height = height = 350 if gSmallUI else 420 if gMedUI else 520
@@ -11673,7 +11726,11 @@ class ThemesWindow(Window):
             ).getRootWidget()
 
 class ExtraButtonsWindow(Window):
+    """
+    category: BombDash Classes
 
+    Class of one of windows which are only in this modpack.
+    """
     def __init__(self, originWidget=None):
         if originWidget is not None:
             self._transitionOut = 'outScale'
