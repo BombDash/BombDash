@@ -1,7 +1,7 @@
 scenes = [1, 2, 3, 5, 7, 8, 9, 10, 11, 12]
 fair = False
 bolt = False
-badWords = False
+badWords = True
 puppeteer = False
 cmdForAll = False
 cmdForMe = True

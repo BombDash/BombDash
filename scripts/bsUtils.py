@@ -2985,6 +2985,9 @@ def _playMusic(musicType, continuous=False,
                 elif musicType == 'BasshunterDota':
                     filename = 'BasshunterDota'
                     volume = 3.0
+                elif musicType == 'ForEverything':
+                    filename = 'violet7ripForEverything'
+                    volume = 3.0
                 else:
                     print "Unknown music: '"+musicType+"'"
                     filename = 'flagCatcherMusic'
