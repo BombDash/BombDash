@@ -1400,6 +1400,15 @@ values = {
 
         'powerupJumpDescriptionText':('Jump much higher than before.'),
 
+        'powerupBlessingNameText':'Blessing',
+        'powerupBlessingDescriptionText':('An angel will come down from heaven and eat us all.\n'
+                                          'Okay joke, almost, he will throw the realm of blessing.\n'
+                                          'She needs to catch. What does she give? Find out for yourself.'),
+
+        'powerupRailgunNameText':'Railgun',
+        'powerupRailgunDescriptionText':('Killer thing, really. Only be careful with her.\n'
+                                         'They say the recoil she has is as killer as she.'),
+
         'powerupCurseDescriptionText':('You probably want to avoid these.\n'
                                        ' ...or do you?'),
         'powerupCurseNameText':'Curse',

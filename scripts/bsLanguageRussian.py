@@ -2016,6 +2016,15 @@ values = {
         'powerupJumpNameText':'Высокий прыжок',
         'powerupJumpDescriptionText':('Прыгай намного выше, чем раньше.'),
 
+        'powerupBlessingNameText':'Благословение',
+        'powerupBlessingDescriptionText':('Ангел спустится с небес и всех нас съест.\n'
+                                          'Ладно шутка, почти, он кинет сферу благословения.\n'
+                                          'Её нужно поймать. Что она дает? Сами узнаете.'),
+
+        'powerupRailgunNameText':'Рельсотрон',
+        'powerupRailgunDescriptionText':('Убойная штука, реально. Только осторожнее с ней.\n'
+                                         'Говорят отдача у нее такая же убойная, как она.'),
+
         'powerupsSubtitleText':'Конечно, ни одна игра не обходится без усилителей:',
         'powerupsText':'Усилители',
         'punchInfoText':('- Удар -\n'

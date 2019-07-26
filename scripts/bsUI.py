@@ -2784,10 +2784,10 @@ class HelpWindow(Window):
         interfaceType = bs.getEnvironment()['interfaceType']
 
         self._subWidth = 660
-        self._subHeight = 4750 + bsUtils._getResource(
+        self._subHeight = 4900 + bsUtils._getResource(
             self._r + '.someDaysExtraSpace') + bsUtils._getResource(
             self._r + '.orPunchingSomethingExtraSpace') if not settings.fair \
-                else 2850 + bsUtils._getResource(
+                else 2950 + bsUtils._getResource(
                     self._r+'.someDaysExtraSpace') + bsUtils._getResource(
                     self._r+'.orPunchingSomethingExtraSpace')
 
@@ -3147,7 +3147,9 @@ class HelpWindow(Window):
                     'powerupElonMine',
                     'powerupAirstrike',
                     'powerupPaintBomb',
-                    'powerupJump']:
+                    'powerupJump',
+                    'powerupBlessing',
+                    'powerupRailgun']:
             name = bs.Lstr(resource=self._r+'.'+tex+'NameText')
             desc = bs.Lstr(resource=self._r+'.'+tex+'DescriptionText')
 
