@@ -12,8 +12,8 @@
 -----------------------------------
 1. Это чтобы не писать постоянно sudo
 #### ```sudo su```
-2. Добавляем репозиторий... (в >\> убрать \, тут просто вк превратит это в »)
-#### ```echo -e "\ndeb https://bombdash.net/nav/repo/deb bionic non-free" >\> /etc/apt/sources.list```
+2. Добавляем репозиторий...
+#### ```echo -e "\ndeb https://bombdash.net/nav/repo/deb bionic non-free" >> /etc/apt/sources.list```
 3. Обновляем список пакетов
 #### ```apt update```
 4. Ну и самая классная строчка — устанавливаем модпак
