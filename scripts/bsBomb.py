@@ -847,16 +847,13 @@ class Bomb(bs.Actor):
                              'airstrike', 'timeBomb', 'fireBottle',
                              'colorBomb']:
             materials = materials + (factory.impactBlastMaterial,)
-
         elif self.bombType in ['landMine', 'slipper', 'elonMine']:
             materials = materials + (factory.landMineNoExplodeMaterial,)
-
         elif self.bombType == 'forceBomb':
             materials = materials + (factory.forseBombMaterial,)
 
-        elif self.bombType == 'sticky':
+        if self.bombType == 'sticky':
             materials = materials + (factory.stickyMaterial,)
-
         elif not self.notSound:
             materials = materials + (factory.normalSoundMaterial,)
 
@@ -1310,10 +1307,10 @@ class Bomb(bs.Actor):
             try: nodeDelegate = node.getDelegate()
             except Exception: nodeDelegate = None
             if node is not None and node.exists():
-                if (self.bombType == type and
+                if (self.bombType == 'impact' if type == 'landMine' else type and
                     (node is self.owner
                      or (isinstance(nodeDelegate, Bomb)
-                         and nodeDelegate.bombType == type
+                         and nodeDelegate.bombType == 'impact' if type == 'landMine' else type
                          and nodeDelegate.owner is self.owner))): return
                 else:
                     self.handleMessage(ExplodeMessage())

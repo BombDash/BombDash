@@ -320,11 +320,11 @@ class MainMenuActivity(bs.Activity):
                 resource='musicText').evaluate()+musicName)
 
             def dropBGD():
-                vel1 = (-5.0 + random.random()*30.0) \
-                    * (-1.0 if pos[0] > 0 else 1.0)
-
                 pos = (-15 + (random.random()*30), 15,
                        -15 + (random.random()*30))
+
+                vel1 = (-5.0 + random.random()*30.0) \
+                    * (-1.0 if pos[0] > 0 else 1.0)
 
                 vel = (vel1, -50.0, random.uniform(-20, 20))
 
