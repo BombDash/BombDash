@@ -1695,6 +1695,8 @@ values = {
                         '   Really Slow Motion - This Ends Now.\n'
                         '   Really Slow Motion - The Way.\n'
                         '   Georgi Kay - In My Mind (Axwell Mix).\n'
+                        '   Basshunter - Dota.\n'
+                        '   Violet7rip - For Everything.\n'
                         '\n'
                         'Sounds:\n'
                         '   noisefx.ru (and others from the internet).\n'

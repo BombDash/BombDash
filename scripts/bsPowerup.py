@@ -159,7 +159,7 @@ class PowerupFactory(object):
         self.texHighJump = bs.getTexture('powerupJump')
         self.texBot = bs.getTexture('neoSpazIcon')
         self.texSno = bs.getTexture('bunnyColor')
-        self.texBlessing = bs.getTexture('achievementFlawlessVictory')
+        self.texBlessing = bs.getTexture('powerupBlessing')
         self.texRailgun = bs.getTexture('powerupRailgun')
 
         self.healthPowerupSound = bs.getSound('healthPowerup')

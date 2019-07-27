@@ -371,6 +371,8 @@ values = {
                         '   Really Slow Motion - This Ends Now.\n'
                         '   Really Slow Motion - The Way.\n'
                         '   Georgi Kay - In My Mind (Axwell Mix).\n'
+                        '   Basshunter - Dota.\n'
+                        '   Violet7rip - For Everything.\n'
                         '\n'
                         'Звуки:\n'
                         '   noisefx.ru (и другие из интернета).\n'
@@ -2376,7 +2378,7 @@ values = {
     'purchasingText':'Покупка...',
     'quitGameText':'Выйти из ${APP_NAME}?',
     'quittingIn5SecondsText':'Выход через 5 секунд...',
-    'randomPlayerNamesText':'Дима, Кузя, Вован, Маха, Русский, Какуля, Бибер, Борька, Няшка, Толян',
+    'randomPlayerNamesText':'Дима, Кузя, Вован, Маха, Русский, Какуля, Бибер, Борька, Няшка, Толян, Дикий, BigDick, Опасный',
     'randomText':'Случайный',
     'rankText':'Ранг',
     'ratingText':'Рейтинг',
