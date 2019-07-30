@@ -1307,10 +1307,11 @@ class Bomb(bs.Actor):
             try: nodeDelegate = node.getDelegate()
             except Exception: nodeDelegate = None
             if node is not None and node.exists():
-                if (self.bombType == 'impact' if type == 'landMine' else type and
+                bombType = 'impact' if type == 'landMine' else type
+                if (self.bombType == bombType and
                     (node is self.owner
                      or (isinstance(nodeDelegate, Bomb)
-                         and nodeDelegate.bombType == 'impact' if type == 'landMine' else type
+                         and nodeDelegate.bombType == bombType
                          and nodeDelegate.owner is self.owner))): return
                 else:
                     self.handleMessage(ExplodeMessage())
