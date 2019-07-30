@@ -1298,7 +1298,7 @@ class Bomb(bs.Actor):
     def _handleOOB(self, m):
         self.handleMessage(bs.DieMessage())
 
-    def _handleImpact(self, m, type):
+    def _handleImpact(self, m, typeOfBomb):
         node, body = bs.getCollisionInfo('opposingNode', 'opposingBody')
         def go():
             # if we're an impact bomb and we came from this node, don't explode...
@@ -1307,11 +1307,11 @@ class Bomb(bs.Actor):
             try: nodeDelegate = node.getDelegate()
             except Exception: nodeDelegate = None
             if node is not None and node.exists():
-                bombType = 'impact' if type == 'landMine' else type
-                if (self.bombType == bombType and
+                typeOfBombEdit = 'impact' if typeOfBomb == 'landMine' else typeOfBomb
+                if (self.bombType == typeOfBombEdit and
                     (node is self.owner
                      or (isinstance(nodeDelegate, Bomb)
-                         and nodeDelegate.bombType == bombType
+                         and nodeDelegate.bombType == typeOfBombEdit
                          and nodeDelegate.owner is self.owner))): return
                 else:
                     self.handleMessage(ExplodeMessage())
@@ -1634,7 +1634,7 @@ class Bomb(bs.Actor):
             node = bs.getCollisionInfo('opposingNode')
             self._handleForceBomb(m, node)
         elif isinstance(m, ImpactMessage):
-            self._handleImpact(m, type=self.bombType)
+            self._handleImpact(m, typeOfBomb=self.bombType)
         elif isinstance(m, bs.PickedUpMessage):
             # change our source to whoever just picked us up *only* if its None
             # this way we can get points for killing bots with their own bombs
