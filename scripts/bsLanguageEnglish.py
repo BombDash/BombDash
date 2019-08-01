@@ -1,6 +1,40 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'add':'Add',
+    'act':'Act',
+    'newName':'New name...',
+    'favoritesServerRenamed':'Server renamed.',
+    'favoritesServerAdded':'Server added to favorites.',
+    'favoritesAlreadyServer':'A server with that name is already in your favorites.\nTry a different name.',
+    'favoritesLastServerNone':'You have not been to any server yet.',
+    'favoritesLastServerInFavorites':'The last server on which you were already in the favorites.',
+    'favoritesLastServerAdded':'The last server on which you were added to your favorites.',
+    'favoritesChatMenuAddButtonText':'Add server to favorites',
+    'favoritesAndSoEmpty':'You already have no servers in your favorites.',
+    'favoritesServerDeletedText':'Server removed from favorites.',
+    'resetFavoritesSucces':'All servers are removed from favorites.',
+    'deleteFavoritesConfirm':'Are you sure you want to remove the server from your favorites?',
+    'resetFavoritesConfirm':'Are you sure you want to remove all servers from your favorites?',
+    'favoritesInstructionText':('How to add a server?\n' 
+                                'There are 2 options.\n'
+                                'Consider the option manually:\n'
+                                '1. You need to somehow find out the ip address and port of the server you need\n' 
+                                '2. Then click on the button in the "Add manually" button\n' 
+                                '3. Well, then I think it’s clear\n'
+                                '(Of course, you need to make a way to get ip and port, but for now not know how)\n' 
+                                '\n'
+                                'Now consider the automatic option:\n' 
+                                '1. Go to the desired server\n' 
+                                '2. Open chat\n' 
+                                '3. Click the "..." button in the upper right corner\n' 
+                                '4. In the mini-window that opens, click the "Add server to favorites" button'),
+    'favoritesInstructionButtonText':'Instruction',
+    'favoritesDeleteButtonText':'Delete',
+    'favoritesDeleteAllButtonText':'Delete all',
+    'favoritesAddButtonText':'Add manually',
+    'emptyFavoritesText':'You have no servers in your favorites.',
+    'favoritesText':'Favorites',
     'flightModeDisabled':'Flight mode is disabled!',
     'databaseNotAvailable':'Oops, our database is not available.\nSome things will not work.',
     'themesAlready':'This theme is chosen as it is.',
@@ -1717,7 +1751,7 @@ values = {
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'Modpack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: July 23 2019\n'
+                        'List updated: August 1 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
@@ -1737,6 +1771,7 @@ values = {
                         '- Added new menu scene "Ricardo Milos"\n'
                         '- Added an info button to the themes window\n'
                         '- Added button to go to the theme folder in the themes window\n'
+                        '- Added a new tab "Favorites" in the multiplayer window\n'
                         '- New developers are added to the "About BombDash" window\n'
                         '\n'
                         'Corrections:\n'

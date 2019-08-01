@@ -11727,6 +11727,282 @@ class ThemesWindow(Window):
             transition='inLeft'
             ).getRootWidget()
 
+
+class FavoritesAddServerWindow(Window):
+    """
+    category: BombDash Classes
+
+    Class of one of windows which are only in this modpack.
+    """
+    def __init__(self):
+        self._transitionOut = 'outScale'
+        transition = 'inScale'
+
+        self._width = width = 450
+        self._height = height = 500
+
+        self._rootWidget = bs.containerWidget(
+            size=(width,height),
+            color=gWindowsColor,
+            transition=transition,
+            toolbarVisibility='MENU_MINIMAL',
+            #scaleOriginStackOffset=scaleOrigin,
+            scale=1.45 if gSmallUI else 1.3 if gMedUI else 1.0,
+            stackOffset=(0, -8) if gSmallUI else (0, 0))
+
+        if gToolbars and gSmallUI:
+            bs.containerWidget(edit=self._rootWidget, onCancelCall=self._back)
+        else:
+            b = bs.buttonWidget(
+                parent=self._rootWidget,
+                position=(40, height-(68 if gSmallUI else 62)),
+                size=(140, 60),
+                scale=0.8,
+                label=bs.Lstr(resource='backText'),
+                color=gWindowsBackColor,
+                textColor=gWindowsBackTextColor,
+                buttonType='back',
+                onActivateCall=self._back,
+                autoSelect=True)
+
+            bs.containerWidget(edit=self._rootWidget, cancelButton=b)
+
+            if gDoAndroidNav:
+                bs.buttonWidget(
+                    edit=b,
+                    buttonType='backSmall',
+                    position=(40,height-(68 if gSmallUI else 62)+5),
+                    size=(60,48),
+                    label=bs.getSpecialChar('back'))
+
+        t = bs.textWidget(
+            parent=self._rootWidget,
+            position=(0, height-(59 if gSmallUI else 54)),
+            size=(width, 30),
+            text=bs.Lstr(resource='favoritesAddButtonText'),
+            hAlign="center",
+            color=gTitleColor,
+            maxWidth=330,
+            vAlign="center")
+
+        if gToolbars:
+            bs.widget(
+                edit=s,
+                rightWidget=bsInternal._getSpecialWidget('partyButton'))
+
+            if gSmallUI:
+                bs.widget(
+                    edit=s,
+                    leftWidget=bsInternal._getSpecialWidget('backButton'))
+
+        self._r = 'gatherWindow'
+
+        self.t1 = bs.textWidget(
+            parent=self._rootWidget, position=(90, 400),
+            color=gTextColor, scale=1.0,
+            size=(0, 0), maxWidth=80,
+            hAlign='right', vAlign='center',
+            text=bs.Lstr(resource='editProfileWindow.nameText'))
+
+        self.t1 = bs.textWidget(
+            parent=self._rootWidget, editable=True, description=bs.Lstr(
+                resource='editProfileWindow.nameText'),
+            text='Server', autoSelect=True,
+            color=gTextColor,
+            position=(50, 315),
+            vAlign='center', scale=1.0, size=(375, 60))
+
+        self.t2 = bs.textWidget(
+            parent=self._rootWidget, position=(117.5, 295),
+            color=gTextColor, scale=1.0,
+            size=(0, 0), maxWidth=80,
+            hAlign='right', vAlign='center',
+            text=bs.Lstr(resource=self._r+'.manualAddressText'))
+
+        self.t2 = bs.textWidget(
+            parent=self._rootWidget, editable=True, description=bs.Lstr(
+                resource=self._r + '.manualAddressText'),
+            text='127.0.0.1', autoSelect=True,
+            color=gTextColor,
+            position=(50, 210),
+            vAlign='center', scale=1.0, size=(375, 60))
+
+        self.t3 = bs.textWidget(
+            parent=self._rootWidget, position=(100, 190),
+            color=gTextColor, scale=1.0,
+            size=(0, 0), maxWidth=80,
+            hAlign='right', vAlign='center',
+            text=bs.Lstr(resource=self._r+'.portText'))
+
+        self.t3 = bs.textWidget(
+            parent=self._rootWidget, editable=True, description=bs.Lstr(
+                resource=self._r + '.portText'),
+            text='43210', autoSelect=True, maxChars=5,
+            color=gTextColor,
+            position=(50, 105),
+            vAlign='center', scale=1.0, size=(375, 60))
+
+        self._addButton = b = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(115, 25),
+            size=(235, 65),
+            autoSelect=False,
+            label=bs.Lstr(resource='add'),
+            color=gButtonsColor,
+            textColor=gButtonsTextColor,
+            onActivateCall=self._addButtonPress)
+
+    def _addButtonPress(self):
+        name = bs.textWidget(query=self.t1)
+        address = bs.textWidget(query=self.t2)
+        port = bs.textWidget(query=self.t3)
+        for i in bs.getConfig()['BombDash Favorites Servers']:
+            if i[0] == name:
+                bs.screenMessage(
+                    bs.Lstr(resource='favoritesAlreadyServer'),
+                    (1, 0, 0))
+
+                return
+        
+        bs.getConfig()['BombDash Favorites Servers'].append(
+            [name, address, port])
+
+        bs.writeConfig()
+        bs.screenMessage(
+            bs.Lstr(resource='favoritesServerAdded'),
+            (0, 1, 0))
+
+    def _back(self):
+        bs.containerWidget(edit=self._rootWidget, transition='outScale')
+
+
+class FavoritesActWindow(Window):
+    """
+    category: BombDash Classes
+
+    Class of one of windows which are only in this modpack.
+    """
+    def __init__(self, serverName):
+        self.serverName = serverName
+
+        self._transitionOut = 'outScale'
+        transition = 'inScale'
+
+        self._width = width = 450
+        self._height = height = 400
+
+        self._rootWidget = bs.containerWidget(
+            size=(width,height),
+            color=gWindowsColor,
+            transition=transition,
+            toolbarVisibility='MENU_MINIMAL',
+            #scaleOriginStackOffset=scaleOrigin,
+            scale=2.0 if gSmallUI else 1.3 if gMedUI else 1.0,
+            stackOffset=(0, -8) if gSmallUI else (0, 0))
+
+        if gToolbars and gSmallUI:
+            bs.containerWidget(edit=self._rootWidget, onCancelCall=self._back)
+        else:
+            b = bs.buttonWidget(
+                parent=self._rootWidget,
+                position=(40, height-(68 if gSmallUI else 62)),
+                size=(140, 60),
+                scale=0.8,
+                label=bs.Lstr(resource='backText'),
+                color=gWindowsBackColor,
+                textColor=gWindowsBackTextColor,
+                buttonType='back',
+                onActivateCall=self._back,
+                autoSelect=True)
+
+            bs.containerWidget(edit=self._rootWidget, cancelButton=b)
+
+            if gDoAndroidNav:
+                bs.buttonWidget(
+                    edit=b,
+                    buttonType='backSmall',
+                    position=(40,height-(68 if gSmallUI else 62)+5),
+                    size=(60,48),
+                    label=bs.getSpecialChar('back'))
+
+        t = bs.textWidget(
+            parent=self._rootWidget,
+            position=(0, height-(59 if gSmallUI else 54)),
+            size=(width, 30),
+            text=bs.Lstr(resource='act'),
+            hAlign="center",
+            color=gTitleColor,
+            maxWidth=330,
+            vAlign="center")
+
+        if gToolbars:
+            bs.widget(
+                edit=s,
+                rightWidget=bsInternal._getSpecialWidget('partyButton'))
+
+            if gSmallUI:
+                bs.widget(
+                    edit=s,
+                    leftWidget=bsInternal._getSpecialWidget('backButton'))
+
+        self.t = bs.textWidget(
+            parent=self._rootWidget, editable=True, description=bs.Lstr(
+                resource='editProfileWindow.nameText'),
+            text=bs.Lstr(resource='newName').evaluate(), autoSelect=True,
+            color=gTextColor,
+            position=(50, 250),
+            vAlign='center', scale=1.0, size=(375, 60))
+
+        self._renameButton = b = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(110, 150),
+            size=(235, 65),
+            autoSelect=False,
+            label=bs.Lstr(resource='renameText'),
+            color=gButtonsColor,
+            textColor=gButtonsTextColor,
+            onActivateCall=self._renameButtonPress)
+
+        self._deleteButton = b = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(110, 50),
+            size=(235, 65),
+            autoSelect=False,
+            label=bs.Lstr(resource='deleteText'),
+            color=gButtonsColor,
+            textColor=gButtonsTextColor,
+            onActivateCall=self._deleteButtonPress)
+
+    def _renameButtonPress(self):
+        name = bs.textWidget(query=self.t)
+        for i in bs.getConfig()['BombDash Favorites Servers']:
+            if i[0] == self.serverName:
+                index = bs.getConfig()['BombDash Favorites Servers'].index(i)
+                bs.getConfig()['BombDash Favorites Servers'][index][0] = name
+                bs.writeConfig()
+                bs.screenMessage(
+                    bs.Lstr(resource='favoritesServerRenamed'),
+                    (0, 1, 0))
+
+    def _deleteButtonPress(self):
+        ConfirmWindow(
+            bs.Lstr(resource='deleteFavoritesConfirm'),
+            self._delete, 450)
+
+    def _delete(self):
+        for i in bs.getConfig()['BombDash Favorites Servers']:
+            if i[0] == self.serverName:
+                index = bs.getConfig()['BombDash Favorites Servers'].index(i)
+                bs.getConfig()['BombDash Favorites Servers'].pop(index)
+                bs.writeConfig()
+                bs.screenMessage(
+                    bs.Lstr(resource='favoritesServerDeletedText'),
+                    (0, 1, 0))
+
+    def _back(self):
+        bs.containerWidget(edit=self._rootWidget, transition='outScale')
+
+
 class ExtraButtonsWindow(Window):
     """
     category: BombDash Classes
@@ -23762,6 +24038,9 @@ class GatherWindow(Window):
 
         tabsDef.append(['manual', bs.Lstr(resource=self._r+'.manualText')])
 
+        tabsDef.append(['favorites', bs.Lstr(
+            resource='favoritesText')])
+
         scrollBufferH = 130 + 2*xOffs
         tabBufferH = 250 + 2*xOffs
 
@@ -24516,6 +24795,161 @@ class GatherWindow(Window):
                     scale=0.8, selectable=True, onActivateCall=bs.Call(
                         doIt, v, c))
 
+        elif tab == 'favorites':
+            config = bs.getConfig()['BombDash Favorites Servers']
+            msgIfEmpty = bs.Lstr(resource='emptyFavoritesText')
+
+            cWidth = self._scrollWidth
+            cHeight = self._scrollHeight-20
+            sub_scroll_height = cHeight - 100
+            sub_scroll_width = 830
+
+            _subWidth = sub_scroll_width * 0.95
+            _subHeight = 50
+            _subHeightAdder = 30
+
+            if len(config) > 1:
+                for i in config:
+                    _subHeight += _subHeightAdder
+                    _subHeightAdder += 5
+
+            self._tabContainer = c = bs.containerWidget(
+                parent=self._rootWidget,
+                position=(scrollLeft, scrollBottom +
+                          (self._scrollHeight - cHeight) * 0.5),
+                size=(cWidth, cHeight),
+                background=False, selectionLoopToParent=True)
+
+            v = cHeight - 30
+            h = 30
+            bs.buttonWidget(
+                parent=c,
+                label=bs.Lstr(resource='favoritesAddButtonText'),
+                color=gButtonsColor,
+                textColor=gButtonsTextColor,
+                autoSelect=True,
+                position=(v*0.5-v*0.5+h, v-50),
+                size=(250, 60),
+                onActivateCall=self._onAddServerPress)
+            
+            h += 295
+            bs.buttonWidget(
+                parent=c,
+                label=bs.Lstr(resource='favoritesDeleteAllButtonText'),
+                color=gButtonsColor,
+                textColor=gButtonsTextColor,
+                autoSelect=True,
+                position=(v*0.5-v*0.5+h, v-50),
+                size=(250, 60),
+                onActivateCall=self._favoritesConfirmDeleteAll)
+
+            h += 295
+            bs.buttonWidget(
+                parent=c,
+                label=bs.Lstr(resource='favoritesInstructionButtonText'),
+                color=gButtonsColor,
+                textColor=gButtonsTextColor,
+                autoSelect=True,
+                position=(v*0.5-v*0.5+h, v-50),
+                size=(250, 60),
+                onActivateCall=self._favoritesGetInstruction)
+
+            v -= 40
+            v -= sub_scroll_height+23
+            sw = bs.scrollWidget(
+                parent=c,
+                color=gWindowsScrollColor,
+                position=((self._scrollWidth - sub_scroll_width) * 0.5, v),
+                size=(sub_scroll_width, sub_scroll_height))
+
+            cb = bs.containerWidget(
+                parent=sw,
+                size=(_subWidth, _subHeight),
+                background=False)
+
+            if not config:
+                bs.textWidget(
+                    parent=c,
+                    position=((self._scrollWidth - sub_scroll_width) * 3, 105 * 2.5),
+                    color=gTextColor,
+                    text=msgIfEmpty)
+            else:
+                vpos = 0
+                for server in config:
+                    handleServer = {
+                        'name': server[0],
+                        'ip': server[1],
+                        'port': server[2]
+                    }
+
+                    bs.textWidget(
+                        text=handleServer['name'],
+                        parent=cb,
+                        size=(300, 20),
+                        position=(25, vpos),
+                        selectable=True,
+                        onSelectCall=bs.WeakCall(self._doNothing),
+                        onActivateCall=bs.WeakCall(
+                            self._favoritesConnectServer,
+                            handleServer['ip'], handleServer['port']),
+                        clickActivate=True,
+                        cornerScale=1.4,
+                        autoSelect=True,
+                        color=gTextColor,
+                        hAlign='left',
+                        vAlign='center')
+
+                    bs.buttonWidget(
+                        color=gButtonsColor,
+                        textColor=gButtonsTextColor,
+                        label=bs.Lstr(resource='act'),
+                        parent=cb,
+                        autoSelect=True,
+                        onActivateCall=bs.WeakCall(
+                            self._onActPress, handleServer['name']),
+                        onSelectCall=bs.WeakCall(self._doNothing),
+                        size=(120, 40),
+                        position=(675, vpos),
+                        scale=0.9)
+
+                    vpos += 50
+
+    def _onAddServerPress(self):
+        FavoritesAddServerWindow()
+
+    def _onActPress(self, serverName):
+        FavoritesActWindow(serverName)
+
+    def _doNothing(self):
+        pass
+
+    def _favoritesConnectServer(self, ip, port):
+        bsInternal._connectToParty(ip, port=int(port))
+
+    def _favoritesConfirmDeleteAll(self):
+        ConfirmWindow(
+            bs.Lstr(resource='resetFavoritesConfirm'),
+            self._favoritesDeleteAll, 450)
+
+    def _favoritesDeleteAll(self):
+        config = bs.getConfig()['BombDash Favorites Servers']
+        if not config:
+            bs.screenMessage(
+                bs.Lstr(resource='favoritesAndSoEmpty'))
+        else:
+            bs.getConfig()['BombDash Favorites Servers'] = list()
+            bs.writeConfig()
+
+            bs.screenMessage(
+                bs.Lstr(resource='resetFavoritesSucces'),
+                (0, 1, 0))
+
+    def _favoritesGetInstruction(self):
+        txt = bs.Lstr(resource='favoritesInstructionText')
+        ConfirmWindow(txt, cancelButton=False,
+                      width=500 if gSmallUI else 600,
+                      height=300)
+
     def _internetFetchLocalAddrCB(self, val):
         self._internetLocalAddress = str(val)
 
@@ -25011,9 +25445,17 @@ class GatherWindow(Window):
                 self._refreshing_public_party_list = False
 
             bs.pushCall(refresh_on)
-                    
+
+    def _write_last_server_to_cloud(self, party):
+        name = party['name']
+        address = party['address']
+        port = party['port']
+
+        bs.getConfig()['BombDash Last Server'] = [name, address, str(port)]
+        bs.writeConfig()
 
     def _on_public_party_activate(self, party):
+        self._write_last_server_to_cloud(party)
         if party['queue'] is not None:
             import bsUI2
             bs.playSound(bs.getSound('swish'))
@@ -25525,10 +25967,12 @@ class PartyWindow(Window):
         PopupMenuWindow(
             position=self._menuButton.getScreenSpaceCenter(),
             scale=2.3 if gSmallUI else 1.65 if gMedUI else 1.23,
-            choices=['unmute' if isMuted else 'mute'],
-            choicesDisplay=[bs.Lstr(
-                resource='chatUnMuteText'
-                if isMuted else 'chatMuteText')],
+            choices=[
+                'unmute' if isMuted else 'mute',
+                'favoritesChatMenuAddButton'],
+            choicesDisplay=[
+                bs.Lstr(resource='chatUnMuteText' if isMuted else 'chatMuteText'),
+                bs.Lstr(resource='favoritesChatMenuAddButtonText')],
             currentChoice='unmute' if isMuted else 'mute', delegate=self)
         self._popupType = 'menu'
 
@@ -25686,6 +26130,24 @@ class PartyWindow(Window):
                 bs.writeConfig()
                 bs.applySettings()
                 self._update()
+            elif choice == 'favoritesChatMenuAddButton':
+                configLastServer = bs.getConfig()['BombDash Last Server']
+                configFavoritesServers = bs.getConfig()['BombDash Favorites Servers']
+                if not configLastServer:
+                    bs.screenMessage(
+                        bs.Lstr(resource='favoritesLastServerNone'),
+                        (1, 0, 0))
+                elif configLastServer in configFavoritesServers:
+                    bs.screenMessage(
+                        bs.Lstr(resource='favoritesLastServerInFavorites'),
+                        (1, 0, 0))
+                else:
+                    bs.getConfig()['BombDash Favorites Servers'].append(configLastServer)
+                    bs.writeConfig()
+                    bs.screenMessage(
+                        bs.Lstr(resource='favoritesLastServerAdded'),
+                        (0, 1, 0))
+
         else:
             print 'unhandled popup type: '+str(self._popupType)
 

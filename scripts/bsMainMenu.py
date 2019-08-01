@@ -208,6 +208,14 @@ class MainMenuActivity(bs.Activity):
 
             bs.writeConfig()
 
+        if 'BombDash Favorites Servers' not in bs.getConfig():
+            bs.getConfig()['BombDash Favorites Servers'] = []
+            bs.writeConfig()
+
+        if 'BombDash Last Server' not in bs.getConfig():
+            bs.getConfig()['BombDash Last Server'] = []
+            bs.writeConfig()
+
         # hmm, it works?
         def writeModpackServers(res):
             global gModpackServers
