@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'serverDataMsg':'Server data:',
+    'serverDataInfo':'Server data is its IP address and port.\nBefore entering the server, they will be written to the chat.\nYou can also include this data in the file.\nThe data file will be in the mods folder.',
+    'writeServerData':'Log server data when entering',
+    'showServerData':'Show server data on call',
     'add':'Add',
     'act':'Act',
     'newName':'New name...',
@@ -17,18 +21,15 @@ values = {
     'deleteFavoritesConfirm':'Are you sure you want to remove the server from your favorites?',
     'resetFavoritesConfirm':'Are you sure you want to remove all servers from your favorites?',
     'favoritesInstructionText':('How to add a server?\n' 
-                                'There are 2 options.\n'
-                                'Consider the option manually:\n'
-                                '1. You need to somehow find out the ip address and port of the server you need\n' 
-                                '2. Then click on the button in the "Add manually" button\n' 
-                                '3. Well, then I think it’s clear\n'
-                                '(Of course, you need to make a way to get ip and port, but for now not know how)\n' 
-                                '\n'
-                                'Now consider the automatic option:\n' 
+                                'There are 2 options, but it is better to use automatic.\n'
+                                'Consider the automatic option:\n' 
                                 '1. Go to the desired server\n' 
                                 '2. Open chat\n' 
                                 '3. Click the "..." button in the upper right corner\n' 
-                                '4. In the mini-window that opens, click the "Add server to favorites" button'),
+                                '4. In the mini-window that opens, click the "Add server to favorites" button\n'
+                                '\nAs you can see, the automatic option is simple. The second option is\n'
+                                'adding manually, but it is more difficult and it does not make sense to paint it.\n'
+                                '\nWe wish you a pleasant use.'),
     'favoritesInstructionButtonText':'Instruction',
     'favoritesDeleteButtonText':'Delete',
     'favoritesDeleteAllButtonText':'Delete all',
@@ -53,7 +54,7 @@ values = {
                       'to send to group, only without screenshots.'),
     'goToThemesFolder':'Go to the folder with the themes (Google Drive)',
     'musicText':'Music: ',
-    'notCompatibilityCheckMsg':'Not compatible with the current version of the theme engine.\nAll errors are written to the log file. Correct these errors :)',
+    'notCompatibilityCheckMsg':'Not compatible with the current version of the theme engine.\nAll errors are written to the log file. Correct these errors.',
     'notCompatibilityCheck':'Not compatible with the current version of the theme engine!',
     'bombName1':'ice',
     'bombName2':'impact',
@@ -1751,7 +1752,7 @@ values = {
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'Modpack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: August 1 2019\n'
+                        'List updated: August 2 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
@@ -1773,11 +1774,14 @@ values = {
                         '- Added button to go to the theme folder in the themes window\n'
                         '- Added a new tab "Favorites" in the multiplayer window\n'
                         '- New developers are added to the "About BombDash" window\n'
+                        '- New setting "Show server data on call"\n'
+                        '- New setting "Log server data when entering"\n'
                         '\n'
                         'Corrections:\n'
                         '- Removed eggs in the main menu during easter\n'
                         '- Removed dropout of artillery from the lego bonus\n'
                         '- Fixed damage when catching sticky gift\n'
+                        '- Fixed crash during Airborne Day\n'
                         '- Fixed link to our site everywhere\n'
                         '- Fixed allocation of our servers if the database is unavailable\n'
                         '- Corrections in hockey\n'

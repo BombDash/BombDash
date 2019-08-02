@@ -8,6 +8,8 @@ cmdForMe = True
 cmdNew = False
 halloweenScene = False
 duck = False
+showServerData = False
+writeServerData = False
 forcedUI = 0
 theme = 'Default'
 
@@ -27,8 +29,10 @@ def saveSettings():
         s[7] = 'cmdNew = ' + str(cmdNew) + '\n'
         s[8] = 'halloweenScene = ' + str(halloweenScene) + '\n'
         s[9] = 'duck = ' + str(duck) + '\n'
-        s[10] = 'forcedUI = ' + str(forcedUI) + '\n'
-        s[11] = 'theme = ' + "'" + str(theme) + "'" + '\n'
+        s[10] = 'showServerData = ' + str(showServerData) + '\n'
+        s[11] = 'writeServerData = ' + str(writeServerData) + '\n'
+        s[12] = 'forcedUI = ' + str(forcedUI) + '\n'
+        s[13] = 'theme = ' + "'" + str(theme) + "'" + '\n'
 
     f = open(
         bs.getEnvironment()['systemScriptsDirectory']+'/settings.py', 'w')

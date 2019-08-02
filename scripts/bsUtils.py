@@ -44,8 +44,7 @@ gNewYear = (datetime.datetime.now().month == 12 \
 gWinter = datetime.datetime.now().month in [12, 1, 2]
 
 gVDV = datetime.datetime.now().month == 8 \
-    and datetime.datetime.now().day == 2 \
-    and bs.getLanguage() == 'Russian'
+    and datetime.datetime.now().day == 2
 
 gMarch8 = datetime.datetime.now().month == 3 \
     and datetime.datetime.now().day == 8

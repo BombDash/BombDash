@@ -2001,7 +2001,7 @@ class MainMenuActivity(bs.Activity):
             return 'logoEaster'
         elif firstApril:
             return 'logoLegacy' if not JRMPmode else 'logo'
-        elif bsUtils.gVDV:
+        elif bsUtils.gVDV and bs.getLanguage() == 'Russian':
             return 'logoVDV'
         elif bsUtils.gNewYear:
             return 'logoNY'

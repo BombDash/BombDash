@@ -896,7 +896,7 @@ class BDSettings(Window):
         self._scrollHeight = self._height - 120
 
         self._subWidth = self._scrollWidth * 0.95
-        self._subHeight = 1750
+        self._subHeight = 1950
 
         self._rootWidget = bs.containerWidget(
             size=(width, height),
@@ -1047,6 +1047,48 @@ class BDSettings(Window):
             scale=0.65)
 
         v -= 65
+        t = bs.textWidget(
+            parent=self._subContainer,
+            text='==========================================',
+            color=gTextColor,
+            position=((self._subWidth-buttonWidth)*0.5-45, v),
+            scale=0.65)
+
+        v -= 50
+        self.showServerData = bs.checkBoxWidget(
+            parent=self._subContainer,
+            position=((self._subWidth-buttonWidth)*0.5-d, v),
+            size=(buttonWidth, 60),
+            value=settings.showServerData,
+            maxWidth=buttonWidth,
+            color=gCheckBoxColor,
+            textColor=gCheckBoxTextColor,
+            onValueChangeCall=self.saveShowServerData,
+            text=bs.Lstr(resource='showServerData'),
+            autoSelect=True)
+
+        v -= 40
+        self.writeServerData = bs.checkBoxWidget(
+            parent=self._subContainer,
+            position=((self._subWidth-buttonWidth)*0.5-d, v),
+            size=(buttonWidth, 60),
+            value=settings.writeServerData,
+            maxWidth=buttonWidth,
+            color=gCheckBoxColor,
+            textColor=gCheckBoxTextColor,
+            onValueChangeCall=self.saveWriteServerData,
+            text=bs.Lstr(resource='writeServerData'),
+            autoSelect=True)
+
+        v -= 20
+        t = bs.textWidget(
+            parent=self._subContainer,
+            text=bs.Lstr(resource='serverDataInfo'),
+            color=gTextColor,
+            position=((self._subWidth-buttonWidth)*0.5-45, v),
+            scale=0.65)
+
+        v -= 85
         t = bs.textWidget(
             parent=self._subContainer,
             text='==========================================',
@@ -1453,6 +1495,20 @@ class BDSettings(Window):
     def _forcedUpdate(self):
         pass
 
+    def saveShowServerData(self, m):
+        settings.showServerData = False if m == 0 else True
+        settings.saveSettings()
+        bs.screenMessage(
+            bs.Lstr(resource='needsRestart'),
+            color=(1, 1, 0))
+
+    def saveWriteServerData(self, m):
+        settings.writeServerData = False if m == 0 else True
+        settings.saveSettings()
+        bs.screenMessage(
+            bs.Lstr(resource='needsRestart'),
+            color=(1, 1, 0))
+
     def saveCmdForMe(self, m):
         settings.cmdForMe = False if m == 0 else True
         settings.saveSettings()
@@ -1502,7 +1558,7 @@ class BDSettings(Window):
                 color=(1, 0.5, 0))
 
     def saveBadWords(self, m):
-        settings.badWords = False if m==0 else True
+        settings.badWords = False if m == 0 else True
         settings.saveSettings()
         bs.screenMessage(
             bs.Lstr(resource='needsRestart'),
@@ -1811,7 +1867,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-315)
+                    suppressWarning=True)-285)
         else:
             self._subHeight = (
                 bsInternal._getStringHeight(
@@ -1819,7 +1875,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-120)
+                    suppressWarning=True)-90)
 
         c = self._subContainer = bs.containerWidget(
             parent=s,
@@ -24811,7 +24867,7 @@ class GatherWindow(Window):
             if len(config) > 1:
                 for i in config:
                     _subHeight += _subHeightAdder
-                    _subHeightAdder += 5
+                    _subHeightAdder += 10 if gSmallUI else 5
 
             self._tabContainer = c = bs.containerWidget(
                 parent=self._rootWidget,
@@ -24935,7 +24991,8 @@ class GatherWindow(Window):
         config = bs.getConfig()['BombDash Favorites Servers']
         if not config:
             bs.screenMessage(
-                bs.Lstr(resource='favoritesAndSoEmpty'))
+                bs.Lstr(resource='favoritesAndSoEmpty'),
+                (1, 0, 0))
         else:
             bs.getConfig()['BombDash Favorites Servers'] = list()
             bs.writeConfig()
@@ -25453,6 +25510,35 @@ class GatherWindow(Window):
 
         bs.getConfig()['BombDash Last Server'] = [name, address, str(port)]
         bs.writeConfig()
+
+        if settings.showServerData:
+            nameMsg = bs.Lstr(
+                resource='nameText').evaluate(
+                ) + ': ' + name
+
+            addressMsg = bs.Lstr(
+                resource='gatherWindow.manualAddressText').evaluate(
+                ) + ': ' + address
+
+            portMsg = bs.Lstr(
+                resource='gatherWindow.portText').evaluate(
+                ) + ': ' + str(port)
+
+            bsInternal._chatMessage(
+                bs.Lstr(resource='serverDataMsg').evaluate())
+
+            bsInternal._chatMessage(nameMsg)
+            bsInternal._chatMessage(addressMsg)
+            bsInternal._chatMessage(portMsg)
+
+        if settings.writeServerData:
+            path = bs.getEnvironment()['userScriptsDirectory']
+            with open(path+'/serversData.txt', 'a+') as f:
+                f.write(
+                    'Server name: ' + name + '\n' + \
+                    'Address: ' + address + '\n' + \
+                    'Port: ' + str(port) + '\n' + \
+                    '===================================\n')
 
     def _on_public_party_activate(self, party):
         self._write_last_server_to_cloud(party)
