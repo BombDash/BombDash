@@ -11547,7 +11547,7 @@ class ThemesWindow(Window):
     """
     def __init__(self, transition='inRight'):
         self._width = width = 580
-        self._height = height = 350 if gSmallUI else 420 if gMedUI else 520
+        self._height = height = 375 if gSmallUI else 420 if gMedUI else 520
 
         self._scrollWidth = self._width - 100
         self._scrollHeight = self._height - 145
@@ -11571,7 +11571,7 @@ class ThemesWindow(Window):
         self._rootWidget = bs.containerWidget(
             size=(width, height),
             transition=transition,
-            scale=2.0 if gSmallUI else 1.55 if gMedUI else 1.0,
+            scale=1.75 if gSmallUI else 1.55 if gMedUI else 1.0,
             color=gWindowsColor,
             stackOffset=(0, -30) if gSmallUI else (0, 0))
 
@@ -11662,8 +11662,8 @@ class ThemesWindow(Window):
         self.goToThemesFolder = bs.buttonWidget(
             parent=self._rootWidget,
             position=(width/2-240,
-                      height-345 if gSmallUI \
-                          else height-415 if gMedUI \
+                      height-360 if gSmallUI \
+                          else height-405 if gMedUI \
                           else height-505),
             size=(buttonWidth-75, 55),
             autoSelect=True,
@@ -11675,8 +11675,8 @@ class ThemesWindow(Window):
         self.themesInfoButton = bs.buttonWidget(
             parent=self._rootWidget,
             position=(width/2+170,
-                      height-345 if gSmallUI \
-                          else height-415 if gMedUI \
+                      height-355 if gSmallUI \
+                          else height-400 if gMedUI \
                           else height-500),
             size=(buttonWidth-385, 50),
             autoSelect=True,
@@ -15886,6 +15886,8 @@ class TeamNamesColorsWindow(PopupWindow):
                 resource='settingsWindowAdvanced.resetText'),
             autoSelect=True, scale=0.7, onActivateCall=self._reset,
             size=(120, 50),
+            color=gInversionColor,
+            textColor=gInversionTextColor,
             position=(self._width * 0.5 - 60 * 0.7, self._height - 60))
 
         for i in range(2):
@@ -15911,10 +15913,14 @@ class TeamNamesColorsWindow(PopupWindow):
         bs.buttonWidget(
             parent=self._rootWidget, label=bs.Lstr(resource='cancelText'),
             autoSelect=True, onActivateCall=self._onCancelPress, size=(150, 50),
+            color=gInversionColor,
+            textColor=gInversionTextColor,
             position=(self._width * 0.5 - 200, 20))
         bs.buttonWidget(
             parent=self._rootWidget, label=bs.Lstr(resource='saveText'),
             autoSelect=True, onActivateCall=self._save, size=(150, 50),
+            color=gInversionColor,
+            textColor=gInversionTextColor,
             position=(self._width * 0.5 + 50, 20))
 
         bs.containerWidget(edit=self._rootWidget,
@@ -24867,7 +24873,7 @@ class GatherWindow(Window):
             if len(config) > 1:
                 for i in config:
                     _subHeight += _subHeightAdder
-                    _subHeightAdder += 10 if gSmallUI else 5
+                    _subHeightAdder += 5
 
             self._tabContainer = c = bs.containerWidget(
                 parent=self._rootWidget,
@@ -24926,9 +24932,13 @@ class GatherWindow(Window):
             if not config:
                 bs.textWidget(
                     parent=c,
-                    position=((self._scrollWidth - sub_scroll_width) * 3, 105 * 2.5),
+                    text=msgIfEmpty,
+                    hAlign='center',
+                    vAlign='top',
                     color=gTextColor,
-                    text=msgIfEmpty)
+                    position=(
+                        cWidth * 0.465,
+                        cHeight * 0.35 if gSmallUI else cHeight * 0.425))
             else:
                 vpos = 0
                 for server in config:
