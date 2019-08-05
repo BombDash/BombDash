@@ -11987,6 +11987,9 @@ class FavoritesAddServerWindow(Window):
             bs.Lstr(resource='favoritesServerAdded'),
             (0, 1, 0))
 
+        uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+        self._back()
+
     def _back(self):
         bs.containerWidget(edit=self._rootWidget, transition='outScale')
 
@@ -12099,6 +12102,9 @@ class FavoritesActWindow(Window):
                     bs.Lstr(resource='favoritesServerRenamed'),
                     (0, 1, 0))
 
+                uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+                self._back()
+
     def _deleteButtonPress(self):
         ConfirmWindow(
             bs.Lstr(resource='deleteFavoritesConfirm'),
@@ -12113,6 +12119,9 @@ class FavoritesActWindow(Window):
                 bs.screenMessage(
                     bs.Lstr(resource='favoritesServerDeletedText'),
                     (0, 1, 0))
+
+                uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+                self._back()
 
     def _back(self):
         bs.containerWidget(edit=self._rootWidget, transition='outScale')
@@ -21499,7 +21508,7 @@ class MainMenuWindow(Window):
         bs.containerWidget(edit=self._rootWidget, transition='outLeft')
         offMenuItems()
         uiGlobals['mainMenuWindow'] = GatherWindow(
-            originWidget=self._gatherButton).getRootWidget()
+            originWidget=self._gatherButton)
 
     def _playPress(self):
         self._save_state()
@@ -25039,6 +25048,10 @@ class GatherWindow(Window):
 
                     vpos += 50
 
+    def _favoritesRestartWindow(self):
+        self._setTab('localNetwork')
+        self._setTab('favorites')
+
     def _onAddServerPress(self):
         FavoritesAddServerWindow()
 
@@ -25069,6 +25082,8 @@ class GatherWindow(Window):
             bs.screenMessage(
                 bs.Lstr(resource='resetFavoritesSucces'),
                 (0, 1, 0))
+
+            self._favoritesRestartWindow()
 
     def _favoritesGetInstruction(self):
         txt = bs.Lstr(resource='favoritesInstructionText')
