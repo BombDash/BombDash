@@ -1522,4 +1522,5 @@ def chatOptions(msg):
         c.handleCommand(n[0], n[1])
 
 
-bs.realTimer(5000, bs.Call(bsInternal._setPartyIconAlwaysVisible, True))
+if settings.agreement:
+    bs.realTimer(5000, bs.Call(bsInternal._setPartyIconAlwaysVisible, True))

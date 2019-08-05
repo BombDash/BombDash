@@ -2167,12 +2167,41 @@ def _preload4():
 gFirstRun = True
 
 
+class SplashScreenActivity(bs.Activity):
+
+    def __init__(self, settings={}):
+        bs.Activity.__init__(self, settings)
+        
+    def onTransitionIn(self):
+        import bsInternal
+        bs.Activity.onTransitionIn(self)
+
+        self._background = bsUtils.Background(
+            fadeTime=500,
+            startFaded=True,
+            showLogo=False)
+
+        bsInternal._unlockAllInput()
+        with bs.Context('UI'):
+            bsUI.AgreementWindow()
+        
+    def onSomethingPressed(self):
+        self.end()
+
+
 class MainMenuSession(bs.Session):
 
     def __init__(self):
         bs.Session.__init__(self)
         self._locked = False
-        self.setActivity(bs.newActivity(MainMenuActivity))
+        global gFirstRun
+        if not settings.agreement:
+            bsInternal._lockAllInput()
+            self._locked = True
+            self.setActivity(bs.newActivity(SplashScreenActivity))
+            gFirstRun = False
+        else:
+            self.setActivity(bs.newActivity(MainMenuActivity))
 
     def onActivityEnd(self, activity, results):
         if self._locked:
@@ -2186,7 +2215,8 @@ class MainMenuSession(bs.Session):
         # opportunity to tell it to leave
         # FIXME - should add a blanket way to capture all input for
         # cases like this
-        # activity = self.getActivity()
-        # if isinstance(activity, SplashScreenActivity):
-        #    with bs.Context(activity): activity.onSomethingPressed()
+        activity = self.getActivity()
+        if isinstance(activity, SplashScreenActivity):
+            with bs.Context(activity): activity.onSomethingPressed()
+
         return False

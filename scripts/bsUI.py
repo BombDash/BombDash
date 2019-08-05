@@ -11539,6 +11539,65 @@ class StatsWindow(Window):
         uiGlobals['mainMenuWindow'] = \
             ExtraButtonsWindow().getRootWidget()
 
+class AgreementWindow(Window):
+    """
+    category: BombDash Classes
+
+    Class of one of windows which are only in this modpack.
+    """
+    def __init__(self, transition='inRight'):
+        self._width = width = 660
+        self._height = height = 375 if gSmallUI else 420 if gMedUI else 520
+
+        self._scrollWidth = self._width - 100
+        self._scrollHeight = self._height - 145
+
+        self._subWidth = self._scrollWidth * 0.95
+        self._subHeight = 1400
+
+        self._rootWidget = bs.containerWidget(
+            size=(width, height),
+            transition=transition,
+            scale=1.75 if gSmallUI else 1.55 if gMedUI else 1.0,
+            stackOffset=(0, -30) if gSmallUI else (0, 0))
+
+        self._scrollWidget = bs.scrollWidget(
+            parent=self._rootWidget,
+            size=(self._scrollWidth, self._scrollHeight),
+            highlight=False,
+            position=((self._width-self._scrollWidth)*0.5, 75))
+
+        bs.containerWidget(edit=self._scrollWidget, claimsLeftRight=True)
+
+        self._subContainer = bs.containerWidget(
+            parent=self._scrollWidget,
+            size=(self._subWidth, self._subHeight),
+            background=False)
+
+        self._agreementText = bs.textWidget(
+            parent=self._subContainer,
+            text=bs.Lstr(resource='agreementText'),
+            position=(0, 1350),
+            scale=0.5,
+            hAlign='left',
+            vAlign='top')
+
+        self.okButton = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(width/2-125,
+                      height-360 if gSmallUI \
+                          else height-405 if gMedUI \
+                          else height-505),
+            size=(250, 55),
+            autoSelect=True,
+            label='Ok',
+            onActivateCall=self._okButtonPressed)
+
+    def _okButtonPressed(self):
+        settings.agreement = True
+        settings.saveSettings()
+        bsInternal._getForegroundHostSession().end()
+
 class ThemesWindow(Window):
     """
     category: BombDash Classes

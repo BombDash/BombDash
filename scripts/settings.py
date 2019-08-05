@@ -1,4 +1,4 @@
-scenes = [1, 2, 3, 7, 8, 9, 10, 11, 13, 5, 12]
+scenes = [1, 2, 3, 5, 7, 8, 9, 10, 11, 12, 13]
 fair = False
 bolt = False
 badWords = False
@@ -10,6 +10,7 @@ halloweenScene = False
 duck = False
 showServerData = False
 writeServerData = False
+agreement = False
 forcedUI = 0
 theme = 'Default'
 
@@ -31,8 +32,9 @@ def saveSettings():
         s[9] = 'duck = ' + str(duck) + '\n'
         s[10] = 'showServerData = ' + str(showServerData) + '\n'
         s[11] = 'writeServerData = ' + str(writeServerData) + '\n'
-        s[12] = 'forcedUI = ' + str(forcedUI) + '\n'
-        s[13] = 'theme = ' + "'" + str(theme) + "'" + '\n'
+        s[12] = 'agreement = ' + str(agreement) + '\n'
+        s[13] = 'forcedUI = ' + str(forcedUI) + '\n'
+        s[14] = 'theme = ' + "'" + str(theme) + "'" + '\n'
 
     f = open(
         bs.getEnvironment()['systemScriptsDirectory']+'/settings.py', 'w')
