@@ -11987,7 +11987,10 @@ class FavoritesAddServerWindow(Window):
             bs.Lstr(resource='favoritesServerAdded'),
             (0, 1, 0))
 
-        uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+        bs.screenMessage(
+            bs.Lstr(resource='needsRestartTab'),
+            (1, 1, 0))
+
         self._back()
 
     def _back(self):
@@ -12102,7 +12105,10 @@ class FavoritesActWindow(Window):
                     bs.Lstr(resource='favoritesServerRenamed'),
                     (0, 1, 0))
 
-                uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+                bs.screenMessage(
+                    bs.Lstr(resource='needsRestartTab'),
+                    (1, 1, 0))
+
                 self._back()
 
     def _deleteButtonPress(self):
@@ -12120,7 +12126,10 @@ class FavoritesActWindow(Window):
                     bs.Lstr(resource='favoritesServerDeletedText'),
                     (0, 1, 0))
 
-                uiGlobals['mainMenuWindow']._favoritesRestartWindow()
+                bs.screenMessage(
+                    bs.Lstr(resource='needsRestartTab'),
+                    (1, 1, 0))
+
                 self._back()
 
     def _back(self):
@@ -21508,7 +21517,7 @@ class MainMenuWindow(Window):
         bs.containerWidget(edit=self._rootWidget, transition='outLeft')
         offMenuItems()
         uiGlobals['mainMenuWindow'] = GatherWindow(
-            originWidget=self._gatherButton)
+            originWidget=self._gatherButton).getRootWidget()
 
     def _playPress(self):
         self._save_state()
@@ -25048,10 +25057,6 @@ class GatherWindow(Window):
 
                     vpos += 50
 
-    def _favoritesRestartWindow(self):
-        self._setTab('localNetwork')
-        self._setTab('favorites')
-
     def _onAddServerPress(self):
         FavoritesAddServerWindow()
 
@@ -25083,7 +25088,9 @@ class GatherWindow(Window):
                 bs.Lstr(resource='resetFavoritesSucces'),
                 (0, 1, 0))
 
-            self._favoritesRestartWindow()
+            bs.screenMessage(
+                bs.Lstr(resource='needsRestartTab'),
+                (1, 1, 0))
 
     def _favoritesGetInstruction(self):
         txt = bs.Lstr(resource='favoritesInstructionText')

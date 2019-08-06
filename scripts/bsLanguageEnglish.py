@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'needsRestartTab':'For the changes to take effect,\nyou need to restart this tab ("Favorites").',
     'agreementText':('AGREEMENT FOR USE OF MODPACK\n\n'
                      'By violating these points, you may lose our support and we will be entitled\n'
                      'refuse to help you if you find errors, the modpack will not start, etc.:\n'
