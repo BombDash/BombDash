@@ -52,7 +52,7 @@ class MainMenuActivity(bs.Activity):
         global JRMPmode
         modpackVersion = '1.8'
         jrmpModeText = 'joi ride madpacke'
-        bdtext = modpackVersion + ' Beta' if not JRMPmode else jrmpModeText
+        bdtext = modpackVersion + ' Release' if not JRMPmode else jrmpModeText
         bdtext2 = 'BombDash Modpack' if not JRMPmode else jrmpModeText
 
         self._logoNode = None
