@@ -1985,7 +1985,6 @@ class cCube(bs.Actor):
         node.handleMessage(bs.DieMessage())
 
     def handleMessage(self, m):
-        factory = self.getFactory()
         if isinstance(m, bs.DieMessage):
             if self.node.exists():
                 self.node.delete()
@@ -2004,8 +2003,9 @@ class cCube(bs.Actor):
             self.uptimer = bs.Timer(330, up)
 
             def checker():
-                if m is None or not m.node.exists() \
-                        or m.node.holdNode != self.node:
+                if self.node.exists() and \
+                        (m is None or not m.node.exists()
+                         or m.node.holdNode != self.node):
                     self.node.extraAcceleration = (0, 0, 0)
                     self.pickuped = False
                     self.checkerTimer = None

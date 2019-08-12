@@ -7,6 +7,7 @@ import bsUtils
 import bsInternal
 import bdUtils
 import settings
+import BuddyBunny
 
 
 class Commands(object):

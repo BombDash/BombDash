@@ -174,7 +174,6 @@ values = {
     'checkMods':'Checking mods...',
     'scriptNotFound':'Script ${NAME} not found. Good.',
     'scriptWasFound':'Script ${NAME} was found! Deleting...',
-    'magicError':'Oops, some kind of error...',
     'joinModpackFFAServer':'Modpack-server (FFA)',
     'joinModpackTeamsServer':'Modpack-server (Teams)',
     'selectGame':'Select game',
@@ -248,10 +247,6 @@ values = {
     'uiStd':'Auto',
     'uiSmall':'Small',
     'uiMed':'Mid',
-    'vdv':'ЗА ВДВ!',
-    'vdvDay':'День ВДВ',
-    'vdv1':'ЗА',
-    'vdv2':'ВДВ!',
     'uiBig':'Big',
     'ericUnlocked':'Unlocked character - Eric Froemling!',
     'lastMsg':'Last',
@@ -350,7 +345,6 @@ values = {
     'deleteSystemScripts':'Removes system scripts in BombSquad folder.',
     'reloadMedia':'Reload game resources,\nexcept scripts.',
     'endSession':'Ends the current session.',
-    'console':'Console',
     'fastgame':'Fast play...',
     'quitA':'Exit (Emergency).',
     'iAmGoodGuy':'I am good gue and follow all the BombDash rules!',
@@ -1825,7 +1819,7 @@ values = {
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'Modpack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: August 2 2019\n'
+                        'List updated: August 11 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'

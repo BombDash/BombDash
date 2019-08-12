@@ -162,29 +162,6 @@ class MainMenuActivity(bs.Activity):
                 bs.animate(self.betaInfo.node, 'opacity',
                            {1300: 0, 1800: 1.0})
 
-        # check storage permission on android
-        def permissionReceiver():
-            if not bsInternal._havePermission('storage'):
-                bs.playSound(bs.getSound('error'))
-                bs.screenMessage(
-                    bs.Lstr(resource='storagePermissionAccessText'),
-                    (1, 0, 0))
-
-                bsInternal._requestPermission('storage')
-                a = bs.gameTimer(1000, bs.Call(permission_receiver),
-                                 repeat=True)
-
-                bsInternal._fadeScreen(False, time=200,
-                                       endCall=bs.Call(bs.quit, soft=True))
-
-                bsInternal._lockAllInput()
-                bs.realTimer(300, bsInternal._unlockAllInput)
-            else:
-                a = None
-                pass
-
-        permissionReceiver()
-
         # create dicts in cloud
         if 'BombDash Privilege' not in bs.getConfig():
             bs.getConfig()['BombDash Privilege'] = {
@@ -316,6 +293,7 @@ class MainMenuActivity(bs.Activity):
         mil16 = pumkinsTex = bs.getTexture('mil16')
         mil17 = pumkinsTex = bs.getTexture('mil17')
 
+        # start handle menu scenes
         if startEvent == 1:
             bsGlobals.vignetteOuter = (0.98, 0.98, 0.98)
             bsGlobals.vignetteInner = (1, 1, 1)
@@ -2192,9 +2170,33 @@ class SplashScreenActivity(bs.Activity):
 class MainMenuSession(bs.Session):
 
     def __init__(self):
-        bs.Session.__init__(self)
-        self._locked = False
         global gFirstRun
+        bs.Session.__init__(self)
+        permissionReceiverTimer = None
+        self._locked = False
+
+        # check storage permission on android
+        def permissionReceiver():
+            if not bsInternal._havePermission('storage'):
+                bs.playSound(bs.getSound('error'))
+                bs.screenMessage(
+                    bs.Lstr(resource='storagePermissionAccessText'),
+                    (1, 0, 0))
+
+                bsInternal._requestPermission('storage')
+                a = bs.gameTimer(1000, bs.Call(permissionReceiver),
+                                 repeat=True)
+
+                bsInternal._fadeScreen(False, time=200,
+                                       endCall=bs.Call(bs.quit, soft=True))
+
+                bsInternal._lockAllInput()
+                bs.realTimer(300, bsInternal._unlockAllInput)
+            else:
+                a = None
+
+        permissionReceiver()
+
         if not settings.agreement:
             bsInternal._lockAllInput()
             self._locked = True
