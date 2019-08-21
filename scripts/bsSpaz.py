@@ -2230,8 +2230,9 @@ class Spaz(bs.Actor):
                     position=self.node.position)
 
                 def waitForCharge():
-                    self.node.getDelegate().getPlayer().assignInputCall(
-                        'punchPress', bs.Call(self.railgunChecker))
+                    player = self.node.getDelegate().getPlayer()
+                    player.assignInputCall(
+                        'punchPress', lambda:(self.railgunChecker(), player.actor.onPunched) )
 
                 bs.gameTimer(1000, bs.Call(waitForCharge))
 
