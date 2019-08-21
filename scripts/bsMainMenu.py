@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import urllib2
 import threading
@@ -14,6 +15,8 @@ import bsPowerup
 import bsInternal
 import bdUtils
 import settings
+import traceback
+
 
 # import of values from theme...
 themeValues = bs.GetThemeValues.values
@@ -53,7 +56,7 @@ class MainMenuActivity(bs.Activity):
         modpackVersion = '1.8'
         jrmpModeText = 'joi ride madpacke'
         bdtext = modpackVersion + ' Release' if not JRMPmode else jrmpModeText
-        bdtext2 = 'BombDash Modpack' if not JRMPmode else jrmpModeText
+        bdtext2 = 'BombDash ModPack' if not JRMPmode else jrmpModeText
 
         self._logoNode = None
         self._customLogoTexName = None
@@ -168,7 +171,7 @@ class MainMenuActivity(bs.Activity):
                 'admins': [],
                 'vips': [],
                 'bans': []
-                }
+            }
 
             bs.writeConfig()
 
@@ -181,7 +184,7 @@ class MainMenuActivity(bs.Activity):
                 'Bomb explosions': 0,
                 'Collected powerups': 0,
                 'Fatality hits': 0
-                }
+            }
 
             bs.writeConfig()
 
@@ -192,35 +195,6 @@ class MainMenuActivity(bs.Activity):
         if 'BombDash Last Server' not in bs.getConfig():
             bs.getConfig()['BombDash Last Server'] = []
             bs.writeConfig()
-
-        # hmm, it works?
-        def writeModpackServers(res):
-            global gModpackServers
-            bs.getConfig()['BombDash Modpack Servers'] = res
-            bs.writeConfig()
-
-            gModpackServers = True
-
-        def getModpackServers():
-            try:
-                global gModpackServers
-                val = {'cmd': 'getModpackServers'}
-
-                req = json.loads(
-                    urllib2.urlopen(
-                        urllib2.Request(bdUtils.BD_INTERNAL_URL),
-                        json.dumps(val)).read().decode('utf-8'))
-
-                bs.gameTimer(1000, bs.Call(writeModpackServers, req))
-            except:
-                bs.screenMessage(bs.Lstr(resource='databaseNotAvailable'))
-
-        if not gModpackServers:
-            getModpackServersThread = threading.Thread(
-                target=getModpackServers)
-
-            getModpackServersThread.start()
-            getModpackServersThread.join()
 
         model = bs.getModel('thePadLevel')
         treesModel = bs.getModel('trees')
@@ -2174,28 +2148,6 @@ class MainMenuSession(bs.Session):
         bs.Session.__init__(self)
         permissionReceiverTimer = None
         self._locked = False
-
-        # check storage permission on android
-        def permissionReceiver():
-            if not bsInternal._havePermission('storage'):
-                bs.playSound(bs.getSound('error'))
-                bs.screenMessage(
-                    bs.Lstr(resource='storagePermissionAccessText'),
-                    (1, 0, 0))
-
-                bsInternal._requestPermission('storage')
-                a = bs.gameTimer(1000, bs.Call(permissionReceiver),
-                                 repeat=True)
-
-                bsInternal._fadeScreen(False, time=200,
-                                       endCall=bs.Call(bs.quit, soft=True))
-
-                bsInternal._lockAllInput()
-                bs.realTimer(300, bsInternal._unlockAllInput)
-            else:
-                a = None
-
-        permissionReceiver()
 
         if not settings.agreement:
             bsInternal._lockAllInput()

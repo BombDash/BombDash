@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'update':'Update',
     'needsRestartTab':'For the changes to take effect,\nyou need to restart this tab ("Favorites").',
     'agreementText':('AGREEMENT FOR USE OF MODPACK\n\n'
                      'By violating these points, you may lose our support and we will be entitled\n'
@@ -75,7 +76,7 @@ values = {
                      'Нажимая кнопку "Ok", которая находится чуть ниже, Вы подтверждаете, что прочитали\n'
                      'и согласны со всем написанным выше.\n\n'),
     'serverDataMsg':'Server data:',
-    'serverDataInfo':'Server data is its IP address and port.\nBefore entering the server, they will be written to the chat.\nYou can also include this data in the file.\nThe data file will be in the mods folder.',
+    'serverDataInfo':'Server data is its IP address and port.\nBefore entering the server, they will be written to the chat.\nYou can also include this data in the file.\n The data file is in the folder mods.',
     'writeServerData':'Log server data when entering',
     'showServerData':'Show server data on call',
     'add':'Add',
@@ -99,10 +100,10 @@ values = {
                                 '1. Go to the desired server\n' 
                                 '2. Open chat\n' 
                                 '3. Click the "..." button in the upper right corner\n' 
-                                '4. In the mini-window that opens, click the "Add server to favorites" button\n'
-                                '\nAs you can see, the automatic option is simple. The second option is\n'
-                                'adding manually, but it is more difficult and it does not make sense to paint it.\n'
-                                '\nWe wish you a pleasant use.'),
+                                '4. In the mini-window that opens, click the "Add server to favorites" button\n\n'
+                                'As you can see, the automatic option is simple. The second option is\n'
+                                'adding manually, but it is more difficult and it does not make sense to paint it.\n\n'
+                                'We wish you a pleasant use.'),
     'favoritesInstructionButtonText':'Instruction',
     'favoritesDeleteButtonText':'Delete',
     'favoritesDeleteAllButtonText':'Delete all',
@@ -110,17 +111,14 @@ values = {
     'emptyFavoritesText':'You have no servers in your favorites.',
     'favoritesText':'Favorites',
     'flightModeDisabled':'Flight mode is disabled!',
-    'databaseNotAvailable':'Oops, our database is not available.\nSome things will not work.',
     'themesAlready':'This theme is chosen as it is.',
     'themesInfoText':('1. The "Go to the folder with the themes (Google Drive)" button is\n'
-                      'fast transition to the folder with all themes for a modpack.\n'
-                      '\n'
+                      'fast transition to the folder with all themes for a modpack.\n\n'
                       '2. If you want to make the subject, then download theme\n'
                       '"Light_CODE" - in the code will be either "RU", or "EN".\n'
                       'RU are the Russian comments, EN are the English comments.\n'
                       'Open a script of a theme and at the beginning the instruction, in it\n'
-                      'everything is in detail painted.\n'
-                      '\n'
+                      'everything is in detail painted.\n\n'
                       '3. It is possible to add the subject to the folder that only,\n'
                       'having sent to our group VKontakte the file with a theme and\n'
                       'screenshots. To do updating of a theme in the same way\n'
@@ -225,12 +223,12 @@ values = {
     'statsPowerup': 'Collected powerups count: ${VALUE}',
     'statsFatality': 'Fatality hits count: ${VALUE}',
     'resetStatsConfirm':'Do you really want to reset the statistics?',
-    'resetStatsSucces': 'Stats have been reset, re-enter this window.',
+    'resetStatsSuccess': 'Statistics reset, reconnect to the window.',
     'resetStats':'Reset',
     'stats':'Stats',
     'placeForAds':'Place for your advertisement :)',
     'themes':'Themes',
-    'Extra':'Advanced',
+    'extra':'Advanced',
     'commands':'Commands',
     'bombdashGroup':'BombDash Group',
     'bombdashSite':'BombDash Website',
@@ -279,9 +277,10 @@ values = {
     'badWords':'Obscene language',
     'runCmd':'Run command',
     'bdSettings':'BombDash settings',
+    'themesCurrent':' (current)',
     'currentTheme':'Сurrent theme:\n${THEME}',
     'themesOn':'The theme is established, restart a game.',
-    'themesDefaultForCurrent':'Сurrent theme:\nDefault',
+    'themesDefaultCurrent':'Default (current)\nEric Froemling | NullWizard',
     'themesDefault':'Default\nEric Froemling | NullWizard',
     'badWords2':'Look out for your parents.\nWARNING! disablind only for local game.',
     'createSystemScriptsButton':'Create system scripts folder',
@@ -336,8 +335,8 @@ values = {
     'nameScene10':'Scene 10 (Fireworks)',
     'nameScene11':'Scene 11 (Night)',
     'nameScene12':'Scene 12 (Party)',
-    'nameScene13':'Сцена 13 (Ricardo Milos)',
-    'nameScene14':'Сцена 14 (Halloween)',
+    'nameScene13':'Scene 13 (Ricardo Milos)',
+    'nameScene14':'Scene 14 (Halloween)',
     'nameScene15':'Scene 15 (Christmas)',
     'needsRestart':'Needs to restart game.',
     'offScenes':'If starting scenes cause\nbig lags, you can disable some of this.',
@@ -1723,7 +1722,7 @@ values = {
         'quitText':'Quit',
         'resumeText':'Resume',
         'settingsText':'Settings',
-        'aboutBDText':'about BombDash',
+        'aboutBDText':'About BombDash',
         'statsText':'Stats'
     },
     'aboutBDWindow':{
@@ -1817,13 +1816,13 @@ values = {
 
         'changeLogText' :('                                                    HISTORY OF UPDATES\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
-                        'Modpack version: 1.8 Release\n'
+                        'Modpack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: August 12 2019\n'
+                        'List updated: August 19 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
-                        'Changelog for 1.8 Release\n'
+                        'Changelog for 1.8 Beta\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         'Upgrade theme engine to version 1.2:\n'
@@ -1844,8 +1843,9 @@ values = {
                         '- Added a new tab "Favorites" in the multiplayer window\n'
                         '- Added agreement window\n'
                         '- New developers are added to the "About BombDash" window\n'
-                        '- New setting "Show server data on call"\n'
-                        '- New setting "Log server data when entering"\n'
+                        '- New option "Log errors to file"\n'
+                        '- New option "Show server data on call"\n'
+                        '- New option "Log server data when entering"\n'
                         '\n'
                         'Corrections:\n'
                         '- Fixed damage when catching sticky gift\n'
@@ -1869,6 +1869,7 @@ values = {
                         '- Minor changes to memory access request\n'
                         '- Removed unnecessary translation\n'
                         '- Removed engine version in the themes window\n'
+                        '- Removed the message about the reboot for some settings\n'
                         '- Performance optimization\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'

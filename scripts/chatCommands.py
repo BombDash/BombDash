@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import random
 import bs
 import bsGame
@@ -6,8 +7,9 @@ import bsSpaz
 import bsUtils
 import bsInternal
 import bdUtils
-import settings
 import BuddyBunny
+import settings
+import traceback
 
 
 class Commands(object):
@@ -23,6 +25,7 @@ class Commands(object):
 
     def checkPrivilege(self, privilege, nick):
         """ Check the player host or player privilege. """
+        self.all = settings.cmdForAll
         data = bs.getConfig()['BombDash Privilege']
 
         # doing a host check

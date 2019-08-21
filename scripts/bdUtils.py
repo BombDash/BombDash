@@ -4,8 +4,7 @@ But nevertheless a smaller part of classes are in other scripts.
 
 And also this script may contain some functions, constants, etc.
 """
-
-
+import sys
 import math
 import random
 import urllib
@@ -13,6 +12,8 @@ import bs
 import bsUtils
 import bsVector
 import bsInternal
+import settings
+import traceback
 
 
 BD_INTERNAL_URL = 'http://bombdash.net/other/BombSquad/server/server/' \

@@ -1,4 +1,5 @@
 import bs
+import sys
 import bsUI
 import time
 import bsInternal
@@ -6,6 +7,8 @@ import copy
 import bsUtils
 import random
 import settings
+import traceback
+
 
 # import of values from theme...
 themeValues = bs.GetThemeValues.values

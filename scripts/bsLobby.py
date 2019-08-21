@@ -1,4 +1,5 @@
 import bs
+import sys
 import bsUtils
 import bsSpaz
 import random
@@ -8,6 +9,8 @@ import bsInternal
 import ast
 import json
 import settings
+import traceback
+
 
 # import of values from theme...
 themeValues = bs.GetThemeValues.values

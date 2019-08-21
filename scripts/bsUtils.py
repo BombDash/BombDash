@@ -17,6 +17,8 @@ import bsGame
 import json
 import datetime
 import settings
+import traceback
+
 
 # even when kiosk mode is set, we want behavior to differ depending on
 # whether we launch games from the kiosk menu or the real one
@@ -89,12 +91,14 @@ class ThemeEngine(object):
         self.currentTheme = 'Default'
         self.path = bs.getEnvironment()['userScriptsDirectory']
 
-        if settings.theme != 'Default':
+        if settings.theme != 'Default' and bsInternal._havePermission('storage'):
             self.currentTheme = __import__(settings.theme)
 
         self.getDefaultTheme()
         self.getThemeValues()
-        self.writeError()
+
+        if bsInternal._havePermission('storage'):
+            self.writeError()
 
     def compatibilityCheck(self):
         scripts = os.listdir(self.path)
@@ -1763,7 +1767,7 @@ def _getModulesWithCall(callName, whiteList=None, blackList=None):
                 bs.printException('Error importing game module \''+name+'\'')
     else:
         global gThemeEngineLimiter
-        if gThemeEngineLimiter < 1:
+        if gThemeEngineLimiter < 1 and bsInternal._havePermission('storage'):
             themeEngineClass.criticalErrorHandling()
             themeEngineClass.compatibilityCheck()
             gThemeEngineLimiter += 1

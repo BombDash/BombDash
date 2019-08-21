@@ -1,4 +1,5 @@
 import bs
+import sys
 import bsInternal
 from bsVector import Vector
 import weakref
@@ -6,6 +7,8 @@ import random
 import bsUtils
 import time
 import settings
+import traceback
+
 
 class Team(object):
     """

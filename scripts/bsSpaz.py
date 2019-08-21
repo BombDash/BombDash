@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+import sys
 import random
 import weakref
 import bs
 import bsUtils
 import bsInternal
 import bdUtils
-import settings
 import bsVector
+import settings
+import traceback
 
 
 # list of defined spazzes

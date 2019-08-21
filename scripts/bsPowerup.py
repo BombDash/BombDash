@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import sys
 import random
 import weakref
 import bs
 import bsUI
 import bsUtils
 import BuddyBunny
+import settings
+import traceback
 
 
 defaultPowerupInterval = 8000
