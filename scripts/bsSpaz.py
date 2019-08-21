@@ -565,8 +565,7 @@ class Spaz(bs.Actor):
         self.shovel = False
         self.character = character
         self.shovels = 0
-        self.Railgun = False
-        self.RailgunFired = 0
+        self.railgunCharges = 0
 
         factory = self.getFactory()
 
@@ -2227,15 +2226,15 @@ class Spaz(bs.Actor):
                 else:
                     self.node.handModel = bs.getModel('beam')
 
-                self.RailgunFired = 0
-                self.Railgun = True
+                self.railgunCharges += 2
                 bs.playSound(
                     self.getFactory().railgunChargeSound,
                     position=self.node.position)
 
                 def waitForCharge():
-                    self.node.getDelegate().getPlayer().assignInputCall(
-                        'punchPress', bs.Call(self.railgunChecker))
+                    player = self.node.getDelegate().getPlayer()
+                    player.assignInputCall(
+                        'punchPress', lambda:(self.railgunChecker(), player.actor.onPunched) )
 
                 bs.gameTimer(1000, bs.Call(waitForCharge))
 
@@ -2736,7 +2735,7 @@ class Spaz(bs.Actor):
                         if m.srcNode.getDelegate().Railgun:
                             d = m.srcNode.getDelegate()
                             s = m.srcNode
-                            if self.RailgunFired == 2:
+                            if self.railgunCharges == 0:
                                 if not s.style == 'penguin':
                                     s.upperArmModel = self.getFactory(
                                         )._getMedia(
@@ -2753,7 +2752,7 @@ class Spaz(bs.Actor):
                                 d.Railgun = False
 
                 except:
-                    if self.RailgunFired == 2:
+                    if self.railgunCharges == 0:
                         if not s.style == 'penguin':
                             s.upperArmModel = self.getFactory()._getMedia(
                                 self.character)['upperArmModel']
@@ -2958,8 +2957,8 @@ class Spaz(bs.Actor):
                                random.random())
 
     def railgunChecker(self):
-        if self.Railgun == True and not self.RailgunFired == 2:
-            if self.node is not None and self.node.exists():
+        if self.railgunCharges > 0:       # Have you railgun?
+            if self.node and self.node.exists() and self.isAlive():   # Check what you can shoot
                 if self.node.getNodeType() == 'spaz':
                     p1 = self.node.positionCenter
                     p2 = self.node.positionForward
@@ -2984,7 +2983,7 @@ class Spaz(bs.Actor):
                     -(self.vel[2]*2), mag*20)
 
                 bs.playSound(self.getFactory().railgunSound, position=self.node.position)
-                self.RailgunFired+=1
+                self.railgunCharges -= 1
                 self.handleMessage(_RailgunFiredMessage(srcNode=self.node))
 
 
