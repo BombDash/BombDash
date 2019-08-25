@@ -1511,8 +1511,6 @@ class BDSettings(Window):
                 bs.Lstr(resource='storagePermissionAccessText'),
                 (1, 0, 0))
 
-            bsInternal._requestPermission('storage')
-
     def saveCmdForMe(self, m):
         settings.cmdForMe = False if m == 0 else True
         settings.saveSettings()
@@ -20912,12 +20910,13 @@ class MainMenuWindow(Window):
                     textColor=menuThemesButtonTextColor,
                     onActivateCall=self._themes)
 
-            path = bs.getEnvironment()['userScriptsDirectory']
-            scripts = os.listdir(path)
             text = 1
-            for x in scripts:
-                if 'theme' in x and '.pyc' in x:
-                    text += 1
+            if bsInternal._havePermission('storage'):
+                path = bs.getEnvironment()['userScriptsDirectory']
+                scripts = os.listdir(path)
+                for x in scripts:
+                    if 'theme' in x and '.pyc' in x:
+                        text += 1
 
             if gSmallUI:
                 self._availableThemes = bs.imageWidget(
@@ -21364,8 +21363,6 @@ class MainMenuWindow(Window):
             bs.screenMessage(
                 bs.Lstr(resource='storagePermissionAccessText'),
                 (1, 0, 0))
-
-            bsInternal._requestPermission('storage')
 
     def _demoMenuPress(self):
         self._save_state()
