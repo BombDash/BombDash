@@ -116,3 +116,5 @@ scripts/wweDefs.pyc
 scripts/zigZagLevelDefs.pyc
 scripts/ZombieHorde.pyc
 *.pyc
+scripts/.idea
+scripts/settings.py

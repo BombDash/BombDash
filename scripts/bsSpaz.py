@@ -2225,8 +2225,7 @@ class Spaz(bs.Actor):
                 else:
                     self.node.handModel = bs.getModel('beam')
 
-                self.RailgunFired = 0
-                self.Railgun = True
+                self.railgunCharges += 2
                 bs.playSound(
                     self.getFactory().railgunChargeSound,
                     position=self.node.position)
