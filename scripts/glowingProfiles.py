@@ -10,7 +10,6 @@ import bsSpaz
 import bsUtils
 import bsInternal
 import settings
-import traceback
 
 
 # import of values from theme...

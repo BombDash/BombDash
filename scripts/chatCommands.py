@@ -9,7 +9,6 @@ import bsInternal
 import bdUtils
 import BuddyBunny
 import settings
-import traceback
 
 
 class Commands(object):

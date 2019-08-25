@@ -13,7 +13,6 @@ import bsUtils
 import bsVector
 import bsInternal
 import settings
-import traceback
 
 
 BD_INTERNAL_URL = 'http://bombdash.net/other/BombSquad/server/server/' \

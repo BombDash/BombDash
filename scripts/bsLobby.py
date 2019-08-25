@@ -9,7 +9,6 @@ import bsInternal
 import ast
 import json
 import settings
-import traceback
 
 
 # import of values from theme...

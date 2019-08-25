@@ -7,7 +7,6 @@ import random
 import bsUtils
 import time
 import settings
-import traceback
 
 
 class Team(object):

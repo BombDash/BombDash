@@ -1,78 +1,94 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'connectModPackServersError':('Error, it looks like You have not received the connection data yet.\n'
+                                  'Try clicking the "Update" button".'),
+    'updateInfo':('The "ModPack-server (*type*)" buttons will help You connect to these servers in one click.\n'
+                  'But without special data they will not be able to do it. Therefore...\n'
+                  'First You need to click on the "Update" button to get this data.\n'
+                  'The result of the data may or may not be due to an error.\n'
+                  'If You have a error, please contact us in our group VKontakte, try to help.\n'
+                  'As well as the data activate the backlight of our servers in the tab "Internet".\n'
+                  'Highlighting our servers will help You find our servers,\n'
+                  'not someone else\'s with our name.'),
+    'updateInfoButton':'Information',
+    'updatePressInfoButton':'To find out all the information on these buttons, click on the "Information" button".',
+    'updateModPackServersSuccess':'ModPack-servers updated.',
+    'updateModPackServersError':'Update failed, looks like database is unavailable.',
     'update':'Update',
-    'needsRestartTab':'For the changes to take effect,\nyou need to restart this tab ("Favorites").',
+    'agreement':'Agreement for the use modPack',
     'agreementText':('AGREEMENT FOR USE OF MODPACK\n\n'
+                     'Last edit was August 25 2019\n\n'
                      'By violating these points, you may lose our support and we will be entitled\n'
-                     'refuse to help you if you find errors, the modpack will not start, etc.:\n'
-                     '1. If you didn’t download the modpack from file hosting services,\n '
+                     'refuse to help you if you find errors, the modPack will not start, etc.:\n'
+                     '1. If you didn’t download the modPack from file hosting services,\n '
                      '   which were indicated in the official source (website, VKontakte group,\n'
                      '    post on the real page of other social. networks of one of the developers).\n'
-                     '1.1 Our modpack is still on GitHub, downloading from it you will not lose support.\n'
-                     '2. It is not recommended to use modpack with other mods.\n'
-                     '3. If you modified the modpack yourself.\n'
+                     '1.1 Our modPack is still on GitHub, downloading from it you will not lose support.\n'
+                     '2. It is not recommended to use modPack with other mods.\n'
+                     '3. If you modified the modPack yourself.\n'
                      '4. If the problem is on the side of the BombSquad developer.\n'
-                     '5. If the problem is found in a modpack with a version lower than the latest (now it is 1.8).\n\n'
+                     '5. If the problem is found in a modPack with a version lower than the latest (now it is 1.8).\n\n'
                      'We guarantee:\n'
                      '1. If the above items are not violated and there are critical bugs,\n'
-                     '    then we will release a modpack update to fix these bugs.\n'
-                     '2. Modpack is free, no need to pay for anything.\n'
-                     '3. Modpack does not spy on you, does not collect your sensitive data.\n'
-                     '4. There are no viruses, ads, analytics, etc. in the modpack..\n'
-                     '5. There are no images of excessive violence, of a sexual nature in the modpack.\n'
-                     '6. Modpack may work without the Internet, but some functions may not work.\n\n'
+                     '    then we will release a modPack update to fix these bugs.\n'
+                     '2. ModPack is free, no need to pay for anything.\n'
+                     '3. ModPack does not spy on you, does not collect your sensitive data.\n'
+                     '4. There are no viruses, ads, analytics, etc. in the modPack..\n'
+                     '5. There are no images of excessive violence, of a sexual nature in the modPack.\n'
+                     '6. ModPack may work without the Internet, but some functions may not work.\n\n'
                      'Note:\n'
-                     '1. Tournaments are disabled in the modpack, because normally they only work in\n'
+                     '1. Tournaments are disabled in the modPack, because normally they only work in\n'
                      '    pure BombSquad.\n'
-                     '2. The modpack does not support Google Games, as they, like tournaments, can work\n'
+                     '2. The modPack does not support Google Games, as they, like tournaments, can work\n'
                      '    only in pure BombSquad.\n'
-                     '3. BombSquad Pro is activated in the modpack, but for free, but if you already have one,\n'
-                     '    then this should not affect the operation of the modpack.\n'
-                     '4. There is foul language in the modpack, but it is disabled by default.\n'
-                     '5. Support for all languages ​​except Russian and English has been removed in the modpack.\n'
-                     '6. Ticket purchase does not work in modpack,\n'
+                     '3. BombSquad Pro is activated in the modPack, but for free, but if you already have one,\n'
+                     '    then this should not affect the operation of the modPack.\n'
+                     '4. There is foul language in the modPack, but it is disabled by default.\n'
+                     '5. Support for all languages ​​except Russian and English has been removed in the modPack.\n'
+                     '6. Ticket purchase does not work in modPack,\n'
                      '    as well as viewing adverts for tickets.\n\n'
                      'Interesting information:\n'
-                     'Starting with BombSquad 1.4.149, our modpack is in the "Credits", that is,\n'
-                     'the developer of BombSquad recognized our modpack as an important contribution\n'
+                     'Starting with BombSquad 1.4.149, our modPack is in the "Credits", that is,\n'
+                     'the developer of BombSquad recognized our modPack as an important contribution\n'
                      'to the development of BombSquad.\n\n'
                      'By clicking the "Ok" button, which is located a little lower, you confirm that you have read\n'
                      'and agree with everything written above.\n\n'
                      'Версия на русском языке:\n\n'
                      'СОГЛАШЕНИЕ НА ИСПОЛЬЗОВАНИЕ МОДПАКА\n\n'
+                     'Последнее редактирование было 25 августа 2019\n\n'
                      'Нарушая эти пункты, Вы можете потерять нашу поддержку и мы будем иметь право\n'
-                     'отказать в помощи Вам, если Вы найдете ошибки, модпак не будет запускаться и т.п.:\n'
-                     '1. Если Вы скачали модпак не с файлообменников,\n'
+                     'отказать в помощи Вам, если Вы найдете ошибки, модПак не будет запускаться и т.п.:\n'
+                     '1. Если Вы скачали модПак не с файлообменников,\n'
                      '    которые были указаны в оффициальном источнике (сайт, группа ВКонтакте,\n'
                      '    пост на реальной странице других соц. сетей одного из разработчиков).\n'
-                     '1.1 Наш модпак есть еще на GitHub, качая с него вы не лишитесь поддержки.\n'
-                     '2. Не рекомендуется использовать модпак с другими модами.\n'
-                     '3. Ecли Вы сами модифицировали модпак.\n'
+                     '1.1 Наш модПак есть еще на GitHub, качая с него вы не лишитесь поддержки.\n'
+                     '2. Не рекомендуется использовать модПак с другими модами.\n'
+                     '3. Ecли Вы сами модифицировали модПак.\n'
                      '4. Если проблема будет на стороне разработчика BombSquad.\n'
-                     '5. Если проблема найдена в модпаке с версией ниже последней (сейчас это 1.8).\n\n'
+                     '5. Если проблема найдена в модПаке с версией ниже последней (сейчас это 1.8).\n\n'
                      'Мы гарантируем:\n'
                      '1. Если вышеперечисленные пункты не будут нарушены и найдутся критические баги,\n'
-                     '    то мы выпустим обновление модпака с исправлением этих багов.\n'
-                     '2. Модпак бесплатный, ни за что платить не нужно.\n'
-                     '3. Модпак не шпионит за Вами, не собирает Ваши конфиденциальные данные.\n'
-                     '4. В модпаке нет вирусов, рекламы, аналитики и т.п..\n'
-                     '5. В модпаке нет изображений чрезмерного насилия, сексуального характера.\n'
-                     '6. Модпак может работать без интернета, но некоторые функции могут не работать.\n\n'
+                     '    то мы выпустим обновление модПака с исправлением этих багов.\n'
+                     '2. МодПак бесплатный, ни за что платить не нужно.\n'
+                     '3. МодПак не шпионит за Вами, не собирает Ваши конфиденциальные данные.\n'
+                     '4. В модПаке нет вирусов, рекламы, аналитики и т.п..\n'
+                     '5. В модПаке нет изображений чрезмерного насилия, сексуального характера.\n'
+                     '6. МодПак может работать без интернета, но некоторые функции могут не работать.\n\n'
                      'Обратите внимание:\n'
-                     '1. В модпаке отключены турниры, так как, нормально они работают только в\n'
+                     '1. В модПаке отключены турниры, так как, нормально они работают только в\n'
                      '    чистом BombSquad.\n'
-                     '2. В модпаке нет поддержки Google Игр, так как, они как и турниры могут работать\n'
+                     '2. В модПаке нет поддержки Google Игр, так как, они как и турниры могут работать\n'
                      '    только в чистом BombSquad.\n'
-                     '3. В модпаке активирован BombSquad Pro, да бесплатно, но если он у вас и так есть,\n'
-                     '    то на работу модпака это повлиять не должно.\n'
-                     '4. В модпаке есть нецензурная лексика, но по умолчанию она отключена.\n'
-                     '5. В модпаке удалена поддержка всех языков, кроме русского и английского.\n'
-                     '6. В модпаке не работает покупка билетов,\n'
+                     '3. В модПаке активирован BombSquad Pro, да бесплатно, но если он у вас и так есть,\n'
+                     '    то на работу модПака это повлиять не должно.\n'
+                     '4. В модПаке есть нецензурная лексика, но по умолчанию она отключена.\n'
+                     '5. В модПаке удалена поддержка всех языков, кроме русского и английского.\n'
+                     '6. В модПаке не работает покупка билетов,\n'
                      '    а также просмотр рекламы для получения билетов.\n\n'
                      'Интересная информация:\n'
-                     'Начиная с версии BombSquad 1.4.149 наш модпак есть в "Благодарностях", то есть\n'
-                     'разработчик BombSquad признал наш модпак важным вкладом в развитие BombSquad.\n\n'
+                     'Начиная с версии BombSquad 1.4.149 наш модПак есть в "Благодарностях", то есть\n'
+                     'разработчик BombSquad признал наш модПак важным вкладом в развитие BombSquad.\n\n'
                      'Нажимая кнопку "Ok", которая находится чуть ниже, Вы подтверждаете, что прочитали\n'
                      'и согласны со всем написанным выше.\n\n'),
     'serverDataMsg':'Server data:',
@@ -113,7 +129,7 @@ values = {
     'flightModeDisabled':'Flight mode is disabled!',
     'themesAlready':'This theme is chosen as it is.',
     'themesInfoText':('1. The "Go to the folder with the themes (Google Drive)" button is\n'
-                      'fast transition to the folder with all themes for a modpack.\n\n'
+                      'fast transition to the folder with all themes for a modPack.\n\n'
                       '2. If you want to make the subject, then download theme\n'
                       '"Light_CODE" - in the code will be either "RU", or "EN".\n'
                       'RU are the Russian comments, EN are the English comments.\n'
@@ -167,13 +183,12 @@ values = {
     'sysCreated':'User System Scripts created.',
     'elonMineDefused':'Elon Musk Mine defused!',
     'nukeArrive':'Nuclear bomb will arrive in 11 and a half seconds.',
-    'bdInternalError':'Failed to connect to our database.\nPlease let the developers know about it.',
     'complete':'Complete.\n',
     'checkMods':'Checking mods...',
     'scriptNotFound':'Script ${NAME} not found. Good.',
     'scriptWasFound':'Script ${NAME} was found! Deleting...',
-    'joinModpackFFAServer':'Modpack-server (FFA)',
-    'joinModpackTeamsServer':'Modpack-server (Teams)',
+    'joinModPackFFAServer':'ModPack-server (FFA)',
+    'joinModPackTeamsServer':'ModPack-server (Teams)',
     'selectGame':'Select game',
     'youNotLastMessage':'You not have last message.',
     'fastGame':'Fast game',
@@ -215,15 +230,15 @@ values = {
     'cannonShots':'Shots: ${VALUE}',
     'cannonReady':'READY!',
     'cannonNotCharged':'NOT CHARGED! EXPLODE!',
-    'statsKill': 'Kills count: ${VALUE}',
-    'statsDeath': 'Deaths count: ${VALUE}',
-    'statsSuicide': 'Suicides count: ${VALUE}',
-    'statsBetray': 'Betrayals count: ${VALUE}',
-    'statsBomb': 'Dropped bombs count: ${VALUE}',
-    'statsPowerup': 'Collected powerups count: ${VALUE}',
-    'statsFatality': 'Fatality hits count: ${VALUE}',
+    'statsKill':'Kills count: ${VALUE}',
+    'statsDeath':'Deaths count: ${VALUE}',
+    'statsSuicide':'Suicides count: ${VALUE}',
+    'statsBetray':'Betrayals count: ${VALUE}',
+    'statsBomb':'Dropped bombs count: ${VALUE}',
+    'statsPowerup':'Collected powerups count: ${VALUE}',
+    'statsFatality':'Fatality hits count: ${VALUE}',
     'resetStatsConfirm':'Do you really want to reset the statistics?',
-    'resetStatsSuccess': 'Statistics reset, reconnect to the window.',
+    'resetStatsSuccess':'Statistics reset.',
     'resetStats':'Reset',
     'stats':'Stats',
     'placeForAds':'Place for your advertisement :)',
@@ -372,7 +387,7 @@ values = {
     'help23':' /ac - flashing map',
     'help24':' /tint - change tint',
     'help25':' /o - funny sound',
-    'help26':' /ps - play sound from modpack',
+    'help26':' /ps - play sound from modPack',
     'help27':' /quit - make the host leaving the game',
     'help28':' /pause - stop game',
     'help29':' /tnt - spawn tnt',
@@ -1728,7 +1743,7 @@ values = {
     'aboutBDWindow':{
         'titleText':'Participated in the creation of BombDash',
         'creditsText2':('Developers-enthusiasts:\n'
-                        '   TROLLMAN - made the majority of resources of a modpack.\n'
+                        '   TROLLMAN - made the majority of resources of a modPack.\n'
                         '   Wrote a lot of code with mistakes (and corrected them).\n'
                         '   And also collected Android version. The old resident in BombSquad.\n'
                         '   VK - https://vk.com/id403100380\n'
@@ -1744,7 +1759,7 @@ values = {
                         '   VK - https://vk.com/id143515551\n'
                         '\n'
                         '   Romtrap - at the time of writing of this text is engaged\n'
-                        '   servers and VK group.\n'
+                        '   servers and VK group. Assist in the development modPack.\n'
                         '   VK - https://vk.com/id233077698\n'
                         '\n'
                         '   byANUS - the best tester, soul of the company.\n'
@@ -1752,22 +1767,22 @@ values = {
                         '   VK - https://vk.com/id167437501\n'
                         '\n'
                         '   DeadPool - was engaged in servers and the VK group.\n'
-                        '   Tested modpack and created couple of themes for it.\n'
+                        '   Tested modPack and created couple of themes for it.\n'
                         '   VK - https://vk.com/id280216078\n'
                         '\n'
                         '   Filinama (Pasha) - did considerable work on the code.\n'
                         '   Recently left our team... Well, we will wish it good luck.\n'
                         '   VK - https://vk.com/id257174229\n'
                         '\n'
-                        '   Nikita Bruskov (Nekusent) - modpack testing.\n'
-                        '   And also assembly of a modpack for Linux.\n'
+                        '   Nikita Bruskov (Nekusent) - modPack testing.\n'
+                        '   And also assembly of a modPack for Linux.\n'
                         '   VK - https://vk.com/id171639336\n'
                         '\n'
-                        '   Mike Bright (ShetkoD) - modpack testing.\n'
+                        '   Mike Bright (ShetkoD) - modPack testing.\n'
                         '   Arts (BombMan and Bum icons).\n'
                         '   VK - https://vk.com/id432035993\n'
                         '\n'
-                        '   John Snake (Evg75) - modpack testing.\n'
+                        '   John Snake (Evg75) - modPack testing.\n'
                         '   Laughs for Voorhiz.\n'
                         '\n'
                         'Thanks also:\n'
@@ -1816,9 +1831,9 @@ values = {
 
         'changeLogText' :('                                                    HISTORY OF UPDATES\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
-                        'Modpack version: 1.8 Beta\n'
+                        'ModPack version: 1.8 Beta\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: August 19 2019\n'
+                        'List updated: August 25 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
@@ -1839,11 +1854,12 @@ values = {
                         '- Added new map "Snowy Mountlands"\n'
                         '- Added new menu scene "Ricardo Milos"\n'
                         '- Added an info button to the themes window\n'
+                        '- Added a button to get modPack-servers data\n'
                         '- Added button to go to the theme folder in the themes window\n'
                         '- Added a new tab "Favorites" in the multiplayer window\n'
+                        '- Added new "Advanced" lining in the "Internet" tab\n'
                         '- Added agreement window\n'
                         '- New developers are added to the "About BombDash" window\n'
-                        '- New option "Log errors to file"\n'
                         '- New option "Show server data on call"\n'
                         '- New option "Log server data when entering"\n'
                         '\n'
@@ -1854,22 +1870,29 @@ values = {
                         '- Fixed link to our site everywhere\n'
                         '- Fixed artillery drop out of lego bonus\n'
                         '- Fixed allocation of our servers if the database is unavailable\n'
+                        '- Fixed interface control buttons in many windows\n'
                         '- Fixed eggs in the main menu during Easter\n'
                         '- Corrections in hockey\n'
                         '- Corrections in translations\n'
                         '- High Jump Fixes\n'
                         '- Corrections in the extra accelerator\n'
-                        '- Bug fixes due to which the game crashed, or maybe not\n'
+                        '- Fixes crash, and maybe not\n'
                         '\n'
                         'Other:\n'
+                        '- Auto restart of the statistics window after the reset\n'
                         '- Tournaments disabled, yes again\n'
+                        '- Moved the connect button modPack-servers\n'
                         '- Returned and improved command /fly3d\n'
                         '- New team abbreviation /iceOff - /io\n'
                         '- Changes in the command description structure\n'
                         '- Minor changes to memory access request\n'
                         '- Removed unnecessary translation\n'
                         '- Removed engine version in the themes window\n'
+                        '- Removed check of mods and their removal\n'
                         '- Removed the message about the reboot for some settings\n'
+                        '- Removed data retrieval modPack-servers at startup modPack\n'
+                        '- Removed and reworked the access request to the memory at startup modPack\n'
+                        '- Optimization start the modPack\n'
                         '- Performance optimization\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
@@ -1914,7 +1937,7 @@ values = {
                         '- Added the ability to write "myPos" in the position argument of some commands\n'
                         '- Added message after the /nuke command\n'
                         '- Added confirmation window after clicking the reset statistics button\n'
-                        '- Added buttons to access modpack-servers\n'
+                        '- Added buttons to access modPack-servers\n'
                         '\n'
                         'Corrections:\n'
                         '- Fixed showing 3 pages in /help, if the commands are only for the host or for all\n'
@@ -1953,7 +1976,7 @@ values = {
                         '- Removed a separate class for the Portal bomb and replaced with the class of portals\n'
                         '- The bdStats script has been deleted, because the statistics code has been rewritten\n'
                         '- The bdPlayers script has been deleted, because the privilege base has been rewritten\n'
-                        '- The secretInformation script was deleted, it hit modpack completely by accident :D\n'
+                        '- The secretInformation script was deleted, it hit modPack completely by accident :D\n'
                         '- Removed some extra code\n'
                         '- Removed /skin command\n'
                         '- Removed /fly3d command\n'
@@ -1982,7 +2005,7 @@ values = {
                         '- New bonus Portal bomb\n'
                         '- Interface change themes\n'
                         '- New map Airlands\n'
-                        '- Statistics of actions in modpack\n'
+                        '- Statistics of actions in modPack\n'
                         '- An inscription about the effect of an electric bomb over the player’s head\n'
                         '- New commands: /fly3d, /skin, /bomb, /blast, /powerup, /sleep, /inv, /admin, /vip, /ban\n'
                         '- New privilege system for lobby creators (like our servers system)\n'
@@ -2008,7 +2031,7 @@ values = {
                         '\n'
                         ' - Everything that was in the micro patches.\n'
                         'Innovations:\n'
-                        ' - Privileges also work in modpack.\n'
+                        ' - Privileges also work in modPack.\n'
                         ' - New map - Tube.\n'
                         ' - New character - Elf.\n'
                         ' - New character - Android.\n'
@@ -2081,7 +2104,7 @@ values = {
                         '   - The tops on the roof will spawn farther from the edge.\n'
                         '   - New commands. (/help)\n'
                         '   - The download screen has been translated and a hint has been added from the\nstupid questions. Also reduced animation duration, loading faster.\n'
-                        '   - Normal start counters without lags. (There will soon be a page where you\ncan see how many times the modpack is running\nUDP: Now you can see it on the main page of the site)\n'
+                        '   - Normal start counters without lags. (There will soon be a page where you\ncan see how many times the modPack is running\nUDP: Now you can see it on the main page of the site)\n'
                         '   - Rewrote code of auto-aiming. (it still works, but it\'s better optimized).\n'
                         '   - The cube from Portal used to just regen hp, now it does it, while showing the\nplayer\'s life strip.\n'
                         '\n'
@@ -2174,7 +2197,7 @@ values = {
                         '    - Some of them had problems due to mods. Now the game\nautomatically removes them.\n'
                         '    - Guys from rain-a-man are now alive.\n'
                         '    - +1 New start scene. \n'
-                        '    - All modes on modes are integrated into modpack.\n'
+                        '    - All modes on modes are integrated into modPack.\n'
                         '    - NEW MAP - "Cheeze Island".\n'
                         '    - NEW MAP - "Roof". \n'
                         '    - New powerup - Artillery.\n'
@@ -2233,7 +2256,7 @@ values = {
                         '    - Messages with name of music in main menu.\n'
                         ' \n'
                         'Improves/Optimizations: \n'
-                        '    - Now the modpack can be installed independently by the original BombSquad.!\n'
+                        '    - Now the modPack can be installed independently by the original BombSquad.!\n'
                         '    - Changed icon.\n'
                         '    - Optimized luckuBloks code.\n'
                         ' \n'
@@ -2282,7 +2305,7 @@ values = {
                         '   - A generator of soap bubbles (sometimes drops out of a varnish block, it does\nnot carry a special \n value, but it looks cool).\n'
                         '   - Map "Twisting pad" (Copy of the usual "the pad", but \n the camera flies like in the menu. \n'
                         '   - 5 new effects in luckuBloks.\n '
-                        '   - Info about the modpack version in the lower right corner. \n '
+                        '   - Info about the modPack version in the lower right corner. \n '
                         '   - Mode-setting a deadly battle "In the dark." When it is activated on the card, \nwill be dark, and players have a glow. \n'
                         '   - Improved models of some characters (increased number of polygons, \n look more smoothly and nicely, the gameplay does not affect) \n'
                         '   - Steps on the M41 Walker Bulldog so you can easily climb up to the tank.\n'

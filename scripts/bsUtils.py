@@ -17,7 +17,6 @@ import bsGame
 import json
 import datetime
 import settings
-import traceback
 
 
 # even when kiosk mode is set, we want behavior to differ depending on

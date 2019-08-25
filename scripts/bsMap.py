@@ -6,7 +6,6 @@ import bsUtils
 import bsVector
 import bdUtils
 import settings
-import traceback
 
 
 _maps = {}

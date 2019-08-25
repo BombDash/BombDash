@@ -7,7 +7,6 @@ import bsUI
 import bsUtils
 import BuddyBunny
 import settings
-import traceback
 
 
 defaultPowerupInterval = 8000
@@ -231,7 +230,8 @@ class PowerupFactory(object):
 
 
 def getDefaultPowerupDistribution():
-    return (('tripleBombs', 3),
+    return (
+            ('tripleBombs', 3),
             ('iceBombs', 3),
             ('punch', 3),
             ('impactBombs', 3),
@@ -264,7 +264,8 @@ def getDefaultPowerupDistribution():
             ('holyBomb', 1),
             ('cannon', 1),
             ('health', 1),
-            ('curse', 1))
+            ('curse', 1)
+            )
 
 
 class Powerup(bs.Actor):

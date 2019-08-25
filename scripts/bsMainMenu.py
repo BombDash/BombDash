@@ -15,7 +15,6 @@ import bsPowerup
 import bsInternal
 import bdUtils
 import settings
-import traceback
 
 
 # import of values from theme...
@@ -28,7 +27,7 @@ for i in themeValues:
 gDidInitialTransition = False
 gFirstRun = True
 gStartTime = time.time()
-gModpackServers = False
+gModPackServers = False
 
 JRMPmode = False
 firstApril = True if datetime.datetime.now().month == 4 \
@@ -53,9 +52,8 @@ class MainMenuActivity(bs.Activity):
 
         # to put the name of a modpak and its version
         global JRMPmode
-        modpackVersion = '1.8'
         jrmpModeText = 'joi ride madpacke'
-        bdtext = modpackVersion + ' Release' if not JRMPmode else jrmpModeText
+        bdtext = '1.8 Release' if not JRMPmode else jrmpModeText
         bdtext2 = 'BombDash ModPack' if not JRMPmode else jrmpModeText
 
         self._logoNode = None
@@ -166,6 +164,7 @@ class MainMenuActivity(bs.Activity):
                            {1300: 0, 1800: 1.0})
 
         # create dicts in cloud
+        bombDashNotInBombSquadConfig = False
         if 'BombDash Privilege' not in bs.getConfig():
             bs.getConfig()['BombDash Privilege'] = {
                 'admins': [],
@@ -173,7 +172,8 @@ class MainMenuActivity(bs.Activity):
                 'bans': []
             }
 
-            bs.writeConfig()
+            if not bombDashNotInBombSquadConfig:
+                bombDashNotInBombSquadConfig = True
 
         if 'BombDash Stats' not in bs.getConfig():
             bs.getConfig()['BombDash Stats'] = {
@@ -186,14 +186,20 @@ class MainMenuActivity(bs.Activity):
                 'Fatality hits': 0
             }
 
-            bs.writeConfig()
+            if not bombDashNotInBombSquadConfig:
+                bombDashNotInBombSquadConfig = True
 
         if 'BombDash Favorites Servers' not in bs.getConfig():
             bs.getConfig()['BombDash Favorites Servers'] = []
-            bs.writeConfig()
+            if not bombDashNotInBombSquadConfig:
+                bombDashNotInBombSquadConfig = True
 
         if 'BombDash Last Server' not in bs.getConfig():
             bs.getConfig()['BombDash Last Server'] = []
+            if not bombDashNotInBombSquadConfig:
+                bombDashNotInBombSquadConfig = True
+
+        if bombDashNotInBombSquadConfig:
             bs.writeConfig()
 
         model = bs.getModel('thePadLevel')

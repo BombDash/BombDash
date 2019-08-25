@@ -7,7 +7,6 @@ import copy
 import bsUtils
 import random
 import settings
-import traceback
 
 
 # import of values from theme...

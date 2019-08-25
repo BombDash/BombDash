@@ -22,7 +22,7 @@ import bsServerData
 import bsGame
 import bsMainMenu
 import settings
-import traceback
+import bdUtils
 
 
 # import of values from theme...
@@ -886,7 +886,7 @@ class BDSettings(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, transition='inRight'):
         import ericBoss
@@ -963,6 +963,8 @@ class BDSettings(Window):
                 else gBadTextColor,
             label=bs.Lstr(resource='runCmd'),
             onActivateCall=self._runCmd)
+
+        bs.widget(edit=b, upWidget=self._doneButton)
 
         v -= 30
         t = bs.textWidget(
@@ -1399,7 +1401,6 @@ class BDSettings(Window):
             label=bs.Lstr(resource='createSystemScriptsButton'),
             onActivateCall=self._createUserSystemScripts)
 
-        bs.widget(edit=b, upWidget=self._doneButton, leftWidget=self._doneButton)
         v -= 30
         t = bs.textWidget(
             parent=self._subContainer,
@@ -1772,7 +1773,7 @@ class AboutBDWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, originWidget=None):
         #bsInternal._setAnalyticsScreen('Credits Window')
@@ -1861,7 +1862,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-160)
+                    suppressWarning=True)-50)
         else:
             self._subHeight = (
                 bsInternal._getStringHeight(
@@ -1869,7 +1870,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)+50)
+                    suppressWarning=True)+170)
 
         c = self._subContainer = bs.containerWidget(
             parent=s,
@@ -2143,7 +2144,7 @@ class NothingWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self):
         if bs.getEnvironment()['platform'] != 'android':
@@ -2177,7 +2178,7 @@ class CMDMenu(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, transition='inRight'):
         self._width = width = 580
@@ -2692,7 +2693,7 @@ class CreditsWindow(Window):
             '\n'.join(translationNames.splitlines()[146:])+'\n'
             '\n'
             '  Awesome Modders:\n\n'
-            '     TheMikirog & SoK - BombSquad Joyride Modpack\n'
+            '     TheMikirog & SoK - BombSquad Joyride ModPack\n'
             '     Mrmaxmeier - BombSquad-Community-Mod-Manager\n'
             '\n'
             '  Holiday theme vector art designed by Freepik\n'
@@ -11362,7 +11363,7 @@ class StatsWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, transition='inRight'):
         self._width = width = 580
@@ -11380,18 +11381,6 @@ class StatsWindow(Window):
             scale=2.0 if gSmallUI else 1.55 if gMedUI else 1.0,
             color=gWindowsColor,
             stackOffset=(0, -30) if gSmallUI else (0, 0))
-
-        self.resetStatsButton = bs.buttonWidget(
-            parent=self._rootWidget,
-            position=(width-177, 
-                      height-(68 if gSmallUI else 62)),
-            size=(155, 60),
-            scale=0.8,
-            label=bs.Lstr(resource='resetStats'),
-            color=gWindowsBackColor,
-            textColor=gWindowsBackTextColor,
-            onActivateCall=self._resetStats,
-            autoSelect=True)
 
         if gToolbars and gSmallUI:
             bs.containerWidget(
@@ -11427,6 +11416,18 @@ class StatsWindow(Window):
         bs.containerWidget(
             edit=self._rootWidget,
             cancelButton=b)
+
+        self.resetStatsButton = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(width-177, 
+                      height-(68 if gSmallUI else 62)),
+            size=(155, 60),
+            scale=0.8,
+            label=bs.Lstr(resource='resetStats'),
+            color=gWindowsBackColor,
+            textColor=gWindowsBackTextColor,
+            onActivateCall=self._resetStats,
+            autoSelect=True)
 
         t = bs.textWidget(
             parent=self._rootWidget,
@@ -11466,7 +11467,7 @@ class StatsWindow(Window):
             'statsBomb',
             'statsPowerup',
             'statsFatality'
-            ]
+        ]
 
         self.statsTypes = [
             'Kills',
@@ -11476,7 +11477,7 @@ class StatsWindow(Window):
             'Bomb explosions',
             'Collected powerups',
             'Fatality hits'
-            ]
+        ]
 
         self.statsIcons = [
             bs.getTexture('achievementCrossHair'),
@@ -11486,11 +11487,11 @@ class StatsWindow(Window):
             bs.getTexture('achievementOnslaught'),
             bs.getTexture('achievementStayinAlive'),
             bs.getTexture('achievementSuperPunch')
-            ]
+        ]
 
         for i in self.statsTypes:
             num = self.statsTypes[iStatsTypes]
-            bs.buttonWidget(
+            statsButton = bs.buttonWidget(
                 parent=self._subContainer,
                 autoSelect=True,
                 position=((self._subWidth-buttonWidth)*0.5-75, v),
@@ -11503,6 +11504,9 @@ class StatsWindow(Window):
                 color=gButtonsColor,
                 textColor=gButtonsTextColor,
                 onActivateCall=self._nothing)
+
+            if iStatsNames == 0:
+                bs.widget(edit=statsButton, upWidget=b)
 
             v -= 75
             iStatsNames += 1
@@ -11526,6 +11530,9 @@ class StatsWindow(Window):
             bs.Lstr(resource='resetStatsSuccess'),
             color=(0, 1, 0))
 
+        bs.containerWidget(edit=self._rootWidget, transition='outScale')
+        uiGlobals['mainMenuWindow'] = StatsWindow().getRootWidget()
+
     def _back(self):
         bs.containerWidget(
             edit=self._rootWidget, transition='outRight')
@@ -11537,7 +11544,7 @@ class AgreementWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, transition='inRight'):
         self._width = width = 660
@@ -11547,13 +11554,22 @@ class AgreementWindow(Window):
         self._scrollHeight = self._height - 145
 
         self._subWidth = self._scrollWidth * 0.95
-        self._subHeight = 1400
+        self._subHeight = 1465
 
         self._rootWidget = bs.containerWidget(
             size=(width, height),
             transition=transition,
             scale=1.75 if gSmallUI else 1.55 if gMedUI else 1.0,
             stackOffset=(0, -30) if gSmallUI else (0, 0))
+
+        t = bs.textWidget(
+            parent=self._rootWidget,
+            position=(0, height-60),
+            size=(width, 30),
+            text=bs.Lstr(resource='agreement'),
+            hAlign='center',
+            vAlign='center',
+            maxWidth=400)
 
         self._scrollWidget = bs.scrollWidget(
             parent=self._rootWidget,
@@ -11571,7 +11587,7 @@ class AgreementWindow(Window):
         self._agreementText = bs.textWidget(
             parent=self._subContainer,
             text=bs.Lstr(resource='agreementText'),
-            position=(0, 1350),
+            position=(0, 1415),
             scale=0.5,
             hAlign='left',
             vAlign='top')
@@ -11592,11 +11608,12 @@ class AgreementWindow(Window):
         settings.saveSettings()
         bsInternal._getForegroundHostSession().end()
 
+
 class ThemesWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, transition='inRight'):
         self._width = width = 580
@@ -11737,8 +11754,11 @@ class ThemesWindow(Window):
                 textColor=(1, 1, 1),
                 onActivateCall=self._setDefaultTheme)
 
+        bs.widget(edit=self.themeButtonDefault, upWidget=b)
+
         if os.listdir(self._path):
             i = 0
+            themesList = []
             if settings.theme != 'Default':
                 oldIndex = scripts.index(settings.theme+'.pyc')
                 scripts.insert(0, scripts.pop(oldIndex))
@@ -11750,6 +11770,7 @@ class ThemesWindow(Window):
                     self._subHeight += 200
                     name = 'self.themeButton' + str(i)
                     themeX = __import__(x.rsplit('.')[0])
+                    themesList.append(name)
                     if n in bsUtils.gThemeNotCompatibilityCheck:
                         themeXName = themeX.themeName + '\n' + ' ' + \
                             themeX.themeAuthor + '\n' + bs.Lstr(
@@ -11785,17 +11806,16 @@ class ThemesWindow(Window):
 
                     i += 1
 
+            bs.widget(edit=eval(themesList[-1]), downWidget=self.goToThemesFolder)
+
     def _onThemesInfoPress(self):
         txt = bs.Lstr(resource='themesInfoText')
         ConfirmWindow(
             txt, cancelButton=False, width=self._width, height=self._height-100,
-            originWidget=self.themesInfoButton
-            )
+            originWidget=self.themesInfoButton)
 
     def _goToThemesFolder(self):
-        bs.openURL(
-            'https://drive.google.com/drive/folders/1uoWI4bPl5cqwgPXpOHeeULIqMZcvs8fB?usp=sharing'
-            )
+        bs.openURL('https://drive.google.com/drive/folders/1uoWI4bPl5cqwgPXpOHeeULIqMZcvs8fB?usp=sharing')
 
     def _setDefaultTheme(self):
         settings.theme = 'Default'
@@ -11803,8 +11823,7 @@ class ThemesWindow(Window):
 
         bs.screenMessage(
             bs.Lstr(resource='themesOn'),
-            color=(0, 1, 0)
-            )
+            color=(0, 1, 0))
 
     def _notCompatibilityCheck(self):
         bs.screenMessage(
@@ -11818,183 +11837,25 @@ class ThemesWindow(Window):
 
             bs.screenMessage(
                 bs.Lstr(resource='themesOn'),
-                color=(0, 1, 0)
-                )
+                color=(0, 1, 0))
         else:
             bs.screenMessage(
-                bs.Lstr(resource='themesAlready')
-                )
+                bs.Lstr(resource='themesAlready'))
 
     def _back(self):
         bs.containerWidget(
-            edit=self._rootWidget, transition='outRight'
-            )
+            edit=self._rootWidget, transition='outRight')
 
         onMenuItems()
         uiGlobals['mainMenuWindow'] = MainMenuWindow(
-            transition='inLeft'
-            ).getRootWidget()
-
-
-class InternetExtraWindow(Window):
-    """
-    category: BombDash Classes
-
-    Class of one of windows which are only in this modpack.
-    """
-    def __init__(self):
-        self._transitionOut = 'outScale'
-        transition = 'inScale'
-
-        self._width = width = 450
-        self._height = height = 500
-
-        self._rootWidget = bs.containerWidget(
-            size=(width,height),
-            color=gWindowsColor,
-            transition=transition,
-            toolbarVisibility='MENU_MINIMAL',
-            #scaleOriginStackOffset=scaleOrigin,
-            scale=1.45 if gSmallUI else 1.3 if gMedUI else 1.0,
-            stackOffset=(0, -8) if gSmallUI else (0, 0))
-
-        if gToolbars and gSmallUI:
-            bs.containerWidget(edit=self._rootWidget, onCancelCall=self._back)
-        else:
-            b = bs.buttonWidget(
-                parent=self._rootWidget,
-                position=(40, height-(68 if gSmallUI else 62)),
-                size=(140, 60),
-                scale=0.8,
-                label=bs.Lstr(resource='backText'),
-                color=gWindowsBackColor,
-                textColor=gWindowsBackTextColor,
-                buttonType='back',
-                onActivateCall=self._back,
-                autoSelect=True)
-
-            bs.containerWidget(edit=self._rootWidget, cancelButton=b)
-
-            if gDoAndroidNav:
-                bs.buttonWidget(
-                    edit=b,
-                    buttonType='backSmall',
-                    position=(40,height-(68 if gSmallUI else 62)+5),
-                    size=(60,48),
-                    label=bs.getSpecialChar('back'))
-
-        t = bs.textWidget(
-            parent=self._rootWidget,
-            position=(0, height-(59 if gSmallUI else 54)),
-            size=(width, 30),
-            text=bs.Lstr(resource='favoritesAddButtonText'),
-            hAlign="center",
-            color=gTitleColor,
-            maxWidth=330,
-            vAlign="center")
-
-        if gToolbars:
-            bs.widget(
-                edit=s,
-                rightWidget=bsInternal._getSpecialWidget('partyButton'))
-
-            if gSmallUI:
-                bs.widget(
-                    edit=s,
-                    leftWidget=bsInternal._getSpecialWidget('backButton'))
-
-        self._r = 'gatherWindow'
-
-        self.t1 = bs.textWidget(
-            parent=self._rootWidget, position=(90, 400),
-            color=gTextColor, scale=1.0,
-            size=(0, 0), maxWidth=80,
-            hAlign='right', vAlign='center',
-            text=bs.Lstr(resource='editProfileWindow.nameText'))
-
-        self.t1 = bs.textWidget(
-            parent=self._rootWidget, editable=True, description=bs.Lstr(
-                resource='editProfileWindow.nameText'),
-            text='Server', autoSelect=True,
-            color=gTextColor,
-            position=(50, 315),
-            vAlign='center', scale=1.0, size=(375, 60))
-
-        self.t2 = bs.textWidget(
-            parent=self._rootWidget, position=(117.5, 295),
-            color=gTextColor, scale=1.0,
-            size=(0, 0), maxWidth=80,
-            hAlign='right', vAlign='center',
-            text=bs.Lstr(resource=self._r+'.manualAddressText'))
-
-        self.t2 = bs.textWidget(
-            parent=self._rootWidget, editable=True, description=bs.Lstr(
-                resource=self._r + '.manualAddressText'),
-            text='127.0.0.1', autoSelect=True,
-            color=gTextColor,
-            position=(50, 210),
-            vAlign='center', scale=1.0, size=(375, 60))
-
-        self.t3 = bs.textWidget(
-            parent=self._rootWidget, position=(100, 190),
-            color=gTextColor, scale=1.0,
-            size=(0, 0), maxWidth=80,
-            hAlign='right', vAlign='center',
-            text=bs.Lstr(resource=self._r+'.portText'))
-
-        self.t3 = bs.textWidget(
-            parent=self._rootWidget, editable=True, description=bs.Lstr(
-                resource=self._r + '.portText'),
-            text='43210', autoSelect=True, maxChars=5,
-            color=gTextColor,
-            position=(50, 105),
-            vAlign='center', scale=1.0, size=(375, 60))
-
-        self._addButton = b = bs.buttonWidget(
-            parent=self._rootWidget,
-            position=(115, 25),
-            size=(235, 65),
-            autoSelect=False,
-            label=bs.Lstr(resource='add'),
-            color=gButtonsColor,
-            textColor=gButtonsTextColor,
-            onActivateCall=self._addButtonPress)
-
-    def _addButtonPress(self):
-        name = bs.textWidget(query=self.t1)
-        address = bs.textWidget(query=self.t2)
-        port = bs.textWidget(query=self.t3)
-        for i in bs.getConfig()['BombDash Favorites Servers']:
-            if i[0] == name:
-                bs.screenMessage(
-                    bs.Lstr(resource='favoritesAlreadyServer'),
-                    (1, 0, 0))
-
-                return
-        
-        bs.getConfig()['BombDash Favorites Servers'].append(
-            [name, address, port])
-
-        bs.writeConfig()
-        bs.screenMessage(
-            bs.Lstr(resource='favoritesServerAdded'),
-            (0, 1, 0))
-
-        bs.screenMessage(
-            bs.Lstr(resource='needsRestartTab'),
-            (1, 1, 0))
-
-        self._back()
-
-    def _back(self):
-        bs.containerWidget(edit=self._rootWidget, transition='outScale')
+            transition='inLeft').getRootWidget()
 
 
 class FavoritesAddServerWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self):
         self._transitionOut = 'outScale'
@@ -12134,21 +11995,18 @@ class FavoritesAddServerWindow(Window):
             bs.Lstr(resource='favoritesServerAdded'),
             (0, 1, 0))
 
-        bs.screenMessage(
-            bs.Lstr(resource='needsRestartTab'),
-            (1, 1, 0))
-
         self._back()
 
     def _back(self):
         bs.containerWidget(edit=self._rootWidget, transition='outScale')
-
+        bs.containerWidget(edit=uiGlobals['mainMenuWindow'], transition='outScale')
+        uiGlobals['mainMenuWindow'] = GatherWindow().getRootWidget()
 
 class FavoritesActWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, serverName):
         self.serverName = serverName
@@ -12252,10 +12110,6 @@ class FavoritesActWindow(Window):
                     bs.Lstr(resource='favoritesServerRenamed'),
                     (0, 1, 0))
 
-                bs.screenMessage(
-                    bs.Lstr(resource='needsRestartTab'),
-                    (1, 1, 0))
-
                 self._back()
 
     def _deleteButtonPress(self):
@@ -12273,21 +12127,18 @@ class FavoritesActWindow(Window):
                     bs.Lstr(resource='favoritesServerDeletedText'),
                     (0, 1, 0))
 
-                bs.screenMessage(
-                    bs.Lstr(resource='needsRestartTab'),
-                    (1, 1, 0))
-
                 self._back()
 
     def _back(self):
         bs.containerWidget(edit=self._rootWidget, transition='outScale')
-
+        bs.containerWidget(edit=uiGlobals['mainMenuWindow'], transition='outScale')
+        uiGlobals['mainMenuWindow'] = GatherWindow().getRootWidget()
 
 class ExtraButtonsWindow(Window):
     """
     category: BombDash Classes
 
-    Class of one of windows which are only in this modpack.
+    Class of one of windows which are only in this modPack.
     """
     def __init__(self, originWidget=None):
         if originWidget is not None:
@@ -12361,18 +12212,20 @@ class ExtraButtonsWindow(Window):
             parent=self._rootWidget,
             position=(40, 225),
             size=(235, 45),
-            autoSelect=False,
+            autoSelect=True,
             label=bs.Lstr(resource='watchWindow.titleText'),
             icon=bs.getTexture('tv'),
             color=menuWatchButtonColor,
             textColor=menuWatchButtonTextColor,
             onActivateCall=self._watchPress)
 
+        #bs.widget(edit=self._watchButton, showBufferRight=50, showBufferBottom=50)
+
         self._groupButton = b = bs.buttonWidget(
             parent=self._rootWidget,
             position=(300, 225),
             size=(235, 45),
-            autoSelect=False,
+            autoSelect=True,
             label=bs.Lstr(resource='bombdashGroup'),
             icon=bs.getTexture('heart'),
             color=menuGroupButtonColor,
@@ -12383,7 +12236,7 @@ class ExtraButtonsWindow(Window):
             parent=self._rootWidget,
             position=(40, 165),
             size=(235, 45),
-            autoSelect=False,
+            autoSelect=True,
             label=bs.Lstr(resource='bombdashSite'),
             icon=bs.getTexture('downButton'),
             color=menuSiteButtonColor,
@@ -12394,7 +12247,7 @@ class ExtraButtonsWindow(Window):
             parent=self._rootWidget,
             position=(300, 165),
             size=(235, 45),
-            autoSelect=False,
+            autoSelect=True,
             color=menuCreditsButtonColor,
             textColor=menuCreditsButtonTextColor,
             label=bs.Lstr(resource=self._r+'.creditsText'),
@@ -12404,7 +12257,7 @@ class ExtraButtonsWindow(Window):
         self._howToPlayButton = b = bs.buttonWidget(
             parent=self._rootWidget,
             position=(40, 105),
-            autoSelect=False,
+            autoSelect=True,
             size=(235, 45),
             color=menuHowToPlayButtonColor,
             textColor=menuHowToPlayButtonTextColor,
@@ -12415,7 +12268,7 @@ class ExtraButtonsWindow(Window):
         self._aboutBDButton = b = bs.buttonWidget(
             parent=self._rootWidget,
             position=(300, 105),
-            autoSelect=False,
+            autoSelect=True,
             size=(235, 45),
             color=menuAboutBDButtonColor,
             textColor=menuAboutBDButtonTextColor,
@@ -12426,7 +12279,7 @@ class ExtraButtonsWindow(Window):
         if bs.getEnvironment()['platform'] != 'android':
             self._statsButton = b = bs.buttonWidget(
                 parent=self._rootWidget,
-                autoSelect=False,
+                autoSelect=True,
                 position=(40, 45),
                 size=(235, 45),
                 label=bs.Lstr(resource=self._r+'.statsText'),
@@ -12437,7 +12290,7 @@ class ExtraButtonsWindow(Window):
 
             self._quitButton = b = bs.buttonWidget(
                 parent=self._rootWidget,
-                autoSelect=False,
+                autoSelect=True,
                 position=(300, 45),
                 size=(235, 45),
                 label=bs.Lstr(
@@ -12450,7 +12303,7 @@ class ExtraButtonsWindow(Window):
         else:
             self._statsButton = b = bs.buttonWidget(
                 parent=self._rootWidget,
-                autoSelect=False,
+                autoSelect=True,
                 position=(165, 45),
                 size=(235, 45),
                 label=bs.Lstr(resource=self._r+'.statsText'),
@@ -24582,6 +24435,18 @@ class GatherWindow(Window):
                 text=bs.Lstr(
                     resource=self._r + '.joinPublicPartyDescriptionText'))
             bs.widget(edit=t, upWidget=self._tab_buttons[tab])
+            self._internetExtraText = t = bs.textWidget(
+                parent=c, position=(
+                    cWidth * 0.5 + (240 if bs.getLanguage() == 'Russian' else 300),
+                    v - 13),
+                color=(0.6, 1.0, 0.6),
+                scale=0.8 if bs.getLanguage() == 'Russian' else 1.3,
+                size=(125, 30), maxWidth=250, hAlign='left', vAlign='center',
+                clickActivate=True, selectable=True, autoSelect=True,
+                onActivateCall=bs.Call(
+                    self._setInternetTab, 'extra', playSound=True),
+                text=bs.Lstr(resource='extra'))
+            bs.widget(edit=t, upWidget=self._tab_buttons[tab])
             self._internetHostText = t = bs.textWidget(
                 parent=c, position=(
                     cWidth * 0.5 - (50 if bs.getLanguage() == 'Russian' else 45),
@@ -24594,18 +24459,6 @@ class GatherWindow(Window):
                     self._setInternetTab, 'host', playSound=True),
                 text=bs.Lstr(
                     resource=self._r + '.hostPublicPartyDescriptionText'))
-
-            self._internetExtraText = t = bs.textWidget(
-                parent=c, position=(
-                    cWidth * 0.5 + (240 if bs.getLanguage() == 'Russian' else 300),
-                    v - 13),
-                color=(0.6, 1.0, 0.6),
-                scale=0.8 if bs.getLanguage() == 'Russian' else 1.3,
-                size=(125, 30), maxWidth=250, hAlign='left', vAlign='center',
-                clickActivate=True, selectable=True, autoSelect=True,
-                onActivateCall=bs.Call(
-                    self._setInternetTab, 'extra', playSound=True),
-                text=bs.Lstr(resource='extra'))
 
             bs.widget(edit=t, leftWidget=self._internetJoinText,
                       upWidget=self._tab_buttons[tab])
@@ -25099,6 +24952,10 @@ class GatherWindow(Window):
                     _subHeight += _subHeightAdder
                     _subHeightAdder += 5
 
+            self._favoritesListSelection = None
+            existingSelection = getattr(self, '_favoritesListSelection',
+                                        None)
+
             self._tabContainer = c = bs.containerWidget(
                 parent=self._rootWidget,
                 position=(scrollLeft, scrollBottom +
@@ -25108,7 +24965,7 @@ class GatherWindow(Window):
 
             v = cHeight - 30
             h = 30
-            bs.buttonWidget(
+            self.favoritesAddButton = b = bs.buttonWidget(
                 parent=c,
                 label=bs.Lstr(resource='favoritesAddButtonText'),
                 color=gButtonsColor,
@@ -25117,9 +24974,11 @@ class GatherWindow(Window):
                 position=(v*0.5-v*0.5+h, v-50),
                 size=(250, 60),
                 onActivateCall=self._onAddServerPress)
-            
+
+            bs.widget(edit=b, upWidget=self._tab_buttons[tab])
+
             h += 295
-            bs.buttonWidget(
+            self.favoritesDeleteAllButton = b = bs.buttonWidget(
                 parent=c,
                 label=bs.Lstr(resource='favoritesDeleteAllButtonText'),
                 color=gButtonsColor,
@@ -25129,8 +24988,10 @@ class GatherWindow(Window):
                 size=(250, 60),
                 onActivateCall=self._favoritesConfirmDeleteAll)
 
+            bs.widget(edit=b, upWidget=self._tab_buttons[tab])
+
             h += 295
-            bs.buttonWidget(
+            self.favoritesInstructionButton = b = bs.buttonWidget(
                 parent=c,
                 label=bs.Lstr(resource='favoritesInstructionButtonText'),
                 color=gButtonsColor,
@@ -25140,18 +25001,31 @@ class GatherWindow(Window):
                 size=(250, 60),
                 onActivateCall=self._favoritesGetInstruction)
 
+            bs.widget(edit=b, upWidget=self._tab_buttons[tab])
+
             v -= 40
             v -= sub_scroll_height+23
             sw = bs.scrollWidget(
-                parent=c,
+                parent=c, simpleCullingV=10,
                 color=gWindowsScrollColor,
                 position=((self._scrollWidth - sub_scroll_width) * 0.5, v),
                 size=(sub_scroll_width, sub_scroll_height))
+
+            bs.widget(edit=sw, autoSelect=True)
 
             cb = bs.containerWidget(
                 parent=sw,
                 size=(_subWidth, _subHeight),
                 background=False)
+
+            bs.containerWidget(edit=sw, claimsLeftRight=True)
+            bs.containerWidget(edit=cb, claimsLeftRight=True)
+            bs.widget(edit=cb, upWidget=self.favoritesAddButton)
+
+            def refresh_on():
+                self._refreshingFavoritesListSelection = True
+
+            bs.pushCall(refresh_on)
 
             if not config:
                 bs.textWidget(
@@ -25172,13 +25046,17 @@ class GatherWindow(Window):
                         'port': server[2]
                     }
 
-                    bs.textWidget(
+                    address = handleServer['ip']+':'+handleServer['port']
+
+                    favoritesServerTextButton = bs.textWidget(
                         text=handleServer['name'],
                         parent=cb,
                         size=(300, 20),
                         position=(25, vpos),
                         selectable=True,
-                        onSelectCall=bs.WeakCall(self._doNothing),
+                        onSelectCall=bs.WeakCall(
+                            self._setFavoritesListSelection,
+                            (address, 'name')),
                         onActivateCall=bs.WeakCall(
                             self._favoritesConnectServer,
                             handleServer['ip'], handleServer['port']),
@@ -25189,7 +25067,11 @@ class GatherWindow(Window):
                         hAlign='left',
                         vAlign='center')
 
-                    bs.buttonWidget(
+                    if existingSelection == (address, 'name'):
+                        bs.containerWidget(edit=cb,
+                                           selectedChild=favoritesServerTextButton)
+
+                    favoritesServerActButton = bs.buttonWidget(
                         color=gButtonsColor,
                         textColor=gButtonsTextColor,
                         label=bs.Lstr(resource='act'),
@@ -25197,12 +25079,42 @@ class GatherWindow(Window):
                         autoSelect=True,
                         onActivateCall=bs.WeakCall(
                             self._onActPress, handleServer['name']),
-                        onSelectCall=bs.WeakCall(self._doNothing),
+                        onSelectCall=bs.WeakCall(
+                            self._setFavoritesListSelection,
+                            (address, 'act_button')),
                         size=(120, 40),
                         position=(675, vpos),
                         scale=0.9)
 
+                    if existingSelection == (address, 'act_button'):
+                        bs.containerWidget(
+                            edit=cb,
+                            selectedChild=favoritesServerActButton)
+
+                    if server == config[-1]:
+                        bs.widget(
+                            edit=favoritesServerTextButton,
+                            upWidget=self.favoritesAddButton)
+
+                        bs.widget(
+                            edit=favoritesServerActButton,
+                            upWidget=self.favoritesAddButton)
+
+                        bs.containerWidget(
+                            edit=cb,
+                            selectedChild=favoritesServerTextButton)
+
                     vpos += 50
+
+            def refresh_on():
+                self._refreshingFavoritesListSelection = False
+
+            bs.pushCall(refresh_on)
+
+    def _setFavoritesListSelection(self, sel):
+        if self._refreshingFavoritesListSelection:
+            return
+        self._favoritesListSelection = sel
 
     def _onAddServerPress(self):
         FavoritesAddServerWindow()
@@ -25235,9 +25147,8 @@ class GatherWindow(Window):
                 bs.Lstr(resource='resetFavoritesSucces'),
                 (0, 1, 0))
 
-            bs.screenMessage(
-                bs.Lstr(resource='needsRestartTab'),
-                (1, 1, 0))
+            bs.containerWidget(edit=self._rootWidget, transition='outScale')
+            uiGlobals['mainMenuWindow'] = GatherWindow().getRootWidget()
 
     def _favoritesGetInstruction(self):
         txt = bs.Lstr(resource='favoritesInstructionText')
@@ -25247,28 +25158,6 @@ class GatherWindow(Window):
 
     def _internetFetchLocalAddrCB(self, val):
         self._internetLocalAddress = str(val)
-
-    def _goToModpackFFAServer(self):
-        try:
-            bsInternal._connectToParty(
-                bs.getConfig()['BombDash Modpack Servers'][0]['server'],
-                port=int(
-                    bs.getConfig()['BombDash Modpack Servers'][0]['port']))
-        except:
-            bs.screenMessage(
-                bs.Lstr(resource='bdInternalError'),
-                color=(1, 0, 0))
-
-    def _goToModpackTeamsServer(self):
-        try:
-            bsInternal._connectToParty(
-                bs.getConfig()['BombDash Modpack Servers'][1]['server'],
-                port=int(
-                    bs.getConfig()['BombDash Modpack Servers'][1]['port']))
-        except:
-            bs.screenMessage(
-                bs.Lstr(resource='bdInternalError'),
-                color=(1, 0, 0))
 
     def _setInternetTab(self, value, playSound=False):
         if playSound:
@@ -25305,9 +25194,10 @@ class GatherWindow(Window):
             '_internetHostMaxPartySizeMinusButton',
             '_internetHostMaxPartySizePlusButton', '_internet_join_status_text',
             '_internetHostDedicatedServerInfoText',
-            '_internetExtraJoinModpackFFAServerButton',
-            '_internetExtraJoinModpackTeamsServerButton',
-                '_internetExtraUpdateButton']:
+            '_internetExtraJoinModPackFFAServerButton',
+            '_internetExtraJoinModPackTeamsServerButton',
+            '_internetExtraUpdateButton', '_internetExtraInfoButton',
+                '_internetExtraDescription']:
             widget = getattr(self, attr, None)
             if widget is not None:
                 widget.delete()
@@ -25471,35 +25361,50 @@ class GatherWindow(Window):
 
         if value == 'extra':
             v -= 100
-            b1 = self._internetExtraJoinModpackFFAServerButton = bs.buttonWidget(
-                parent=self._tabContainer, size=(400, 60),
-                onActivateCall=bs.WeakCall(
-                    self._onMaxPublicPartySizeMinusPress),
-                position=(250, v),
+            b1 = self._internetExtraJoinModPackFFAServerButton = bs.buttonWidget(
+                parent=self._tabContainer, size=(350, 60),
+                onActivateCall=self._connectModPackFFAServer,
+                position=(50, v),
                 color=gButtonsColor,
                 textColor=gButtonsTextColor,
-                label=bs.Lstr(resource='joinModpackFFAServer'),
+                label=bs.Lstr(resource='joinModPackFFAServer'),
                 autoSelect=True)
-            v -= 100
-            b2 = self._internetExtraJoinModpackTeamsServerButton = bs.buttonWidget(
-                parent=self._tabContainer, size=(400, 60),
-                onActivateCall=bs.WeakCall(
-                    self._onMaxPublicPartySizePlusPress),
-                position=(250, v),
+
+            b2 = self._internetExtraJoinModPackTeamsServerButton = bs.buttonWidget(
+                parent=self._tabContainer, size=(350, 60),
+                onActivateCall=self._connectModPackTeamsServer,
+                position=(500, v),
                 color=gButtonsColor,
                 textColor=gButtonsTextColor,
-                label=bs.Lstr(resource='joinModpackTeamsServer'),
+                label=bs.Lstr(resource='joinModPackTeamsServer'),
                 autoSelect=True)
+
             v -= 100
             b3 = self._internetExtraUpdateButton = bs.buttonWidget(
-                parent=self._tabContainer, size=(400, 60),
-                onActivateCall=bs.WeakCall(
-                    self._onMaxPublicPartySizePlusPress),
-                position=(250, v),
+                parent=self._tabContainer, size=(350, 60),
+                onActivateCall=self._updateModPackServers,
+                position=(50, v),
                 color=gButtonsColor,
                 textColor=gButtonsTextColor,
                 label=bs.Lstr(resource='update'),
                 autoSelect=True)
+
+            b4 = self._internetExtraInfoButton = bs.buttonWidget(
+                parent=self._tabContainer, size=(350, 60),
+                onActivateCall=self._updateOpenInfo,
+                position=(500, v),
+                color=gButtonsColor,
+                textColor=gButtonsTextColor,
+                label=bs.Lstr(resource='updateInfoButton'),
+                autoSelect=True)
+
+            v -= 100
+            t = self._internetExtraDescription = bs.textWidget(
+                parent=self._tabContainer, text=bs.Lstr(
+                    resource='updatePressInfoButton'),
+                scale=0.75, flatness=1.0, shadow=0.0, hAlign='center',
+                vAlign='center', maxWidth=cWidth * 0.9, color=gInfoTextColor,
+                position=(cWidth * 0.47, v))
 
         # now add a lock icon overlay for if we don't have pro
         icon = getattr(self, '_internetLockIcon', None)
@@ -25511,6 +25416,68 @@ class GatherWindow(Window):
             size=(120, 120),
             opacity=0.0 if not self._isInternetLocked() else 0.5,
             texture=bs.getTexture('lock'))
+
+    def _updateOpenInfo(self):
+        txt = bs.Lstr(resource='updateInfo')
+        ConfirmWindow(
+            txt, cancelButton=False,
+            width=600 if (gSmallUI or gMedUI) else 800,
+            height=200 if (gSmallUI or gMedUI) else 300,
+            originWidget=self._internetExtraInfoButton)
+
+    def _updateModPackServers(self):
+        class _GetModPackServersThread(threading.Thread):
+
+            def __init__(self):
+                threading.Thread.__init__(self)
+
+            def run(self):
+                try:
+                    data = {'cmd': 'getModPackServers'}
+
+                    request = urllib2.urlopen(
+                        urllib2.Request(bdUtils.BD_INTERNAL_URL),
+                        json.dumps(data))
+
+                    result = json.loads(request.read().decode('utf-8'))
+
+                    def writeData():
+                        bs.getConfig()['BombDash ModPack Servers'] = result
+                        bs.writeConfig()
+
+                    bs.callInGameThread(bs.Call(writeData))
+                    bs.screenMessage(
+                        bs.Lstr(resource='updateModPackServersSuccess'),
+                        (0, 1, 0))
+                except Exception:
+                    bs.screenMessage(
+                        bs.Lstr(resource='updateModPackServersError'),
+                        (1, 0, 0))
+
+
+        _GetModPackServersThread().start()
+
+    def _connectModPackFFAServer(self):
+        try:
+            bsInternal._connectToParty(
+                bs.getConfig()['BombDash ModPack Servers'][0]['server'],
+                port=int(
+                    bs.getConfig()['BombDash ModPack Servers'][0]['port']))
+        except Exception:
+            bs.screenMessage(
+                bs.Lstr(resource='connectModPackServersError'),
+                color=(1, 0, 0))
+
+    def _connectModPackTeamsServer(self):
+        try:
+            bsInternal._connectToParty(
+                bs.getConfig()['BombDash ModPack Servers'][1]['server'],
+                port=int(
+                    bs.getConfig()['BombDash ModPack Servers'][1]['port']))
+        except Exception:
+            bs.screenMessage(
+                bs.Lstr(resource='connectModPackServersError'),
+                color=(1, 0, 0))
 
     def _isInternetLocked(self):
         if bsInternal._getAccountMiscReadVal('ilck', False):
@@ -25654,8 +25621,8 @@ class GatherWindow(Window):
                 edit=self._internetHostScrollWidget,
                 claimsUpDown=(len(orderedParties) > 0))
 
-            if 'BombDash Modpack Servers' in bs.getConfig():
-                mpServers = bs.getConfig()['BombDash Modpack Servers']
+            if 'BombDash ModPack Servers' in bs.getConfig():
+                mpServers = bs.getConfig()['BombDash ModPack Servers']
             else:
                 mpServers = None
 
