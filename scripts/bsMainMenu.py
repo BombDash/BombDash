@@ -55,6 +55,7 @@ class MainMenuActivity(bs.Activity):
         jrmpModeText = 'joi ride madpacke'
         bdtext = '1.8 Release' if not JRMPmode else jrmpModeText
         bdtext2 = 'BombDash ModPack' if not JRMPmode else jrmpModeText
+        bdtext3 = 'BombSquad: %s' % bdtext2
 
         self._logoNode = None
         self._customLogoTexName = None
@@ -73,6 +74,7 @@ class MainMenuActivity(bs.Activity):
                 'texture': bs.getTexture('white'),
                 'position': (-350, 0),
                 'opacity': 0.7,
+                'hostOnly': True,
                 'color': menuImgMenuColor,
                 'scale': (350, 2000)}))
 
@@ -99,6 +101,16 @@ class MainMenuActivity(bs.Activity):
             'position': (0, -200),
             'flatness': 1.0,
             'hAlign': 'center'}))
+
+        self._hostGameNameText = bs.NodeActor(bs.newNode('text', attrs={
+            'text': bdtext3,
+            'clientOnly': True,
+            'position': (0, 0),
+            'flatness': 1.0,
+            'vAttach': 'top',
+            'vAlign': 'top',
+            'hAttach': 'left',
+            'hAlign': 'left'}))
 
         if not gDidInitialTransition and hasattr(self, 'myName'):
             bs.animate(self.myName.node, 'opacity',
@@ -154,6 +166,7 @@ class MainMenuActivity(bs.Activity):
                 'color': menuBDMPMenuColor,
                 'shadow': 0.5,
                 'flatness': 0.5,
+                'hostOnly': True,
                 'scale': 1.0,
                 'vrDepth': -60,
                 'position': (230, 125) if env['kioskMode'] else (-350, 215),
@@ -1887,6 +1900,7 @@ class MainMenuActivity(bs.Activity):
                 'shadow': 0.2,
                 'vrDepth': -40+vrDepthOffset,
                 'vAlign': 'center',
+                'hostOnly': True,
                 'projectScale': scale,
                 'scale': 1.0,
                 'text': word}))
@@ -1985,6 +1999,7 @@ class MainMenuActivity(bs.Activity):
             'vrDepth': -10+vrDepthOffset,
             'rotate': rotate,
             'attach': 'center',
+            'hostOnly': True,
             'tiltTranslate': 0.21,
             'absoluteScale': True}))
 

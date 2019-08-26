@@ -1833,7 +1833,7 @@ values = {
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'ModPack version: 1.8 Release\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: August 25 2019\n'
+                        'List updated: August 26 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
@@ -1852,7 +1852,7 @@ values = {
                         '- Added new bonus "Raingun"\n'
                         '- Added new bonus "Blessing"\n'
                         '- Added new map "Snowy Mountlands"\n'
-                        '- Added new menu scene "Ricardo Milos"\n'
+                        '- Added new main menu scene "Ricardo Milos"\n'
                         '- Added an info button to the themes window\n'
                         '- Added a button to get modPack-servers data\n'
                         '- Added button to go to the theme folder in the themes window\n'
@@ -1885,6 +1885,8 @@ values = {
                         '- Returned and improved command /fly3d\n'
                         '- New team abbreviation /iceOff - /io\n'
                         '- Changes in the command description structure\n'
+                        '- Changes and fixes to the scene in full screen\n'
+                        '- Changes and fixes in menu indication for host clients\n'
                         '- Minor changes to memory access request\n'
                         '- Removed unnecessary translation\n'
                         '- Removed engine version in the themes window\n'
@@ -2675,7 +2677,7 @@ values = {
     'tournamentStandingsText':'Tournament Standings',
     'tournamentText':'Tournament',
     'tournamentTimeExpiredText':'Tournament Time Expired',
-    'tournamentsText':'You can not play tournaments with mods :(',
+    'tournamentsText':'You can\'t play tournaments with mods :(',
     'translations':{
         'characterNames':{
             'Lucky':None,

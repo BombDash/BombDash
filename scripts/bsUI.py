@@ -1767,6 +1767,7 @@ class BDSettings(Window):
         uiGlobals['mainMenuWindow'] = SettingsWindow(
             transition='inLeft').getRootWidget()
 
+
 class AboutBDWindow(Window):
     """
     category: BombDash Classes
@@ -1860,7 +1861,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)-50)
+                    suppressWarning=True)+365)
         else:
             self._subHeight = (
                 bsInternal._getStringHeight(
@@ -1868,7 +1869,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)+170)
+                    suppressWarning=True)+565)
 
         c = self._subContainer = bs.containerWidget(
             parent=s,
@@ -2088,8 +2089,7 @@ class AboutBDWindow(Window):
             position=(0, self._subHeight-20),
             hAlign='left',
             vAlign='top',
-            text=txt
-            )
+            text=txt)
 
         t2 = bs.textWidget(
             parent=c,
@@ -2102,8 +2102,7 @@ class AboutBDWindow(Window):
                 scale-25),
             hAlign='left',
             vAlign='top',
-            text=txt2
-            )
+            text=txt2)
 
         if bs.getLanguage() == 'Russian':
             t3 = bs.textWidget(
@@ -2114,11 +2113,10 @@ class AboutBDWindow(Window):
                 flatness=1.0,
                 size=(0, 0),
                 position=(0, self._subHeight-bsInternal._getStringHeight(txt2, suppressWarning=True)*
-                    scale-1125),
+                    scale-1500),
                 hAlign='left',
                 vAlign='top',
-                text=txt3
-                )
+                text=txt3)
         else:
             t3 = bs.textWidget(
                 parent=c,
@@ -2128,15 +2126,15 @@ class AboutBDWindow(Window):
                 flatness=1.0,
                 size=(0, 0),
                 position=(0, self._subHeight-bsInternal._getStringHeight(txt2, suppressWarning=True)*
-                    scale-1175),
+                    scale-1520),
                 hAlign='left',
                 vAlign='top',
-                text=txt3
-                )
+                text=txt3)
 
     def _back(self):
         bs.containerWidget(edit=self._rootWidget, transition=self._transitionOut)
         uiGlobals['mainMenuWindow'] = ExtraButtonsWindow().getRootWidget()
+
 
 class NothingWindow(Window):
     """
@@ -2145,32 +2143,12 @@ class NothingWindow(Window):
     Class of one of windows which are only in this modPack.
     """
     def __init__(self):
-        if bs.getEnvironment()['platform'] != 'android':
-            pos = (-600, 400)
-        else:
-            pos = (-600, 290)
-
         self._rootWidget = bs.containerWidget(
-            transition='inRight',
-            rootSelectable=False,
-            clickActivate=True,
-            onActivateCall=self._back)
-
-        #bs.realTimer(10000, bs.Call(self._back))
-
-        self._backButton = b = bs.buttonWidget(
-            parent=self._rootWidget,
-            position=pos,
-            size=(120, 60),
-            scale=0.8,
-            color=gWindowsBackColor,
-            textColor=gWindowsBackTextColor,
-            autoSelect=True,
-            label=bs.Lstr(resource='backText'),
-            onActivateCall=self._back)
+            onOutsideClickCall=self._back)
 
     def _back(self):
         bsInternal._getForegroundHostSession().end()
+
 
 class CMDMenu(Window):
     """
@@ -2247,6 +2225,8 @@ class CMDMenu(Window):
             textColor=gButtonsTextColor,
             label=bs.Lstr(resource='spawnB9000'),
             onActivateCall=self.spawnRobot)
+
+        bs.widget(edit=b, upWidget=self._doneButton)
 
         v -= 75
         b = bs.buttonWidget(
@@ -2527,6 +2507,7 @@ class CMDMenu(Window):
 
         uiGlobals['mainMenuWindow'] = BDSettings(
             transition='inLeft').getRootWidget()
+
 
 class CreditsWindow(Window):
     def __init__(self, originWidget=None):
