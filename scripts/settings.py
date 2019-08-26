@@ -10,7 +10,7 @@ halloweenScene = False
 duck = False
 showServerData = False
 writeServerData = False
-agreement = True
+agreement = False
 forcedUI = 0
 theme = 'Default'
 
