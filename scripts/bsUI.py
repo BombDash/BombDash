@@ -1507,9 +1507,7 @@ class BDSettings(Window):
             settings.writeServerData = False if m == 0 else True
             settings.saveSettings()
         else:
-            bs.screenMessage(
-                bs.Lstr(resource='storagePermissionAccessText'),
-                (1, 0, 0))
+            ProvideWindow()
 
     def saveCmdForMe(self, m):
         settings.cmdForMe = False if m == 0 else True
@@ -2143,8 +2141,28 @@ class NothingWindow(Window):
     Class of one of windows which are only in this modPack.
     """
     def __init__(self):
+        JRMPmode = bsMainMenu.JRMPmode
+        jrmpModeText = 'joi ride madpacke'
+        bdtext2 = 'BombDash ModPack' if not JRMPmode else jrmpModeText
+        bdtext3 = 'BombSquad: %s' % bdtext2
+
         self._rootWidget = bs.containerWidget(
+            scale=0.0,
+            rootSelectable=True,
+            onActivateCall=self._back,
             onOutsideClickCall=self._back)
+
+        activity = bsInternal._getForegroundHostActivity()
+        if activity is not None:
+            with bs.Context(activity):
+                self._gameNameText = bs.NodeActor(bs.newNode('text', attrs={
+                    'text': bdtext3,
+                    'position': (0, 0),
+                    'flatness': 1.0,
+                    'vAttach': 'top',
+                    'vAlign': 'top',
+                    'hAttach': 'left',
+                    'hAlign': 'left'}))
 
     def _back(self):
         bsInternal._getForegroundHostSession().end()
@@ -11519,6 +11537,7 @@ class StatsWindow(Window):
         uiGlobals['mainMenuWindow'] = \
             ExtraButtonsWindow().getRootWidget()
 
+
 class AgreementWindow(Window):
     """
     category: BombDash Classes
@@ -11586,6 +11605,115 @@ class AgreementWindow(Window):
         settings.agreement = True
         settings.saveSettings()
         bsInternal._getForegroundHostSession().end()
+
+
+class ProvideWindow(Window):
+    """
+    category: BombDash Classes
+
+    Class of one of windows which are only in this modPack.
+    """
+    def __init__(self, transition='inRight'):
+        self._width = width = 660
+        self._height = height = 375 if gSmallUI else 420 if gMedUI else 520
+
+        self._scrollWidth = self._width - 100
+        self._scrollHeight = self._height - 145
+
+        self._subWidth = self._scrollWidth * 0.95
+        self._subHeight = 385
+
+        self._rootWidget = bs.containerWidget(
+            size=(width, height),
+            transition=transition,
+            scale=1.75 if gSmallUI else 1.55 if gMedUI else 1.0,
+            stackOffset=(0, -30) if gSmallUI else (0, 0))
+
+        if gToolbars and gSmallUI:
+            bs.containerWidget(
+                edit=self._rootWidget,
+                onCancelCall=self._back)
+        else:
+            b = bs.buttonWidget(
+                parent=self._rootWidget,
+                position=(40, height-(68 if gSmallUI else 62)),
+                size=(140, 60),
+                scale=0.8,
+                label=bs.Lstr(resource='backText'),
+                color=gWindowsBackColor,
+                textColor=gWindowsBackTextColor,
+                buttonType='back',
+                onActivateCall=self._back,
+                autoSelect=True)
+
+            bs.containerWidget(
+                edit=self._rootWidget,
+                cancelButton=b)
+
+            if gDoAndroidNav:
+                bs.buttonWidget(
+                    edit=b,
+                    buttonType='backSmall',
+                    position=(40, height-(68 if gSmallUI else 62)+5),
+                    size=(60, 48),
+                    color=gWindowsBackColor,
+                    textColor=gWindowsBackTextColor,
+                    label=bs.getSpecialChar('back'))
+
+        bs.containerWidget(
+            edit=self._rootWidget,
+            cancelButton=b)
+
+        t = bs.textWidget(
+            parent=self._rootWidget,
+            position=(0, height-60),
+            size=(width, 30),
+            text=bs.Lstr(resource='accessToStorageDeviceText'),
+            hAlign='center',
+            vAlign='center',
+            maxWidth=400)
+
+        self._scrollWidget = bs.scrollWidget(
+            parent=self._rootWidget,
+            size=(self._scrollWidth, self._scrollHeight),
+            highlight=False,
+            position=((self._width-self._scrollWidth)*0.5, 75))
+
+        bs.containerWidget(edit=self._scrollWidget, claimsLeftRight=True)
+
+        self._subContainer = bs.containerWidget(
+            parent=self._scrollWidget,
+            size=(self._subWidth, self._subHeight),
+            background=False)
+
+        self._provideText = bs.textWidget(
+            parent=self._subContainer,
+            text=bs.Lstr(resource='accessToStorageDeviceDescription'),
+            position=(0, 345),
+            scale=0.65,
+            hAlign='left',
+            vAlign='top')
+
+        self.provideButton = bs.buttonWidget(
+            parent=self._rootWidget,
+            position=(width/2-125,
+                      height-360 if gSmallUI \
+                          else height-405 if gMedUI \
+                          else height-505),
+            size=(250, 55),
+            autoSelect=True,
+            label=bs.Lstr(resource='provideText'),
+            onActivateCall=self._provideButtonPressed)
+
+    def _back(self):
+        bs.containerWidget(
+            edit=self._rootWidget, transition='outRight')
+
+    def _provideButtonPressed(self):
+        bs.containerWidget(
+            edit=self._rootWidget, transition='outRight')
+
+        bsUtils.showUserScripts()
 
 
 class ThemesWindow(Window):
@@ -21341,9 +21469,7 @@ class MainMenuWindow(Window):
             offMenuItems()
             uiGlobals['mainMenuWindow'] = ThemesWindow().getRootWidget()
         else:
-            bs.screenMessage(
-                bs.Lstr(resource='storagePermissionAccessText'),
-                (1, 0, 0))
+            ProvideWindow()
 
     def _demoMenuPress(self):
         self._save_state()
@@ -26492,7 +26618,7 @@ class PartyWindow(Window):
         else:
             bs.screenMessage(
                 bs.Lstr(resource='youNotLastMessage'),
-                color=(1, 0.5, 0))
+                color=(1, 0, 0))
 
     def close(self):
         bs.containerWidget(edit=self._rootWidget, transition='outScale')

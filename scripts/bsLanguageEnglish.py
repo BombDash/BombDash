@@ -1,6 +1,23 @@
 # -*- coding: utf-8 -*-
 
 values = {
+    'accessToStorageDeviceDescription':('To use this feature and complete the work modPack,\n'
+                                        'modPack need to access storage of Your device.\n\n'
+                                        'After granting access, the folder "BombSquad" will appear.\n'
+                                        'The path to this folder You can find using the button,\n'
+                                        'called "Show Mods Folder" and is located at:\n'
+                                        'Main menu - Settings - Advanced.\n'
+                                        'ModPack will not steal your data, create viruses, etc.!\n'
+                                        'If you read the agreement on the use of modPack,\n'
+                                        'there is written about it.\n\n'
+                                        'By clicking the "Provide" button, which is located just below,\n'
+                                        'You launch the grant access permission window.\n'
+                                        'In this window, click "Allow" and everything will work.\n'
+                                        'If you click the "Deny" button, the modPack will\n'
+                                        'not have access and, accordingly, this function and some others\n'
+                                        'will not work until you allow access.'),
+    'accessToStorageDeviceText':'Access to storage device',
+    'provideText':'Provide',
     'connectModPackServersError':('Error, it looks like You have not received the connection data yet.\n'
                                   'Try clicking the "Update" button".'),
     'updateInfo':('The "ModPack-server (*type*)" buttons will help You connect to these servers in one click.\n'
