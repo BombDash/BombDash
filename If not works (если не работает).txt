@@ -1,0 +1,30 @@
+﻿Русский:
+
+Первый вариант:
+1) Распаковать куда-нибудь, если этого ещё не сделали.
+2) Если выкидывает ошибку типа "В системе отсутствует *имя*.dll библиотека",
+установить файл в папке с игрой "vc_redist.exe". Если не помогло,
+искать в гугле *имя*.dll в каком распространяемом пакете, и устанавливать этот пакет.
+3) Перезагружаем ПК и пробуем.
+
+Второй вариант:
+1) Распаковать куда-нибудь, если этого ещё не сделали.
+2) Установить все версии Microsoft Visual C++ (2005, 2008, 2010, 2012, 2013, 2015-2019).
+И главное! Устанавливайте и 32-ух битную и 64-ех битную версию каждого года, если это возможно.
+3) Перезагружаем ПК и пробуем.
+
+===============================================================================================
+English:
+
+First option:
+1) Unpack somewhere if you haven't already.
+2) If throws an error like "The system is missing *name*.dll",
+install the file in the folder with the game "vc_redist.exe". If not helped,
+search in Google *name*.dll in which redistributable package, and install this package.
+3) Reboot the PC and try.
+
+Second option:
+1) Unpack somewhere if you haven't already.
+2) Install all versions of Microsoft Visual C++ (2005, 2008, 2010, 2012, 2013, 2015-2019).
+And importantly! Install both 32-bit and 64-bit versions of each year, if possible.
+3) Reboot the PC and try.
