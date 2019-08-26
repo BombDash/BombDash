@@ -1,4 +1,4 @@
-# BomSquad: BombDash Modpack
+# BombSquad: BombDash ModPack
 
 Модпак одной интересной игры под названием BombSquad.
 
