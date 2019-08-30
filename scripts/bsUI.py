@@ -1859,7 +1859,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)+365)
+                    suppressWarning=True)+375)
         else:
             self._subHeight = (
                 bsInternal._getStringHeight(
@@ -1867,7 +1867,7 @@ class AboutBDWindow(Window):
                     suppressWarning=True)+
                 bsInternal._getStringHeight(
                     txt3,
-                    suppressWarning=True)+565)
+                    suppressWarning=True)+575)
 
         c = self._subContainer = bs.containerWidget(
             parent=s,
