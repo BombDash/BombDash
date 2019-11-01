@@ -267,24 +267,24 @@ class MainMenuActivity(bs.Activity):
 
         # create data for a menu scene with Ricardo Milos
         milosModel = bs.getModel('milos')
-        mil0 = pumkinsTex = bs.getTexture('mil0')
-        mil1 = pumkinsTex = bs.getTexture('mil1')
-        mil2 = pumkinsTex = bs.getTexture('mil2')
-        mil3 = pumkinsTex = bs.getTexture('mil3')
-        mil4 = pumkinsTex = bs.getTexture('mil4')
-        mil5 = pumkinsTex = bs.getTexture('mil5')
-        mil6 = pumkinsTex = bs.getTexture('mil6')
-        mil7 = pumkinsTex = bs.getTexture('mil7')
-        mil8 = pumkinsTex = bs.getTexture('mil8')
-        mil9 = pumkinsTex = bs.getTexture('mil9')
-        mil10 = pumkinsTex = bs.getTexture('mil10')
-        mil11 = pumkinsTex = bs.getTexture('mil11')
-        mil12 = pumkinsTex = bs.getTexture('mil12')
-        mil13 = pumkinsTex = bs.getTexture('mil13')
-        mil14 = pumkinsTex = bs.getTexture('mil14')
-        mil15 = pumkinsTex = bs.getTexture('mil15')
-        mil16 = pumkinsTex = bs.getTexture('mil16')
-        mil17 = pumkinsTex = bs.getTexture('mil17')
+        mil0 = bs.getTexture('mil0')
+        mil1 = bs.getTexture('mil1')
+        mil2 = bs.getTexture('mil2')
+        mil3 = bs.getTexture('mil3')
+        mil4 = bs.getTexture('mil4')
+        mil5 = bs.getTexture('mil5')
+        mil6 = bs.getTexture('mil6')
+        mil7 = bs.getTexture('mil7')
+        mil8 = bs.getTexture('mil8')
+        mil9 = bs.getTexture('mil9')
+        mil10 = bs.getTexture('mil10')
+        mil11 = bs.getTexture('mil11')
+        mil12 = bs.getTexture('mil12')
+        mil13 = bs.getTexture('mil13')
+        mil14 = bs.getTexture('mil14')
+        mil15 = bs.getTexture('mil15')
+        mil16 = bs.getTexture('mil16')
+        mil17 = bs.getTexture('mil17')
 
         # start handle menu scenes
         if startEvent == 1:
@@ -633,8 +633,9 @@ class MainMenuActivity(bs.Activity):
             bsGlobals.ambientColor = (1.06, 1.04, 1.03)
             bsGlobals.vignetteOuter = (0.45, 0.55, 0.54)
             bsGlobals.vignetteInner = (0.99, 0.98, 0.98)
-            tint = (1.14, 1.1, 1.0)
+            tint = (0.7, 0.7, 0.8)
             rec = 0
+            bs.getSharedObject('globals').cameraMode = 'follow'
             self._spazArray = []
 
             if bs.getEnvironment()['platform'] != 'android':
@@ -719,9 +720,19 @@ class MainMenuActivity(bs.Activity):
                     bs.gameTimer(50, bs.Call(jump))
 
             jump()
-            bs.gameTimer(5000, bs.Call(boom))
-            bs.gameTimer(8000, bs.Call(reBoom))
-            bs.gameTimer(6000, bs.Call(knockOut))
+            def stopTime():
+                bs.getSharedObject('globals').paused = True
+
+            delay = 4500
+
+            # define the platform and a pause
+            if bs.getEnvironment()['platform'] == 'android':
+                pause = 1000
+            else:
+                pause = 340
+
+
+            bs.gameTimer(delay+pause, stopTime)
 
         elif startEvent == 8:
             bsGlobals.ambientColor = (1.06, 1.04, 1.03)

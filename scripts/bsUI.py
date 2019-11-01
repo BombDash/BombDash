@@ -1283,7 +1283,7 @@ class BDSettings(Window):
                 parent=self._subContainer,
                 position=((self._subWidth-buttonWidth)*0.5-d, v),
                 size=(buttonWidth, 60),
-                value=13 in settings.scenes,
+                value=14 in settings.scenes,
                 maxWidth=buttonWidth,
                 onValueChangeCall=self.saveScene14,
                 color=(0.4, 0.3, 1),
@@ -1297,7 +1297,7 @@ class BDSettings(Window):
                 parent=self._subContainer,
                 position=((self._subWidth-buttonWidth)*0.5-d, v),
                 size=(buttonWidth, 60),  
-                value=14 in settings.scenes,
+                value=15 in settings.scenes,
                 maxWidth=buttonWidth, 
                 onValueChangeCall=self.saveScene15,
                 color=(0.4, 0.3, 1),
@@ -2407,6 +2407,7 @@ class CMDMenu(Window):
                 pos = (0, 3, 0)
 
             bs.Spaz(
+                character=random.choice(['Russian tramp','Gambol','Dart Vader','Antoshko Gavriluk','Carl Jonhson','Jason Voorhees','Knuckles','S-117','Android','Elf','Bum','Bolt','Hrundel','Pikachu','Eric','Kukusik','Monkey','Zombie','Impact','Bombman','Deadpool']),
                 color=(random.random(), random.random(), random.random()),
                 highlight=(random.random(),
                            random.random(),
