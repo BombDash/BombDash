@@ -633,9 +633,8 @@ class MainMenuActivity(bs.Activity):
             bsGlobals.ambientColor = (1.06, 1.04, 1.03)
             bsGlobals.vignetteOuter = (0.45, 0.55, 0.54)
             bsGlobals.vignetteInner = (0.99, 0.98, 0.98)
-            tint = (0.7, 0.7, 0.8)
+            tint = (1.14, 1.1, 1.0)
             rec = 0
-            bs.getSharedObject('globals').cameraMode = 'follow'
             self._spazArray = []
 
             if bs.getEnvironment()['platform'] != 'android':
@@ -720,19 +719,10 @@ class MainMenuActivity(bs.Activity):
                     bs.gameTimer(50, bs.Call(jump))
 
             jump()
-            def stopTime():
-                bs.getSharedObject('globals').paused = True
 
-            delay = 4500
-
-            # define the platform and a pause
-            if bs.getEnvironment()['platform'] == 'android':
-                pause = 1000
-            else:
-                pause = 340
-
-
-            bs.gameTimer(delay+pause, stopTime)
+            bs.gameTimer(5000, bs.Call(boom))
+            bs.gameTimer(8000, bs.Call(reBoom))
+            bs.gameTimer(6000, bs.Call(knockOut))
 
         elif startEvent == 8:
             bsGlobals.ambientColor = (1.06, 1.04, 1.03)

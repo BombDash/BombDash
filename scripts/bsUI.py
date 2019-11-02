@@ -2407,7 +2407,6 @@ class CMDMenu(Window):
                 pos = (0, 3, 0)
 
             bs.Spaz(
-                character=random.choice(['Russian tramp','Gambol','Dart Vader','Antoshko Gavriluk','Carl Jonhson','Jason Voorhees','Knuckles','S-117','Android','Elf','Bum','Bolt','Hrundel','Pikachu','Eric','Kukusik','Monkey','Zombie','Impact','Bombman','Deadpool']),
                 color=(random.random(), random.random(), random.random()),
                 highlight=(random.random(),
                            random.random(),

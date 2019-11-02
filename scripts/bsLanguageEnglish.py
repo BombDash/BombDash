@@ -35,7 +35,7 @@ values = {
     'update':'Update',
     'agreement':'Agreement for the use modPack',
     'agreementText':('AGREEMENT FOR USE OF MODPACK\n\n'
-                     'Last edit was November 1 2019\n\n'
+                     'Last edit was November 2 2019\n\n'
                      'By violating these points, you may lose our support and we will be entitled\n'
                      'refuse to help you if you find errors, the modPack will not start, etc.:\n'
                      '1. If you didn’t download the modPack from file hosting services,\n '
@@ -73,7 +73,7 @@ values = {
                      'and agree with everything written above.\n\n'
                      'Версия на русском языке:\n\n'
                      'СОГЛАШЕНИЕ НА ИСПОЛЬЗОВАНИЕ МОДПАКА\n\n'
-                     'Последнее редактирование было 1 ноября 2019\n\n'
+                     'Последнее редактирование было 2 ноября 2019\n\n'
                      'Нарушая эти пункты, Вы можете потерять нашу поддержку и мы будем иметь право\n'
                      'отказать в помощи Вам, если Вы найдете ошибки, модПак не будет запускаться и т.п.:\n'
                      '1. Если Вы скачали модПак не с файлообменников,\n'
@@ -1850,7 +1850,7 @@ values = {
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         'ModPack version: 1.8 Release\n'
                         'Base Version: 1.4.146\n'
-                        'List updated: November 1 2019\n'
+                        'List updated: November 2 2019\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
                         '\n'
                         '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------—\n'
